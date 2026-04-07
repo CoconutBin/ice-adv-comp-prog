@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 public class Player extends GameEntity {
     private String name;

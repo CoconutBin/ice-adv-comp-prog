@@ -7,7 +7,7 @@ public class Game {
             System.out.println("Hello brave adventurer! What is your name?");
             String name = scanner.nextLine();
             System.out.println("Nice to meet you, " + name + "!");
-            Entities.Player player = new Entities.Player(name);
+            entities.Player player = new entities.Player(name);
             
         } catch(Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
