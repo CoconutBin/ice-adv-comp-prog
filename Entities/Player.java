@@ -11,7 +11,6 @@ public class Player extends GameEntity {
 
     @Override
     public void attack(GameEntity target) {
-        // TODO Auto-generated method stub
         
     }
 }

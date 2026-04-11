@@ -8,4 +8,8 @@ public abstract class GameEntity {
     protected void updateHp(double hp) {
         this.hp += hp;
     }
+
+    public double getHp() {
+        return hp;
+    }
 }
