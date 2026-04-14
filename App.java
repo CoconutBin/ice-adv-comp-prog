@@ -4,9 +4,8 @@ public class App {
         
         entities.Boss boss = new entities.Boss(100);
 
-        //TODO: handle case when player doesnt write name
         ioHandler.print("Hello brave adventurer! What is your name?");
-        entities.Player player = new entities.Player(ioHandler.readLine(), 50);
+        entities.Player player = new entities.Player(ioHandler.readLine() == ""? ioHandler.readLine() : "Player", 50);
         
         ioHandler.print("Nice to meet you, " + player.getName() + "!");
         ioHandler.print("You are now ready for your adventure, " + player.getName() + "!");
@@ -21,10 +20,15 @@ public class App {
             
             if (isCorrect) {
                 ioHandler.print(player.getName() + " is so smart! The answer is " + question.getAnswer() + ".\n");
+                boss.updateHp(Math.random() * 7);
             }
             else {
-                 ioHandler.print(player.getName() + " is dumb as FUCK! The correct answer was " + question.getAnswer() + ".\n");
+                ioHandler.print(player.getName() + " is dumb as FUCK! The correct answer was " + question.getAnswer() + ".\n");
+                player.updateHp(Math.random() * 7);
             }
         }
+
+        if(player.getHp() < 0) ioHandler.print("wow you're dead");
+        if(boss.getHp() < 0) ioHandler.print("wow boss dead");
     }
 }

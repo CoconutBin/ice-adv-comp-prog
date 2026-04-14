@@ -9,7 +9,7 @@ public abstract class GameEntity {
 
     public abstract void attack(GameEntity target);
 
-    protected void updateHp(double hp_change) {
+    public void updateHp(double hp_change) {
         this.hp += hp_change;
     }
 
