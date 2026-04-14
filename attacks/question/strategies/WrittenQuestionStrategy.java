@@ -13,7 +13,7 @@ public class WrittenQuestionStrategy implements QuestionStrategy {
     }
 
     @Override
-    public boolean processAnswer(Question question, String scannerInput) {
-        return question.getAnswer().equals(scannerInput);
+    public boolean isCorrect(Question question, String player_answer) {
+        return question.getAnswer().equals(player_answer);
     }
 }

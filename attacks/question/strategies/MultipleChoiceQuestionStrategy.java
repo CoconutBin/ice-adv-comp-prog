@@ -16,9 +16,9 @@ public class MultipleChoiceQuestionStrategy implements QuestionStrategy {
     }
 
     @Override
-    public boolean processAnswer(Question question, String scannerInput) {
+    public boolean isCorrect(Question question, String player_answer) {
         try {
-            int answer = Integer.parseInt(scannerInput);
+            int answer = Integer.parseInt(player_answer);
             return question.getAnswer().equals(question.getOptions()[answer - 1]);
         } catch (NumberFormatException e) {
             return false;

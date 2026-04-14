@@ -13,7 +13,7 @@ public class TrueFalseQuestionStrategy implements QuestionStrategy {
     }
 
     @Override
-    public boolean processAnswer(Question question, String scannerInput) {
-        return (scannerInput.toLowerCase()).charAt(0) == (question.getAnswer().toLowerCase()).charAt(0);
+    public boolean isCorrect(Question question, String player_answer) {
+        return (player_answer.toLowerCase()).charAt(0) == (question.getAnswer().toLowerCase()).charAt(0);
     }
 }

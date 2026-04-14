@@ -3,10 +3,13 @@ package entities;
 public class Player extends GameEntity {
     private String name;
 
-    public Player(String name) {
-        super();
+    public Player(String name, double init_hp) {
+        super(init_hp);
         this.name = name;
-        updateHp(50);
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

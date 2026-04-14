@@ -9,37 +9,25 @@ public class Question {
     private String[] options;
     private String answer;
 
-    public Question(QuestionTypes type, String question, String answer) {
+    public Question(QuestionStrategy strategy, String question, String answer) {
+        this.strategy = strategy;
         this.question = question;
         this.answer = answer;
-        determineStrategy(type);
     }
 
-    public Question(QuestionTypes type, String question, String[] options, String answer) {
+    public Question(QuestionStrategy strategy, String question, String[] options, String answer) {
+        this.strategy = strategy;
         this.question = question;
         this.options = options;
         this.answer = answer;
-        determineStrategy(type);
-    }
-
-    private void determineStrategy(QuestionTypes type) throws IllegalArgumentException {
-        switch (type) {
-            case MULTIPLE_CHOICE:
-                this.strategy = new attacks.question.strategies.MultipleChoiceQuestionStrategy();
-                break;
-            case WRITTEN:
-                this.strategy = new attacks.question.strategies.WrittenQuestionStrategy();
-                break;
-            case TRUE_FALSE:
-                this.strategy = new attacks.question.strategies.TrueFalseQuestionStrategy();
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid question type: " + type);
-        }
     }
 
     public String askQuestion(IOHandler ioHandler) {
         return strategy.askQuestion(this, ioHandler);
+    }
+
+    public boolean isCorrect(String player_answer) {
+        return strategy.isCorrect(this, player_answer);
     }
 
     public String getQuestion() {

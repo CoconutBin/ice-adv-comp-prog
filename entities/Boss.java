@@ -1,9 +1,8 @@
 package entities;
 
 public class Boss extends GameEntity {
-    public Boss() {
-        super();
-        updateHp(100);
+    public Boss(double init_hp) {
+        super(init_hp);
     }
 
     @Override
