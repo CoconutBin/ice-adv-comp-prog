@@ -14,9 +14,8 @@ public class App {
 
 
         while (boss.getHp() > 0 && player.getHp() > 0) {
-            final attacks.question.Question[] questions = attacks.question.QuestionBank.questions;
-            attacks.question.Question question = questions[(int) (Math.random() * questions.length)];
 
+            attacks.question.Question question = attacks.question.QuestionBank.getInstance().getRandomQuestion();
             String playerAnswer = question.askQuestion(ioHandler);
             boolean isCorrect = question.isCorrect(playerAnswer);
             
