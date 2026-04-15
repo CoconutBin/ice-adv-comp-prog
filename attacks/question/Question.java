@@ -23,11 +23,11 @@ public class Question {
   }
 
   public String askQuestion(IOHandler ioHandler) {
-    return strategy.askQuestion(question, options, answer, ioHandler);
+    return strategy.askQuestion(question, options, ioHandler);
   }
 
-  public boolean isCorrect(String player_answer) {
-    return strategy.isCorrect(question, options, answer, player_answer);
+  public boolean isCorrect(String playerAnswer) {
+    return strategy.isCorrect(question, options, answer, playerAnswer);
   }
 
   public String getQuestion() {
