@@ -19,6 +19,8 @@ public class App {
             String playerAnswer = question.askQuestion(ioHandler);
             boolean isCorrect = question.isCorrect(playerAnswer);
             
+            ioHandler.clearTerminal();
+
             if (isCorrect) {
                 ioHandler.print(player.getName() + " is so smart! The answer is " + question.getAnswer() + ".\n");
                 boss.updateHp(-Math.random() * 7);
