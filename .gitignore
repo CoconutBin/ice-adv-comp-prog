@@ -1,3 +1,21 @@
 Project.iml
 .idea/
 class_files/
+
+# Compiled output
+out/
+target/
+bin/
+
+# VS Code Java extension workspace storage
+.classpath
+.project
+.settings/
+.vscode/
+
+# OS garbage
+.DS_Store
+Thumbs.db
+
+# Maven (once you set it up)
+*.class
