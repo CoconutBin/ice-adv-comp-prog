@@ -14,6 +14,6 @@ public class Player extends GameEntity {
 
     @Override
     public void attack(GameEntity target) {
-        
+        // Implementation for player attack
     }
 }

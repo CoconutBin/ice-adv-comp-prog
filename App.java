@@ -2,7 +2,7 @@ public class App {
     public static void main(String[] args) {
         final game.IOHandler ioHandler = new game.IOHandler();
         
-        entities.Boss boss = new entities.Boss(100);
+        entities.boss.Boss boss = new entities.boss.Boss(100);
 
         ioHandler.print("Hello brave adventurer! What is your name?");
     
