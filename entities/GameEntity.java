@@ -21,6 +21,10 @@ public abstract class GameEntity {
         return hp;
     }
 
+    public double getMaxHp() {
+        return maxHp;
+    }
+
     public void addObserver(EntityObserver observer) {
         observers.add(observer);
     }

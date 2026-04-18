@@ -6,7 +6,7 @@ import entities.boss.behavior.*;
 
 public class BossBehaviorObserver extends EntityObserver {
     @Override
-    public void onHpChange(Boss entity) {
+    public void onHpChange(GameEntity entity) {
         if (!(entity instanceof Boss)) return;
         Boss boss = (Boss) entity;
         double hpPercentage = boss.getHp() / boss.getMaxHp();
