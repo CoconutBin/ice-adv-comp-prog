@@ -7,7 +7,7 @@ public class GameEngine {
     private Player player = new Player("Player", 50);
     private Boss boss = new Boss(100);
     private IOHandler ioHandler = new IOHandler();
-    
+
     // If we manage to get persistance then we could skip this call
     public void initializeGame() {
         ioHandler.print("Hello brave adventurer! What is your name?");
@@ -35,12 +35,12 @@ public class GameEngine {
 
             if (isCorrect) {
                 ioHandler.print(player.getName() + " is so smart! The answer is " + question.getAnswer() + ".\n");
-                boss.updateHp(-Math.random() * 7);
+                player.attack(boss);
                 ioHandler.print("Boss HP: " + boss.getHp());
             } else {
                 ioHandler.print(
-                        player.getName() + " is dumb as FUCK! The correct answer was " + question.getAnswer() + ".\n");
-                player.updateHp(-Math.random() * 7);
+                player.getName() + " is dumb as FUCK! The correct answer was " + question.getAnswer() + ".\n");
+                boss.attack(player);
                 ioHandler.print("Your HP: " + player.getHp());
             }
         }
