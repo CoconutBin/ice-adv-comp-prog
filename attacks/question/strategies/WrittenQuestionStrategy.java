@@ -6,13 +6,30 @@ public class WrittenQuestionStrategy implements QuestionStrategy {
 
     @Override
     public String askQuestion(String question, String[] options, IOHandler ioHandler) {
-        ioHandler.print(question);
-        ioHandler.print("Write your answer below:");
-        return ioHandler.readLine();
+        String input;
+        
+        while (true) {
+            ioHandler.print("\n" + question);
+            ioHandler.print("Write your answer below");
+            System.out.print("--> ");
+            
+            input = ioHandler.readLine();
+            
+            // Validation: Don't allow empty or purely whitespace answers
+            if (input != null && !input.trim().isEmpty()) {
+                return input.trim();
+            }
+
+            ioHandler.print("\u001B[31m[!] You must type an answer to attack!\u001B[0m");
+        }
     }
 
     @Override
     public boolean isCorrect(String question, String[] options, String answer, String playerAnswer) {
-        return answer.equals(playerAnswer);
+        if (playerAnswer == null) return false;
+        
+        // Use equalsIgnoreCase and trim to be fair to the player
+        // Otherwise "Derivative" != "derivative"
+        return answer.trim().equalsIgnoreCase(playerAnswer.trim());
     }
 }

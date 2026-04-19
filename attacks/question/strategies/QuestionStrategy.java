@@ -4,6 +4,6 @@ import game.IOHandler;
 
 public interface QuestionStrategy {
     String askQuestion(String question, String[] options, IOHandler ioHandler);
-    //TODO: handle case when answer is invalid
+    //I think it's done.
     boolean isCorrect(String question, String[] options, String answer, String playerAnswer);
 }
