@@ -428,20 +428,6 @@ public class QuestionBank {
             new Question(new MultipleChoiceQuestionStrategy(), "What keyword is used in a method signature to declare that it might throw an exception?", new String[] {"throw", "throws", "catch", "assert"}, "throws"),
             new Question(new TrueFalseQuestionStrategy(), "True or False: 'Error' and 'Exception' are both subclasses of 'Throwable'.", "True"),
 
-            // --- COLLECTIONS & DATA STRUCTURES ---
-            new Question(new MultipleChoiceQuestionStrategy(), "Which collection does not allow duplicate elements?", new String[] {"ArrayList", "LinkedList", "HashSet", "Vector"}, "HashSet"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: An ArrayList is generally faster than a LinkedList for random access.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which data structure follows the LIFO (Last In, First Out) principle?", new String[] {"Queue", "Stack", "Tree", "HashMap"}, "Stack"),
-            new Question(new MultipleChoiceQuestionStrategy(), "To store key-value pairs where keys are unique, you should use:", new String[] {"HashSet", "TreeMap", "HashMap", "LinkedSet"}, "HashMap"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The 'Iterator' interface allows you to remove elements during iteration.", "True"),
-
-            // --- ADVANCED JAVA FEATURES ---
-            new Question(new MultipleChoiceQuestionStrategy(), "Which feature allows a type to be a parameter to methods and classes (e.g., List<T>)?", new String[] {"Wrappers", "Generics", "Interfaces", "Reflection"}, "Generics"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: An 'Enum' can have fields, methods, and constructors in Java.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is a 'Functional Interface'?", new String[] {"An interface with no methods", "An interface with exactly one abstract method", "A class that acts like a function", "A thread-safe interface"}, "An interface with exactly one abstract method"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Lambda expressions can only be used with functional interfaces.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The 'Optional' class in Java 8 is primarily used to:", new String[] {"Speed up code", "Reduce NullPointerExceptions", "Store multiple values", "Format text"}, "Reduce NullPointerExceptions"),
-
             // --- STRATEGY & DESIGN ---
             new Question(new MultipleChoiceQuestionStrategy(), "The Singleton pattern ensures that:", new String[] {"A class has only one instance", "A class is thread-safe", "Methods are static", "Memory is cleared"}, "A class has only one instance"),
             new Question(new TrueFalseQuestionStrategy(), "True or False: The Strategy Pattern involves defining a family of algorithms and making them interchangeable.", "True"),
