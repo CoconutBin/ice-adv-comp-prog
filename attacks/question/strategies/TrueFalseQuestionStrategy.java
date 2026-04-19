@@ -1,7 +1,7 @@
 package attacks.question.strategies;
 
 import game.io.IOHandler;
-import game.io.TerminalTools;
+import game.ui.TerminalColor;
 
 public class TrueFalseQuestionStrategy implements QuestionStrategy {
 
@@ -10,9 +10,9 @@ public class TrueFalseQuestionStrategy implements QuestionStrategy {
         String input;
         
         while (true) {
-            TerminalTools.typing("\n" + question);
+            ioHandler.printTyping("\n" + question);
             ioHandler.print(" (True / False)");
-            System.out.print("\n--> ");
+            ioHandler.inlinePrint("\n--> ");
             input = ioHandler.readLine().trim().toLowerCase();
 
             // Check if it's empty or doesn't start with T or F
@@ -20,7 +20,7 @@ public class TrueFalseQuestionStrategy implements QuestionStrategy {
                 return input;
             }
 
-            ioHandler.print("\u001B[31m[!] Invalid input. Please type 'True' or 'False'.\u001B[0m");
+            ioHandler.print(TerminalColor.RED.apply("Invalid input. Please type 'True' or 'False'."));
         }
     }
 

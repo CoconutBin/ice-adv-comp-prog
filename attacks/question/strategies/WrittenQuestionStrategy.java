@@ -1,7 +1,7 @@
 package attacks.question.strategies;
 
 import game.io.IOHandler;
-import game.io.TerminalTools;
+import game.ui.TerminalColor;
 
 public class WrittenQuestionStrategy implements QuestionStrategy {
 
@@ -10,9 +10,9 @@ public class WrittenQuestionStrategy implements QuestionStrategy {
         String input;
         
         while (true) {
-            TerminalTools.typing("\n" + question);
+            ioHandler.printTyping("\n" + question);
             ioHandler.print("Write your answer below");
-            System.out.print("--> ");
+            ioHandler.inlinePrint("--> ");
             
             input = ioHandler.readLine();
             
@@ -21,7 +21,7 @@ public class WrittenQuestionStrategy implements QuestionStrategy {
                 return input.trim();
             }
 
-            ioHandler.print("\u001B[31m[!] You must type an answer to attack!\u001B[0m");
+            ioHandler.print(TerminalColor.RED.apply(" You must type an answer to attack!"));
         }
     }
 

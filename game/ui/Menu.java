@@ -1,7 +1,6 @@
 package game.ui;
 
 import game.io.IOHandler;
-import game.io.TerminalTools;
 
 public class Menu {
     private final IOHandler io;
@@ -20,8 +19,8 @@ public class Menu {
     }
 
     public boolean shouldSkip(game.io.IOHandler io) {
-        System.out.println(game.io.TerminalTools.LIGHT_GREY + "\n[ Press 'x' to skip intro]" + game.io.TerminalTools.RESET);
-        System.out.print(game.io.TerminalTools.CYAN + "--> " + game.io.TerminalTools.RESET);
+        System.out.println(TerminalColor.LIGHT_GREY.apply("\n[ Press 'x' to skip intro]"));
+        System.out.print(TerminalColor.CYAN.apply("--> "));
         
         String input = io.readLine();
         
@@ -30,13 +29,13 @@ public class Menu {
     }
 
     public int SubjectSelection() {
-        System.out.println(TerminalTools.YELLOW + "============== SELECT YOUR SUBJECT ==============" + TerminalTools.RESET);
+        System.out.println(TerminalColor.YELLOW.apply("============== SELECT YOUR SUBJECT =============="));
         
         for (int i = 0; i < subjects.length; i++) {
-            System.out.println(TerminalTools.PURPLE + "[" + (i + 1) + "] " + TerminalTools.RESET + subjects[i]);
-            TerminalTools.wait(100);
+            System.out.println(TerminalColor.PURPLE.apply("[" + (i + 1) + "] ") + subjects[i]);
+            io.wait(100);
         }
-        System.out.println(TerminalTools.YELLOW + "=================================================" + TerminalTools.RESET);
+        System.out.println(TerminalColor.YELLOW.apply("================================================="));
 
         int choice;
         while (true) {
@@ -46,7 +45,7 @@ public class Menu {
             if (choice >= 1 && choice <= subjects.length) {
                 return choice; // Exit the method with the valid choice
             } else {
-                TerminalTools.typing(TerminalTools.RED + "Invalid choice! Please pick a number between 1 and " + subjects.length + "." + TerminalTools.RESET);
+                io.printTyping(TerminalColor.RED.apply("Invalid choice! Please pick a number between 1 and " + subjects.length + "."));
             }
         }
     }

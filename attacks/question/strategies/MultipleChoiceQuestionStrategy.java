@@ -1,6 +1,6 @@
 package attacks.question.strategies;
 import game.io.IOHandler;
-import game.io.TerminalTools;
+import game.ui.TerminalColor;
 
 public class MultipleChoiceQuestionStrategy implements QuestionStrategy {
 
@@ -10,12 +10,12 @@ public class MultipleChoiceQuestionStrategy implements QuestionStrategy {
         int choice;
 
         while (true) {
-            TerminalTools.typing("\n" + question);
+            ioHandler.printTyping("\n" + question);
             for (int i = 0; i < options.length; i++) {
                 ioHandler.print((i + 1) + ". " + options[i]);
             }
             
-            System.out.print("--> ");
+            ioHandler.inlinePrint("--> ");
             input = ioHandler.readLine().trim();
 
             try {
@@ -27,7 +27,7 @@ public class MultipleChoiceQuestionStrategy implements QuestionStrategy {
                     ioHandler.print("\u001B[31m[!] Out of bounds! Please pick 1 through " + options.length + ".\u001B[0m");
                 }
             } catch (NumberFormatException e) {
-                ioHandler.print("\u001B[31m[!] Invalid input. Please enter the NUMBER of your choice.\u001B[0m");
+                ioHandler.print(TerminalColor.RED.apply("[!] Invalid input. Please enter the NUMBER of your choice."));
             }
         }
     }

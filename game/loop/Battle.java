@@ -5,7 +5,7 @@ import attacks.question.QuestionBank;
 import entities.Player;
 import entities.boss.Boss;
 import game.io.IOHandler;
-import game.io.TerminalTools;
+import game.ui.TerminalColor;
 import game.ui.Visuals;
 
 import java.util.Random;
@@ -13,10 +13,12 @@ import java.util.Random;
 public class Battle {
     private final IOHandler io;
     private final Random rand;
+    private final Visuals visuals;
 
     public Battle(IOHandler io) {
         this.io = io;
         this.rand = new Random();
+        this.visuals = new Visuals(io);
     }
 
     public void startLoop(Player player, Boss boss, int choice) {
@@ -26,7 +28,7 @@ public class Battle {
             Question question = QuestionBank.getInstance().getUniqueQuestion(choice);
             String playerAnswer = question.askQuestion(io);
             boolean isCorrect = question.isCorrect(playerAnswer);
-            TerminalTools.clearTerminal();
+            io.clearTerminal();
             
             // 2. Action Phase
             if (isCorrect) {
@@ -35,15 +37,15 @@ public class Battle {
                 handleBossCounter(player, boss, question.getAnswer());
             }
 
-            TerminalTools.wait(1000);
-            TerminalTools.clearTerminal();
+            io.wait(1000);
+            io.clearTerminal();
         }
         
         handleEndgame(player, boss);
     }
 
     private void handlePlayerStrike(Player player, Boss boss, String answer) {
-        TerminalTools.typing(TerminalTools.GREEN + "[!] CORRECT! The answer is: " + TerminalTools.YELLOW + answer + TerminalTools.GREEN + "\nPrepare your strike! " + TerminalTools.RESET);
+        io.printTyping(TerminalColor.GREEN + "[!] CORRECT! The answer is: " + TerminalColor.YELLOW + answer + TerminalColor.GREEN + "\nPrepare your strike! " + TerminalColor.RESET);
         System.out.println("Striking [1] Head [2] Body [3] Legs");
         
         int aim = io.readInt();
@@ -51,20 +53,20 @@ public class Battle {
         int blockedPoint = (weakPoint % 3) + 1;
 
         if (aim == weakPoint) {
-            TerminalTools.typing(TerminalTools.YELLOW + "CRITICAL HIT! You found the weak spot!" + TerminalTools.RESET);
+            io.printTyping(TerminalColor.YELLOW.apply("CRITICAL HIT! You found the weak spot!"));
             boss.updateHp(-10);
         } else if (aim == blockedPoint) {
-            TerminalTools.typing(TerminalTools.LIGHT_GREY + "Change your glasses, the boss is on the other side." + TerminalTools.RESET);
+            io.printTyping(TerminalColor.LIGHT_GREY.apply("Change your glasses, the boss is on the other side."));
         } else {
             String part = (aim == 1 ? "Head" : aim == 2 ? "Body" : "Legs");
-            TerminalTools.typing(TerminalTools.CYAN + "Average strike to the " + part + "." + TerminalTools.RESET);
+            io.printTyping(TerminalColor.CYAN.apply("Average strike to the " + part + "."));
             boss.updateHp(-5);
         }
-        Visuals.displayStatus("boss", boss.getHp(), boss.getName());
+        visuals.displayStatus("boss", boss.getHp(), boss.getName());
     }
 
     private void handleBossCounter(Player player, Boss boss, String answer) {
-        TerminalTools.typing(TerminalTools.RED + "[X] WRONG! The answer is " + TerminalTools.CYAN + answer + TerminalTools.RED + "\nThe boss counters! DODGE!" + TerminalTools.RESET);
+        io.printTyping(TerminalColor.RED.apply("[X] WRONG! The answer is ") + TerminalColor.CYAN.apply(answer) + TerminalColor.RED.apply("\nThe boss counters! DODGE!"));
         System.out.println("Dodge to [1] Left [2] Right [3] Duck");
         
         int dodge = io.readInt();
@@ -72,22 +74,22 @@ public class Battle {
         int trapZone = (safeZone % 3) + 1;
 
         if (dodge == safeZone) {
-            TerminalTools.typing(TerminalTools.GREEN + "PERFECT DODGE! You took no damage." + TerminalTools.RESET);
+            io.printTyping(TerminalColor.GREEN.apply("PERFECT DODGE! You took no damage."));
         } else if (dodge == trapZone) {
-            TerminalTools.typing(TerminalTools.RED + "??? You jumped right into the blade!" + TerminalTools.RESET);
+            io.printTyping(TerminalColor.RED.apply("??? You jumped right into the blade!"));
             player.updateHp(-10);
         } else {
-            TerminalTools.typing(TerminalTools.LIGHT_GREY + "A glancing blow. You took standard damage." + TerminalTools.RESET);
+            io.printTyping(TerminalColor.LIGHT_GREY.apply("A glancing blow. You took standard damage."));
             player.updateHp(-5);
         }
-        Visuals.displayStatus("player", player.getHp(), player.getName());
+        visuals.displayStatus("player", player.getHp(), player.getName());
     }
 
     private void handleEndgame(Player player, Boss boss) {
         if (player.getHp() <= 0) {
-            Visuals.showDefeat(player, boss);
+            visuals.showDefeat(player, boss);
         } else {
-            Visuals.showVictory(player, boss);
+            visuals.showVictory(player, boss);
         }
         System.exit(0);
     }
