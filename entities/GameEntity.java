@@ -1,14 +1,13 @@
 package entities;
 
-import java.util.ArrayList;
-
 import entities.observers.EntityObserver;
+import java.util.ArrayList;
 
 public abstract class GameEntity {
     protected ArrayList<EntityObserver> observers;
-    private double maxHp;
+    private final double maxHp;
     private double hp;
-    private String name;
+    private final String name;
 
     public GameEntity(double initHp, String name) {
         this.maxHp = initHp;
