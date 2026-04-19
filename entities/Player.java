@@ -11,6 +11,10 @@ public class Player extends GameEntity {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public void attack(GameEntity target) {
         // Implementation for player attack
