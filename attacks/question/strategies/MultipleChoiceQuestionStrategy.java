@@ -1,6 +1,6 @@
 package attacks.question.strategies;
-
 import game.IOHandler;
+import game.TerminalTools;
 
 public class MultipleChoiceQuestionStrategy implements QuestionStrategy {
 
@@ -10,7 +10,7 @@ public class MultipleChoiceQuestionStrategy implements QuestionStrategy {
         int choice;
 
         while (true) {
-            ioHandler.print("\n" + question);
+            TerminalTools.typing("\n" + question);
             for (int i = 0; i < options.length; i++) {
                 ioHandler.print((i + 1) + ". " + options[i]);
             }

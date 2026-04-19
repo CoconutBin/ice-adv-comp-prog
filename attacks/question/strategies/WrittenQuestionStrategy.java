@@ -1,6 +1,7 @@
 package attacks.question.strategies;
 
 import game.IOHandler;
+import game.TerminalTools;
 
 public class WrittenQuestionStrategy implements QuestionStrategy {
 
@@ -9,7 +10,7 @@ public class WrittenQuestionStrategy implements QuestionStrategy {
         String input;
         
         while (true) {
-            ioHandler.print("\n" + question);
+            TerminalTools.typing("\n" + question);
             ioHandler.print("Write your answer below");
             System.out.print("--> ");
             

@@ -3,7 +3,7 @@ package game;
 import java.util.Scanner;
 
 public class IOHandler {
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public IOHandler() {
         this.scanner = new Scanner(System.in);
@@ -21,10 +21,5 @@ public class IOHandler {
         int value = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
         return value;
-    }
-
-    public void clearTerminal() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 }
