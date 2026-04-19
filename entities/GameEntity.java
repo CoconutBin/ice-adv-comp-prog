@@ -31,6 +31,10 @@ public abstract class GameEntity {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void addObserver(EntityObserver observer) {
         observers.add(observer);
     }
