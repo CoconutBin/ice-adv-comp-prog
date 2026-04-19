@@ -28,8 +28,8 @@ public class App {
             System.out.print(TerminalTools.CYAN + "--> " + TerminalTools.RESET);
         }
         String playerName = ioHandler.readLine();
-        entities.Player player = new entities.Player(playerName.isEmpty() ? "Academic Probation" : playerName, 1);
-        entities.boss.Boss boss = new entities.boss.Boss(attacks.question.QuoteBank.getBossName(choice),attacks.question.QuoteBank.getBossIntro(choice),1);
+        entities.Player player = new entities.Player(playerName.isEmpty() ? "Academic Probation" : playerName, 100);
+        entities.boss.Boss boss = new entities.boss.Boss(attacks.question.QuoteBank.getBossName(choice),attacks.question.QuoteBank.getBossIntro(choice),100);
         if (!skip){
             Visuals.playPrologue(player, boss);
         }
