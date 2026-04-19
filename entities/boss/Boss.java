@@ -4,25 +4,17 @@ import entities.GameEntity;
 import entities.boss.behavior.*;
 
 public class Boss extends GameEntity {
-    private final String name;
     private final String intro;
-    private BossBehaviorStrategy bossBehavior;
+    private BossBehaviorStrategy bossBehavior = new DefaultBossBehavior();
 
     // Updated constructor to include name and intro
-    public Boss(String name, String intro, double init_hp) {
-        super(init_hp);
-        this.name = name;
+    public Boss(String name, String intro, double initHp) {
+        super(initHp, name);
         this.intro = intro;
-    }
-
-    // Getters for name and intro so Visuals can use them
-    public String getName() {
-        return name;
     }
 
     public String getIntro() {
         return intro;
-    }
 
     @Override
     public void attack(GameEntity target) {

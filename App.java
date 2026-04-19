@@ -34,5 +34,9 @@ public class App {
         }
         Battle battle = new Battle(ioHandler);
         battle.startLoop(player, boss, choice);
+        game.GameEngine gameEngine = new game.GameEngine();
+
+        gameEngine.initializeGame();
+        gameEngine.startGameLoop();
     }
 }
