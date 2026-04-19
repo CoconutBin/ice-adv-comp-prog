@@ -12,6 +12,8 @@ public class App {
         ioHandler.print("Nice to meet you, " + player.getName() + "!");
         ioHandler.print("You are now ready for your adventure, " + player.getName() + "!");
 
+        game.GameSetup gameSetup = new game.GameSetup(player, boss, ioHandler);
+        gameSetup.initializeGame();
 
         while (boss.getHp() > 0 && player.getHp() > 0) {
 
@@ -32,8 +34,5 @@ public class App {
                 ioHandler.print("Your HP: " + player.getHp());
             }
         }
-
-        if(player.getHp() <= 0) ioHandler.print("wow you're dead");
-        if(boss.getHp() <= 0) ioHandler.print("wow boss dead");
     }
 }
