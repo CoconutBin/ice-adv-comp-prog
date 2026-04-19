@@ -7,7 +7,7 @@ public abstract class GameEntity {
     protected ArrayList<EntityObserver> observers;
     private final double maxHp;
     private double hp;
-    private final String name;
+    private String name;
 
     public GameEntity(double initHp, String name) {
         this.maxHp = initHp;

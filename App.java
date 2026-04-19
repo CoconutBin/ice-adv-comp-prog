@@ -1,5 +1,6 @@
 import game.io.TerminalTools;
 import game.loop.Battle;
+import game.setup.GameSetup;
 import game.ui.Visuals;
 
 public class App {
@@ -32,6 +33,11 @@ public class App {
         if (!skip){
             Visuals.playPrologue(player, boss);
         }
+
+        // Setup game state (register observers, initialize systems)
+        GameSetup gameSetup = new GameSetup(player, boss, ioHandler);
+        gameSetup.setupObservers();
+
         Battle battle = new Battle(ioHandler);
         battle.startLoop(player, boss, choice);
     }
