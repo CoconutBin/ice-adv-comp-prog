@@ -392,3 +392,236 @@ The following aspects were developed without AI assistance:
 **Institution**: International School of Engineering (ISE), Chulalongkorn University  
 **Program**: Information and Communication Engineering (ICE)  
 **Status**: Functional
+
+---
+
+# Class Diagram
+
+```mermaid
+classDiagram
+    %% Abstract Base Classes
+    class GameEntity {
+        <<abstract>>
+        #name: String
+        #hp: double
+        +getName() String
+        +getHp() double
+        +updateHp(damage: int) void
+        +notifyObservers() void
+    }
+
+    class EntityObserver {
+        <<abstract>>
+        +onHpChange(entity: GameEntity) void
+        +onEntityDeath(entity: GameEntity) void
+    }
+
+    %% Concrete Entities
+    class Player {
+        -level: int
+        -score: int
+    }
+
+    class Boss {
+        -intro: String
+        -currentBehavior: BossBehaviorStrategy
+        +getIntro() String
+        +setBehavior(behavior: BossBehaviorStrategy) void
+        +performAction() void
+    }
+
+    %% Concrete Observers
+    class BossBehaviorObserver {
+        -boss: Boss
+        +onHpChange(entity: GameEntity) void
+        +onEntityDeath(entity: GameEntity) void
+    }
+
+    class EntityLoggerObserver {
+        +onHpChange(entity: GameEntity) void
+        +onEntityDeath(entity: GameEntity) void
+    }
+
+    %% Boss Behavior Strategy Pattern
+    class BossBehaviorStrategy {
+        <<interface>>
+        +execute(boss: Boss) void
+    }
+
+    class DefaultBossBehavior {
+        +execute(boss: Boss) void
+    }
+
+    class MidHPBossBehavior {
+        +execute(boss: Boss) void
+    }
+
+    class LowHPBossBehavior {
+        +execute(boss: Boss) void
+    }
+
+    %% Question Strategy Pattern
+    class QuestionStrategy {
+        <<interface>>
+        +askQuestion(io: IOHandler) String
+        +isCorrect(answer: String) boolean
+        +getAnswer() String
+    }
+
+    class MultipleChoiceQuestionStrategy {
+        +askQuestion(io: IOHandler) String
+        +isCorrect(answer: String) boolean
+        +getAnswer() String
+    }
+
+    class TrueFalseQuestionStrategy {
+        +askQuestion(io: IOHandler) String
+        +isCorrect(answer: String) boolean
+        +getAnswer() String
+    }
+
+    class WrittenQuestionStrategy {
+        +askQuestion(io: IOHandler) String
+        +isCorrect(answer: String) boolean
+        +getAnswer() String
+    }
+
+    %% Question Related Classes
+    class Question {
+        -content: String
+        -strategy: QuestionStrategy
+        +askQuestion(io: IOHandler) String
+        +isCorrect(answer: String) boolean
+        +getAnswer() String
+    }
+
+    class Subject {
+        <<enumeration>>
+        MATH
+        SCIENCE
+        HISTORY
+        LITERATURE
+        +getDisplayName() String
+    }
+
+    class QuestionBank {
+        <<singleton>>
+        -instance: QuestionBank
+        -questions: Map
+        +getInstance() QuestionBank
+        +getUniqueQuestion(subject: Subject) Question
+        +loadQuestions() void
+    }
+
+    class QuoteBank {
+        <<static>>
+        +getBossName(subject: Subject) String
+        +getBossIntro(subject: Subject) String
+    }
+
+    %% Game Management Classes
+    class Battle {
+        -io: IOHandler
+        -rand: Random
+        -visuals: Visuals
+        +startLoop(player: Player, boss: Boss, subject: Subject) void
+        -handlePlayerStrike(player: Player, boss: Boss, answer: String) void
+        -handleBossCounter(player: Player, boss: Boss, answer: String) void
+        -handleEndgame(player: Player, boss: Boss) void
+    }
+
+    class GameSetup {
+        -player: Player
+        -boss: Boss
+        -io: IOHandler
+        +setupObservers() void
+        -registerObserver(observer: EntityObserver) void
+    }
+
+    class TerminalColor {
+        <<static>>
+        RED: TerminalColor
+        GREEN: TerminalColor
+        BLUE: TerminalColor
+        CYAN: TerminalColor
+        YELLOW: TerminalColor
+        +apply(text: String) String
+    }
+
+    class Visuals {
+        -ioHandler: IOHandler
+        +showLogo() void
+        +playPrologue(player: Player, boss: Boss) void
+        +showSubjectHeader(subject: String) void
+        +displayStatus(entity: String, hp: double, name: String) void
+        +showVictory(player: Player, boss: Boss) void
+        +showDefeat(player: Player, boss: Boss) void
+    }
+
+    class IOHandler {
+        +print(text: String) void
+        +printTyping(text: String) void
+        +readLine() String
+        +readInt() int
+        +clearTerminal() void
+        +fullClear() void
+        +wait(ms: int) void
+    }
+
+    class Menu {
+        -ioHandler: IOHandler
+        +SubjectSelection() Subject
+        +shouldSkip(io: IOHandler) boolean
+    }
+
+    class App {
+        +main(args: String[]) void
+    }
+
+    %% Relationships
+    GameEntity <|-- Player
+    GameEntity <|-- Boss
+    EntityObserver <|-- BossBehaviorObserver
+    EntityObserver <|-- EntityLoggerObserver
+    
+    BossBehaviorStrategy <|.. DefaultBossBehavior
+    BossBehaviorStrategy <|.. MidHPBossBehavior
+    BossBehaviorStrategy <|.. LowHPBossBehavior
+    
+    QuestionStrategy <|.. MultipleChoiceQuestionStrategy
+    QuestionStrategy <|.. TrueFalseQuestionStrategy
+    QuestionStrategy <|.. WrittenQuestionStrategy
+    
+    Question --> QuestionStrategy : uses
+    Question --> Subject : references
+    
+    Boss --> BossBehaviorStrategy : uses
+    BossBehaviorObserver --> Boss : observes
+    
+    Battle --> Player : uses
+    Battle --> Boss : uses
+    Battle --> Question : uses
+    Battle --> QuestionBank : uses
+    Battle --> Visuals : uses
+    Battle --> IOHandler : uses
+    Battle --> Subject : uses
+    
+    GameSetup --> Player : initializes
+    GameSetup --> Boss : initializes
+    GameSetup --> EntityObserver : registers
+    
+    Visuals --> IOHandler : uses
+    Visuals --> TerminalColor : uses
+    Visuals --> Player : displays
+    Visuals --> Boss : displays
+    
+    Menu --> IOHandler : uses
+    Menu --> Subject : returns
+    
+    App --> GameSetup : orchestrates
+    App --> Battle : orchestrates
+    App --> Menu : uses
+    App --> Visuals : uses
+    App --> Player : creates
+    App --> Boss : creates
+```
