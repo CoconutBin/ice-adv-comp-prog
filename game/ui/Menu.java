@@ -1,4 +1,7 @@
-package game;
+package game.ui;
+
+import game.io.IOHandler;
+import game.io.TerminalTools;
 
 public class Menu {
     private final IOHandler io;
@@ -16,9 +19,9 @@ public class Menu {
         this.io = io;
     }
 
-    public boolean shouldSkip(game.IOHandler io) {
-        System.out.println(game.TerminalTools.LIGHT_GREY + "\n[ Press 'x' to skip intro]" + game.TerminalTools.RESET);
-        System.out.print(game.TerminalTools.CYAN + "--> " + game.TerminalTools.RESET);
+    public boolean shouldSkip(game.io.IOHandler io) {
+        System.out.println(game.io.TerminalTools.LIGHT_GREY + "\n[ Press 'x' to skip intro]" + game.io.TerminalTools.RESET);
+        System.out.print(game.io.TerminalTools.CYAN + "--> " + game.io.TerminalTools.RESET);
         
         String input = io.readLine();
         

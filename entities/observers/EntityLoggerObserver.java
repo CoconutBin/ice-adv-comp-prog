@@ -3,9 +3,9 @@ package entities.observers;
 import entities.GameEntity;
 
 public class EntityLoggerObserver extends EntityObserver {
-    private game.IOHandler ioHandler;
+    private game.io.IOHandler ioHandler;
 
-    public EntityLoggerObserver(game.IOHandler ioHandler) {
+    public EntityLoggerObserver(game.io.IOHandler ioHandler) {
         this.ioHandler = ioHandler;
     }
 

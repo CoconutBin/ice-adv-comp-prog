@@ -1,4 +1,4 @@
-package game;
+package game.io;
 
 public class TerminalTools {
 
@@ -20,6 +20,7 @@ public class TerminalTools {
             Thread.currentThread().interrupt();
         }
     }
+    
     private static final int DELAY = 20;
     public static void typing(String message) {
         for (char c : message.toCharArray()) {

@@ -1,9 +1,13 @@
-package game;
+package game.loop;
 
 import attacks.question.Question;
 import attacks.question.QuestionBank;
 import entities.Player;
 import entities.boss.Boss;
+import game.io.IOHandler;
+import game.io.TerminalTools;
+import game.ui.Visuals;
+
 import java.util.Random;
 
 public class Battle {

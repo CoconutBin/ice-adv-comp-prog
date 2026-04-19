@@ -1,12 +1,12 @@
-import game.Battle;
-import game.TerminalTools;
-import game.Visuals;
+import game.io.TerminalTools;
+import game.loop.Battle;
+import game.ui.Visuals;
 
 public class App {
 
     public static void main(String[] args) {
         
-        final game.IOHandler ioHandler = new game.IOHandler();
+        final game.io.IOHandler ioHandler = new game.io.IOHandler();
         
         TerminalTools.fullClear();
 
@@ -15,7 +15,7 @@ public class App {
         ioHandler.readLine();
         TerminalTools.fullClear();
         
-        game.Menu menu = new game.Menu(ioHandler);
+        game.ui.Menu menu = new game.ui.Menu(ioHandler);
         int choice = menu.SubjectSelection();
         boolean skip = menu.shouldSkip(ioHandler);
         Visuals.showSubjectHeader(menu.getSubjectName(choice));
@@ -34,9 +34,5 @@ public class App {
         }
         Battle battle = new Battle(ioHandler);
         battle.startLoop(player, boss, choice);
-        game.GameEngine gameEngine = new game.GameEngine();
-
-        gameEngine.initializeGame();
-        gameEngine.startGameLoop();
     }
 }

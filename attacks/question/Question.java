@@ -1,7 +1,7 @@
 package attacks.question;
 
 import attacks.question.strategies.QuestionStrategy;
-import game.IOHandler;
+import game.io.IOHandler;
 
 public class Question {
   private final QuestionStrategy strategy;

@@ -15,6 +15,7 @@ public class Boss extends GameEntity {
 
     public String getIntro() {
         return intro;
+    }
 
     @Override
     public void attack(GameEntity target) {

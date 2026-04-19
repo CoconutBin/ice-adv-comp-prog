@@ -1,6 +1,6 @@
 package attacks.question.strategies;
 
-import game.IOHandler;
+import game.io.IOHandler;
 
 public interface QuestionStrategy {
     String askQuestion(String question, String[] options, IOHandler ioHandler);

@@ -1,6 +1,7 @@
-package game;
+package game.ui;
 import entities.Player;
 import entities.boss.Boss;
+import game.io.TerminalTools;
 public class Visuals {
 
     public static void showLogo() {

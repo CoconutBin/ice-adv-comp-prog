@@ -1,6 +1,6 @@
 package attacks.question.strategies;
-import game.IOHandler;
-import game.TerminalTools;
+import game.io.IOHandler;
+import game.io.TerminalTools;
 
 public class MultipleChoiceQuestionStrategy implements QuestionStrategy {
 
