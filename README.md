@@ -166,11 +166,19 @@ Project Root/
 - A terminal/command prompt
 
 ### Compilation
+
+**Unix/Linux/MacOS:**
 ```bash
 javac -d bin $(find . -name "*.java" -type f)
 ```
 
+**Windows (PowerShell):**
+```powershell
+javac -d bin (Get-ChildItem -Recurse -Filter *.java | ForEach-Object { $_.FullName })
+```
+
 ### Execution
+
 ```bash
 java -cp bin App
 ```
