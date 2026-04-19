@@ -24,15 +24,6 @@ public class Visuals {
         TerminalTools.wait(800);
         TerminalTools.typing("If you falter, your GPA will be lower than the bar for a TikTok challenge.");
         TerminalTools.wait(1500);
-
-        TerminalTools.typing("Searching for a spark of intelligence...");
-        TerminalTools.wait(800);
-        TerminalTools.typing("Error: Spark not found. Proceeding anyway...");
-        TerminalTools.wait(500);
-        TerminalTools.typing("Simulating student loan interest rates...");
-        TerminalTools.wait(500);
-        TerminalTools.typing("Destroying your eyesight..." + TerminalTools.RESET);
-        TerminalTools.wait(1000);
         TerminalTools.clearTerminal();
         TerminalTools.typing(TerminalTools.RED + "--- " + boss.getName() + " --- descends" + TerminalTools.RESET);
         TerminalTools.wait(1000);
