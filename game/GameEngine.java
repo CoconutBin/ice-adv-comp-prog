@@ -36,13 +36,13 @@ public class GameEngine {
             if (isCorrect) {
                 ioHandler.print(player.getName() + " is so smart! The answer is " + question.getAnswer() + ".\n");
                 player.attack(boss);
-                ioHandler.print("Boss HP: " + boss.getHp());
             } else {
                 ioHandler.print(
                 player.getName() + " is dumb as FUCK! The correct answer was " + question.getAnswer() + ".\n");
                 boss.attack(player);
-                ioHandler.print("Your HP: " + player.getHp());
             }
         }
+
+        ioHandler.print("The game has ended");
     }
 }

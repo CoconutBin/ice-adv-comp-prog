@@ -4,7 +4,7 @@ import entities.GameEntity;
 import entities.boss.behavior.*;
 
 public class Boss extends GameEntity {
-    private BossBehaviorStrategy bossBehavior;
+    private BossBehaviorStrategy bossBehavior = new DefaultBossBehavior();
 
     public Boss(double initialHp) {
         super(initialHp, "Boss");
