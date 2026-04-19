@@ -4,10 +4,10 @@ import attacks.question.strategies.QuestionStrategy;
 import game.IOHandler;
 
 public class Question {
-  private QuestionStrategy strategy;
-  private String question;
+  private final QuestionStrategy strategy;
+  private final String question;
   private String[] options;
-  private String answer;
+  private final String answer;
 
   public Question(QuestionStrategy strategy, String question, String answer) {
     this.strategy = strategy;
