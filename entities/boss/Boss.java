@@ -6,8 +6,8 @@ import entities.boss.behavior.*;
 public class Boss extends GameEntity {
     private BossBehaviorStrategy bossBehavior;
 
-    public Boss(double init_hp) {
-        super(init_hp);
+    public Boss(double initialHp) {
+        super(initialHp, "Boss");
     }
 
     @Override

@@ -3,9 +3,8 @@ package entities;
 public class Player extends GameEntity {
     private String name;
 
-    public Player(String name, double init_hp) {
-        super(init_hp);
-        this.name = name;
+    public Player(String name, double initialHp) {
+        super(initialHp, name);
     }
 
     public String getName() {
