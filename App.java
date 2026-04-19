@@ -1,4 +1,5 @@
 import game.ui.TerminalColor;
+import attacks.question.Subject;
 import game.loop.Battle;
 import game.setup.GameSetup;
 import game.ui.Visuals;
@@ -18,9 +19,9 @@ public class App {
         ioHandler.fullClear();
         
         game.ui.Menu menu = new game.ui.Menu(ioHandler);
-        int choice = menu.SubjectSelection();
+        Subject chosenSubject = menu.SubjectSelection();
         boolean skip = menu.shouldSkip(ioHandler);
-        visuals.showSubjectHeader(menu.getSubjectName(choice));
+        visuals.showSubjectHeader(chosenSubject.getDisplayName());
         if (!skip){
             visuals.showOpening();
         }
@@ -30,7 +31,7 @@ public class App {
         }
         String playerName = ioHandler.readLine();
         entities.Player player = new entities.Player(playerName.isEmpty() ? "Academic Probation" : playerName, 100);
-        entities.boss.Boss boss = new entities.boss.Boss(attacks.question.QuoteBank.getBossName(choice),attacks.question.QuoteBank.getBossIntro(choice),100);
+        entities.boss.Boss boss = new entities.boss.Boss(attacks.question.QuoteBank.getBossName(chosenSubject),attacks.question.QuoteBank.getBossIntro(chosenSubject),100);
         if (!skip){
             visuals.playPrologue(player, boss);
         }
@@ -40,6 +41,6 @@ public class App {
         gameSetup.setupObservers();
 
         Battle battle = new Battle(ioHandler);
-        battle.startLoop(player, boss, choice);
+        battle.startLoop(player, boss, chosenSubject);
     }
 }

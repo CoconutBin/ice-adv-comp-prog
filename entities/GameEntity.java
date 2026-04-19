@@ -55,7 +55,7 @@ public abstract class GameEntity {
     }
 
     public void updateHp(double hpChange) {
-        this.hp += hpChange;
+        this.hp = Math.max(0, Math.min(this.hp + hpChange, maxHp));
         notifyHpChanged();
         if (this.hp <= 0) notifyDeath();
     }

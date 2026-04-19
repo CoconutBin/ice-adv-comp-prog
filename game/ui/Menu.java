@@ -1,18 +1,10 @@
 package game.ui;
 
 import game.io.IOHandler;
+import attacks.question.Subject;
 
 public class Menu {
     private final IOHandler io;
-    private final String[] subjects = {
-        "Calculus I",
-        "Physics I",
-        "Calculus II",
-        "Physics II",
-        "Computer Programming",
-        "Advance Computer Programming",
-        "Probability and Statistics for Data Analysis"
-    };
 
     public Menu(IOHandler io) {
         this.io = io;
@@ -28,30 +20,24 @@ public class Menu {
         return input.equalsIgnoreCase("x");
     }
 
-    public int SubjectSelection() {
+    public Subject SubjectSelection() {
         System.out.println(TerminalColor.YELLOW.apply("============== SELECT YOUR SUBJECT =============="));
         
-        for (int i = 0; i < subjects.length; i++) {
-            System.out.println(TerminalColor.PURPLE.apply("[" + (i + 1) + "] ") + subjects[i]);
+        for (int i = 0; i < Subject.values().length; i++) {
+            System.out.println(TerminalColor.PURPLE.apply("[" + (i + 1) + "] ") + Subject.fromId(i + 1).getDisplayName());
             io.wait(100);
         }
         System.out.println(TerminalColor.YELLOW.apply("================================================="));
 
-        int choice;
         while (true) {
             System.out.print("\nEnter subject number: ");
-            choice = io.readInt(); // Using your clean IOHandler method!
+            int choice = io.readInt(); // Using your clean IOHandler method!
 
-            if (choice >= 1 && choice <= subjects.length) {
-                return choice; // Exit the method with the valid choice
-            } else {
-                io.printTyping(TerminalColor.RED.apply("Invalid choice! Please pick a number between 1 and " + subjects.length + "."));
+            try {
+                return Subject.fromId(choice); 
+            } catch (IllegalArgumentException e) {
+                io.printTyping(TerminalColor.RED.apply("Invalid choice! Please pick a number between 1 and " + Subject.values().length + "."));
             }
         }
-    }
-
-    // A helper method so App can get the name of the subject later
-    public String getSubjectName(int index) {
-        return subjects[index - 1];
     }
 }

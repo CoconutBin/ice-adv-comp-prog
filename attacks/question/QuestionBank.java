@@ -9,18 +9,15 @@ import java.util.List;
 import java.util.Map;
 
 public class QuestionBank {
-    private static QuestionBank instance;
-    private final Map<Integer, Question[]> subjectData;
-    private final Map<Integer, String> subjectNames;
-    private final Map<Integer, List<Question>> remainingQuestions;
+    private static QuestionBank instance = new QuestionBank();
+    private final Map<Subject, Question[]> subjectData;
+    private final Map<Subject, List<Question>> remainingQuestions;
 
     private QuestionBank() {
         subjectData = new HashMap<>();
-        subjectNames = new HashMap<>();
         remainingQuestions = new HashMap<>();
 
-        subjectNames.put(1, "Calculus I");
-        subjectData.put(1, new Question[] {
+        subjectData.put(Subject.CALCULUS_I, new Question[] {
             // --- LIMITS & CONTINUITY ---
             new Question(new MultipleChoiceQuestionStrategy(), "If the left-hand limit and right-hand limit at x=c exist but are not equal, what exists at c?", new String[] {"A jump discontinuity", "A removable discontinuity", "An infinite discontinuity", "A vertical asymptote"}, "A jump discontinuity"),
             new Question(new TrueFalseQuestionStrategy(), "True or False: If a function is continuous at x=c, it must be differentiable at x=c.", "False"),
@@ -94,8 +91,7 @@ public class QuestionBank {
             new Question(new WrittenQuestionStrategy(), "If f'(x) is positive, is the function increasing or decreasing?", "Increasing")
         });
 
-        subjectNames.put(2, "Physics I");
-        subjectData.put(2, new Question[] {
+        subjectData.put(Subject.PHYSICS_I, new Question[] {
             // --- PHYSICS I COMPLETE DATASET (50 QUESTIONS) ---
 
             // KINEMATICS & NEWTON'S LAWS
@@ -174,8 +170,7 @@ public class QuestionBank {
             new Question(new WrittenQuestionStrategy(), "What is the product of mass and velocity?", "Momentum")
         });
 
-        subjectNames.put(3, "Calculus II");
-        subjectData.put(3, new Question[] {
+        subjectData.put(Subject.CALCULUS_II, new Question[] {
             // --- CALCULUS II COMPLETE DATASET (50 QUESTIONS) ---
 
             // INTEGRATION TECHNIQUES (U-SUB, PARTS, TRIG)
@@ -248,8 +243,7 @@ public class QuestionBank {
             new Question(new WrittenQuestionStrategy(), "What is the integral of e^x dx?", "e^x")
             });
 
-        subjectNames.put(4, "Physics II");
-        subjectData.put(4, new Question[] {
+        subjectData.put(Subject.PHYSICS_II, new Question[] {
             // --- PHYSICS II COMPLETE DATASET (50 QUESTIONS) ---
 
             // ELECTRIC CHARGE & FIELDS
@@ -330,8 +324,7 @@ public class QuestionBank {
             new Question(new WrittenQuestionStrategy(), "The bending of light as it passes between mediums is called ____.", "Refraction")
         });
 
-        subjectNames.put(5, "Computer Programming");
-        subjectData.put(5, new Question[] {
+        subjectData.put(Subject.COMP_PROG, new Question[] {
             // --- COMPUTER PROGRAMMING ---
 
             // --- BASICS & SYNTAX ---
@@ -406,8 +399,7 @@ public class QuestionBank {
             new Question(new WrittenQuestionStrategy(), "Which keyword is used to skip to the next iteration of a loop?", "continue")
         });
 
-        subjectNames.put(6, "Advance Computer Programming");
-        subjectData.put(6, new Question[] {
+        subjectData.put(Subject.ADV_COMP_PROG, new Question[] {
             // --- ADVANCED COMPUTER PROGRAMMING ---
 
             // --- OBJECT-ORIENTED PRINCIPLES ---
@@ -482,8 +474,7 @@ public class QuestionBank {
             new Question(new WrittenQuestionStrategy(), "Which access modifier allows access only within the same class?", "private")
         });
 
-        subjectNames.put(7, "Probability and Statistics for Data Analysis");
-        subjectData.put(7, new Question[] {
+        subjectData.put(Subject.PROB_STAT_DATA, new Question[] {
             // --- PROBABILITY AND STATISTICS COMPLETE DATASET (50 QUESTIONS) ---
 
             // --- CENTRAL TENDENCY & DISPERSION ---
@@ -562,44 +553,37 @@ public class QuestionBank {
     }
 
     public static QuestionBank getInstance() {
-        if (instance == null) {
-            instance = new QuestionBank();
-        }
         return instance;
     }
 
-    public Question[] getQuestionsByNumber(int subjectNumber) {
-        return subjectData.getOrDefault(subjectNumber, new Question[0]);
+    public Question[] getQuestionsBySubject(Subject subject) {
+        return subjectData.getOrDefault(subject, new Question[0]);
     }
 
-    public String getSubjectName(int subjectNumber) {
-        return subjectNames.getOrDefault(subjectNumber, "Unknown Subject");
-    }
-
-    public Question getRandomQuestion(int subjectNumber) {
-        Question[] questions = getQuestionsByNumber(subjectNumber);
+    public Question getRandomQuestion(Subject subject) {
+        Question[] questions = getQuestionsBySubject(subject);
         if (questions.length == 0) return null;
         return questions[(int) (Math.random() * questions.length)];
     }
     
-    public void resetSubjectDeck(int subjectNumber) {
-        Question[] original = subjectData.get(subjectNumber);
+    public void resetSubjectDeck(Subject subject) {
+        Question[] original = subjectData.get(subject);
         if (original != null) {
             List<Question> shuffledList = new ArrayList<>(Arrays.asList(original));
             Collections.shuffle(shuffledList); // Randomize the order
-            remainingQuestions.put(subjectNumber, shuffledList);
+            remainingQuestions.put(subject, shuffledList);
         }
     }
 
     // UPDATED: Get a question without repeats
-    public Question getUniqueQuestion(int subjectNumber) {
+    public Question getUniqueQuestion(Subject subject) {
         // If the deck doesn't exist or is empty, refill and shuffle it
-        if (!remainingQuestions.containsKey(subjectNumber) || remainingQuestions.get(subjectNumber).isEmpty()) {
-            resetSubjectDeck(subjectNumber);
+        if (!remainingQuestions.containsKey(subject) || remainingQuestions.get(subject).isEmpty()) {
+            resetSubjectDeck(subject);
         }
 
         // Pull the top question off the "deck"
-        List<Question> deck = remainingQuestions.get(subjectNumber);
+        List<Question> deck = remainingQuestions.get(subject);
         return deck.remove(0); // Removes and returns the first question
     }
 }

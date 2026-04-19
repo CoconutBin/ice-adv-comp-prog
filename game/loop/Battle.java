@@ -7,6 +7,7 @@ import entities.boss.Boss;
 import game.io.IOHandler;
 import game.ui.TerminalColor;
 import game.ui.Visuals;
+import attacks.question.Subject;
 
 import java.util.Random;
 
@@ -21,11 +22,11 @@ public class Battle {
         this.visuals = new Visuals(io);
     }
 
-    public void startLoop(Player player, Boss boss, int choice) {
+    public void startLoop(Player player, Boss boss, Subject subject) {
         while (boss.getHp() > 0 && player.getHp() > 0) {
             
             // 1. Question Phase
-            Question question = QuestionBank.getInstance().getUniqueQuestion(choice);
+            Question question = QuestionBank.getInstance().getUniqueQuestion(subject);
             String playerAnswer = question.askQuestion(io);
             boolean isCorrect = question.isCorrect(playerAnswer);
             io.clearTerminal();
@@ -56,7 +57,7 @@ public class Battle {
             io.printTyping(TerminalColor.YELLOW.apply("CRITICAL HIT! You found the weak spot!"));
             boss.updateHp(-10);
         } else if (aim == blockedPoint) {
-            io.printTyping(TerminalColor.LIGHT_GREY.apply("Change your glasses, the boss is on the other side."));
+            io.printTyping(TerminalColor.LIGHT_GREY.apply("Change your glasses, the boss is on the other side!"));
         } else {
             String part = (aim == 1 ? "Head" : aim == 2 ? "Body" : "Legs");
             io.printTyping(TerminalColor.CYAN.apply("Average strike to the " + part + "."));
