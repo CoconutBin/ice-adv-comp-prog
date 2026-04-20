@@ -1,21 +1,17 @@
 package entities.observers;
 
 import entities.GameEntity;
+import game.ui.Visuals;
 
 public class EntityLoggerObserver extends EntityObserver {
-    private game.io.IOHandler ioHandler;
+    private final Visuals visuals;
 
     public EntityLoggerObserver(game.io.IOHandler ioHandler) {
-        this.ioHandler = ioHandler;
+        this.visuals = new Visuals(ioHandler);
     }
 
     @Override
     public void onHpChange(GameEntity entity) {
-        ioHandler.print("HP changed for entity " + entity.getName() + ": " + entity.getHp() + "/" + entity.getMaxHp());
-    }
-
-    @Override
-    public void onEntityDeath(GameEntity entity) {
-        ioHandler.print("entity " + entity.getName() + " died");
+        visuals.displayStatus(entity.getType(), entity.getHp(), entity.getName());
     }
 }

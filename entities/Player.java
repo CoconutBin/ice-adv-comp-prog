@@ -10,4 +10,9 @@ public class Player extends GameEntity {
     public void attack(GameEntity target) {
         target.updateHp(-Math.random() * 7);
     }
+
+    @Override
+    public String getType(){
+        return "player";
+    }
 }

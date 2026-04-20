@@ -25,6 +25,11 @@ public class Boss extends GameEntity {
         }
     }
 
+    @Override
+    public String getType(){
+        return "boss";
+    }
+
     public void setBossBehavior(BossBehaviorStrategy behavior) {
         this.bossBehavior = behavior;
     }

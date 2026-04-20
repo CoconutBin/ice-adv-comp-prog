@@ -18,9 +18,4 @@ public class BossBehaviorObserver extends EntityObserver {
             boss.setBossBehavior(new LowHPBossBehavior());
         }
     }
-
-    @Override
-    public void onEntityDeath(GameEntity entity) {
-        // Handle boss death event
-    }
 }

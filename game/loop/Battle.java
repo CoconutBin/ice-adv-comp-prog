@@ -2,13 +2,12 @@ package game.loop;
 
 import attacks.question.Question;
 import attacks.question.QuestionBank;
+import attacks.question.Subject;
 import entities.Player;
 import entities.boss.Boss;
 import game.io.IOHandler;
 import game.ui.TerminalColor;
 import game.ui.Visuals;
-import attacks.question.Subject;
-
 import java.util.Random;
 
 public class Battle {
@@ -29,7 +28,6 @@ public class Battle {
             Question question = QuestionBank.getInstance().getUniqueQuestion(subject);
             String playerAnswer = question.askQuestion(io);
             boolean isCorrect = question.isCorrect(playerAnswer);
-            io.clearTerminal();
             
             // 2. Action Phase
             if (isCorrect) {
@@ -37,11 +35,16 @@ public class Battle {
             } else {
                 handleBossCounter(player, boss, question.getAnswer());
             }
-
-            io.wait(1000);
+            
+            if (!(boss.getHp() > 0 && player.getHp() > 0)){
+                break;
+            }
+            io.print(TerminalColor.LIGHT_GREY.apply("\n[ Press ENTER to continue]"));
+            io.readLine();
             io.clearTerminal();
         }
-        
+        io.wait(1000);
+        io.clearTerminal();
         handleEndgame(player, boss);
     }
 
@@ -58,12 +61,12 @@ public class Battle {
             boss.updateHp(-10);
         } else if (aim == blockedPoint) {
             io.printTyping(TerminalColor.LIGHT_GREY.apply("Change your glasses, the boss is on the other side!"));
+            boss.updateHp(0);
         } else {
             String part = (aim == 1 ? "Head" : aim == 2 ? "Body" : "Legs");
             io.printTyping(TerminalColor.CYAN.apply("Average strike to the " + part + "."));
             boss.updateHp(-5);
         }
-        visuals.displayStatus("boss", boss.getHp(), boss.getName());
     }
 
     private void handleBossCounter(Player player, Boss boss, String answer) {
@@ -76,6 +79,7 @@ public class Battle {
 
         if (dodge == safeZone) {
             io.printTyping(TerminalColor.GREEN.apply("PERFECT DODGE! You took no damage."));
+            player.updateHp(0);
         } else if (dodge == trapZone) {
             io.printTyping(TerminalColor.RED.apply("??? You jumped right into the blade!"));
             player.updateHp(-10);
@@ -83,7 +87,6 @@ public class Battle {
             io.printTyping(TerminalColor.LIGHT_GREY.apply("A glancing blow. You took standard damage."));
             player.updateHp(-5);
         }
-        visuals.displayStatus("player", player.getHp(), player.getName());
     }
 
     private void handleEndgame(Player player, Boss boss) {

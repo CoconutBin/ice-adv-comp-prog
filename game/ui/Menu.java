@@ -1,7 +1,7 @@
 package game.ui;
 
-import game.io.IOHandler;
 import attacks.question.Subject;
+import game.io.IOHandler;
 
 public class Menu {
     private final IOHandler io;
@@ -21,13 +21,13 @@ public class Menu {
     }
 
     public Subject SubjectSelection() {
-        System.out.println(TerminalColor.YELLOW.apply("============== SELECT YOUR SUBJECT =============="));
+        System.out.println(TerminalColor.YELLOW.apply("================================================= SELECT YOUR SUBJECT =================================================="));
         
         for (int i = 0; i < Subject.values().length; i++) {
             System.out.println(TerminalColor.PURPLE.apply("[" + (i + 1) + "] ") + Subject.fromId(i + 1).getDisplayName());
             io.wait(100);
         }
-        System.out.println(TerminalColor.YELLOW.apply("================================================="));
+        System.out.println(TerminalColor.YELLOW.apply("========================================================================================================================"));
 
         while (true) {
             System.out.print("\nEnter subject number: ");
