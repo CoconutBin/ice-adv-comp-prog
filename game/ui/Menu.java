@@ -11,8 +11,8 @@ public class Menu {
     }
 
     public boolean shouldSkip(game.io.IOHandler io) {
-        System.out.println(TerminalColor.LIGHT_GREY.apply("\n[ Press 'x' to skip intro]"));
-        System.out.print(TerminalColor.CYAN.apply("--> "));
+        io.print(TerminalColor.LIGHT_GREY.apply("\n[ Press 'x' to skip intro]"));
+        io.inlinePrint(TerminalColor.CYAN.apply("--> "));
         
         String input = io.readLine();
         
@@ -21,11 +21,11 @@ public class Menu {
     }
 
     public int selectSpecialty() {
-        System.out.println(TerminalColor.YELLOW.apply(io.center(" PICK YOUR GIFT ", 120, "=")));
-        System.out.println(TerminalColor.PURPLE.apply("[1]") + " INTELLIGENCE");
-        System.out.println(TerminalColor.PURPLE.apply("[2]") + " STRENGTH");
-        System.out.println(TerminalColor.PURPLE.apply("[3]") + " CHARISMA");
-        System.out.println(TerminalColor.YELLOW.apply(io.center("", 120, "=")));
+        io.print(TerminalColor.YELLOW.apply(io.center(" PICK YOUR GIFT ", 120, "=")));
+        io.print(TerminalColor.PURPLE.apply("[1]") + " INTELLIGENCE");
+        io.print(TerminalColor.PURPLE.apply("[2]") + " STRENGTH");
+        io.print(TerminalColor.PURPLE.apply("[3]") + " CHARISMA");
+        io.print(TerminalColor.YELLOW.apply(io.center("", 120, "=")));
 
         while (true) {
             io.inlinePrint("--> ");
@@ -34,34 +34,33 @@ public class Menu {
                 int choice = Integer.parseInt(input);
 
                 switch (choice) {
-                    case 1 -> {
+                    case 1:
                         return 1;
-                    }
-                    case 2 -> {
+                    case 2:
                         return 2;
-                    }
-                    case 3 -> {
+                    case 3:
                         return 3;
-                    }
-                    default -> System.out.println("Pick 1, 2, or 3!");
+                    default:
+                        io.print("Pick 1, 2, or 3!");
+                        break;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Pick a number.");
+                io.print("Invalid input. Pick a number.");
             }
         }
     }
 
-    public Subject SubjectSelection() {
-        System.out.println(TerminalColor.YELLOW.apply(io.center(" SELECT YOUR SUBJECT ", 120, "=")));
+    public Subject subjectSelection() {
+        io.print(TerminalColor.YELLOW.apply(io.center(" SELECT YOUR SUBJECT ", 120, "=")));
         
         for (int i = 0; i < Subject.values().length; i++) {
-            System.out.println(TerminalColor.PURPLE.apply("[" + (i + 1) + "] ") + Subject.fromId(i + 1).getDisplayName());
+            io.print(TerminalColor.PURPLE.apply("[" + (i + 1) + "] ") + Subject.fromId(i + 1).getDisplayName());
             io.wait(100);
         }
-        System.out.println(TerminalColor.YELLOW.apply(io.center("", 120, "=")));
+        io.print(TerminalColor.YELLOW.apply(io.center("", 120, "=")));
 
         while (true) {
-            System.out.print("\nEnter subject number: ");
+            io.inlinePrint("\nEnter subject number: ");
             
             try {
                 String input = io.readLine();             

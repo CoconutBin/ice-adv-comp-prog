@@ -1,8 +1,8 @@
 package game.ui;
 import attacks.question.QuoteBank;
 import attacks.question.Subject;
+import entities.Boss;
 import entities.Player;
-import entities.boss.Boss;
 import game.io.IOHandler;
 
 
@@ -53,7 +53,7 @@ public void showLogo() {
         ioHandler.printTyping(TerminalColor.PURPLE.apply("[!] THE VOID OPENS (smells like cheap coffee and regret)..."));
         ioHandler.wait(500);
         ioHandler.printTyping("A voice echoes: 'State your name, mortal, so we can misspell it on your final certificate.'");
-        System.out.print(TerminalColor.CYAN.apply("--> "));
+        ioHandler.inlinePrint(TerminalColor.CYAN.apply("--> "));
     }
     public void displayStatus(String entity, double hp, String name) {
         String bar = "";

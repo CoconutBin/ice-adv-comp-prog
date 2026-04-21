@@ -1,6 +1,5 @@
-package entities.boss;
+package entities;
 
-import entities.GameEntity;
 import entities.boss.behavior.*;
 
 public class Boss extends GameEntity {

@@ -1,9 +1,7 @@
 package game.setup;
 
-import entities.Player;
-import entities.boss.Boss;
-import entities.observers.EntityLoggerObserver;
-import entities.observers.BossBehaviorObserver;
+import entities.*;
+import entities.observers.*;
 import game.io.IOHandler;
 
 public class GameSetup {
