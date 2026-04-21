@@ -12,8 +12,8 @@ public class App {
         Visuals visuals = new Visuals(ioHandler);
         
         ioHandler.fullClear();
-        ioHandler.print("Please set your terminal to 120 x 15");
-        ioHandler.print(TerminalColor.LIGHT_GREY.apply("\n[ Press ENTER to continue]"));
+        ioHandler.print(ioHandler.center("Please set your terminal to 120 x 15", 120, " "));
+        ioHandler.print(TerminalColor.LIGHT_GREY.apply(ioHandler.center("[ Press ENTER to continue ]", 120, " ")));
         ioHandler.readLine(); 
         ioHandler.fullClear();
         visuals.showLogo();
@@ -23,17 +23,16 @@ public class App {
         
         game.ui.Menu menu = new game.ui.Menu(ioHandler);
         Subject chosenSubject = menu.SubjectSelection();
+        ioHandler.print("");
+        int playerPath = menu.selectSpecialty();
         boolean skip = menu.shouldSkip(ioHandler);
-        visuals.showSubjectHeader(chosenSubject.getDisplayName());
+        String playerName = "";
         if (!skip){
+            visuals.showSubjectHeader(chosenSubject.getDisplayName());
             visuals.showOpening();
+            playerName = ioHandler.readLine();
         }
-        else{
-            ioHandler.printTyping("Name : ");
-            ioHandler.inlinePrint(TerminalColor.CYAN.apply("--> "));
-        }
-        String playerName = ioHandler.readLine();
-        entities.Player player = new entities.Player(playerName.isEmpty() ? "Academic Probation" : playerName, 1);
+        entities.Player player = new entities.Player(playerName.isEmpty() ? "Academic Probation" : playerName, 1, playerPath);
         entities.boss.Boss boss = new entities.boss.Boss(attacks.question.QuoteBank.getBossName(chosenSubject),attacks.question.QuoteBank.getBossIntro(chosenSubject),1);
         if (!skip){
             visuals.playPrologue(player);     
@@ -42,7 +41,7 @@ public class App {
             ioHandler.clearTerminal();
         }
         visuals.playBossIntro(boss);
-        ioHandler.print(TerminalColor.LIGHT_GREY.apply("\n[ Press ENTER to continue]"));
+        ioHandler.print(TerminalColor.LIGHT_GREY.apply("\n[ Press ENTER to continue ]"));
         ioHandler.readLine(); 
         ioHandler.clearTerminal();
         // Setup game state (register observers, initialize systems)

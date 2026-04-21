@@ -1,4 +1,6 @@
 package game.ui;
+import attacks.question.QuoteBank;
+import attacks.question.Subject;
 import entities.Player;
 import entities.boss.Boss;
 import game.io.IOHandler;
@@ -20,7 +22,7 @@ public void showLogo() {
         ioHandler.print(TerminalColor.BLUE.apply(  "       | ██/██ ██| ██  | ██  | ██    /██/           /██  \\ ██| ██      | ██  | ██    | ██    | ██      | ██  \\ ██"));
         ioHandler.print(TerminalColor.PURPLE.apply("       |  ██████/|  ██████/ /██████ /████████      |  ██████/| ████████| ██  | ██    | ██    | ████████| ██  | ██"));
         ioHandler.print(TerminalColor.PINK.apply(  "        \\____ ███ \\______/ |______/|________/       \\______/ |________/|__/  |__/    |__/    |________/|__/  |__/"));
-        ioHandler.printTyping("\n                                                  - Press Enter to start -                                     ");
+        ioHandler.print("\n                                                  - Press Enter to start -                                     ");
     }
 
     public void playPrologue(Player player) {
@@ -35,16 +37,16 @@ public void showLogo() {
         ioHandler.clearTerminal();
     }
 
-    public void playBossIntro(Boss boss) { //make this dynamic
-        ioHandler.printTyping(TerminalColor.RED.apply("--- " + boss.getName() + " ---"));
+    public void playBossIntro(Boss boss) {
+        ioHandler.printTyping(TerminalColor.RED.apply("[!] " + boss.getName() + " descends"));
         ioHandler.wait(1000);
         ioHandler.printTyping(boss.getIntro());
         ioHandler.wait(1000);
     }
 
-    public void showSubjectHeader(String subjectName) { //make this dynamic
+    public void showSubjectHeader(String subjectName) {
         ioHandler.fullClear();
-        ioHandler.printTyping(TerminalColor.YELLOW.apply("--- " + subjectName.toUpperCase() + " ---"));
+        ioHandler.print(TerminalColor.YELLOW.apply(ioHandler.center(" " + subjectName.toUpperCase() + " ", 120, "-")));
         ioHandler.wait(500);
     }
     public void showOpening() {
@@ -68,28 +70,34 @@ public void showLogo() {
         }
     }
 
-    public void showDefeat(Player player, Boss boss) {
-        ioHandler.print("\n" + TerminalColor.RED.apply("========================================================================================================================"));
-        ioHandler.printTyping(TerminalColor.RED.apply(" [X] YOUR GPA IS CURRENTLY F! GITGUD")); // center
-        ioHandler.printTyping(TerminalColor.RESET + " " + boss.getName() + " is handing you a flyer for a career in competitive grass touching."); // center
+    public void showDefeat(Player player, Boss boss, Subject subject) {
+        ioHandler.print("\n" + TerminalColor.RED.apply(ioHandler.center("", 120, "=")));
+        ioHandler.print("");
+        ioHandler.printTyping(TerminalColor.RED.apply(ioHandler.center("[!] YOUR GPA IS CURRENTLY F! GITGUD", 120 , " ")));
+        ioHandler.print("");
+        ioHandler.printTyping(ioHandler.center(boss.getName() + " is handing you a flyer for a career in competitive grass touching.", 120 , " "));
+        ioHandler.printTyping(ioHandler.center(QuoteBank.getBossVictory(subject), 120 , " "));
+        ioHandler.print("");
         ioHandler.wait(500);
-        ioHandler.printTyping(TerminalColor.RED.apply("            G A M E   O V E R "));
-        ioHandler.print(TerminalColor.RED.apply("========================================================================================================================"));
+        ioHandler.printTyping(TerminalColor.RED.apply(ioHandler.center("G A M E   O V E R", 120 , " ")));
+        ioHandler.print("");
+        ioHandler.print(TerminalColor.RED.apply(ioHandler.center("", 120, "=")));
     }
 
-    public void showVictory(Player player, Boss boss) {
-        ioHandler.print("\n" + TerminalColor.YELLOW.apply("========================================================================================================================"));
-        ioHandler.printTyping(TerminalColor.GREEN.apply(" [!] " + boss.getName() + " HAS BEEN DEFEATED! "));
-
+    public void showVictory(Player player, Boss boss, Subject subject) {
+        ioHandler.print("\n" + TerminalColor.YELLOW.apply(ioHandler.center("", 120, "=")));
+        ioHandler.print("");
+        ioHandler.printTyping(TerminalColor.YELLOW.apply(ioHandler.center("[!] " + boss.getName() + " HAS BEEN DEFEATED!", 120 , " ")));
+        ioHandler.printTyping(ioHandler.center(QuoteBank.getBossDefeat(subject), 120, " "));
+        ioHandler.print("");
         ioHandler.wait(500);
-        ioHandler.printTyping(TerminalColor.RESET + " " + player.getName() + " is aiming for that A\r");
-        ioHandler.inlinePrint("\033[1A " + player.getName() + " is aiming for that A");
-        ioHandler.wait(500);
-        ioHandler.printTyping(TerminalColor.RESET + "...verage (what? You don't know A is average?)");
+        ioHandler.printTyping(ioHandler.center(player.getName() + " is aiming for that A!", 120 , " "));
+        ioHandler.print("");
         ioHandler.wait(1000);
-        ioHandler.printTyping(TerminalColor.YELLOW.apply(" A V E R A G E   A C H I E V E D "));
+        ioHandler.printTyping(TerminalColor.YELLOW.apply(ioHandler.center("A V E R A G E   A C H I E V E D", 120 , " ")));
         ioHandler.wait(500);
-        ioHandler.printTyping(TerminalColor.PURPLE.apply(" Remaining Health: " + (int)player.getHp() + " HP (and 0 dignity remaining)"));
-        ioHandler.print(TerminalColor.YELLOW.apply("========================================================================================================================"));
+        ioHandler.printTyping(TerminalColor.PURPLE.apply(ioHandler.center("Remaining Health: " + (int)player.getHp() + " HP (and 0 dignity remaining)", 120, " ")));
+        ioHandler.print("");
+        ioHandler.print(TerminalColor.YELLOW.apply(ioHandler.center("", 120, "=")));
     }
 }

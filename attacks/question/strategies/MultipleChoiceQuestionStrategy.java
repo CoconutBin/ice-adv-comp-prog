@@ -8,13 +8,12 @@ public class MultipleChoiceQuestionStrategy implements QuestionStrategy {
     public String askQuestion(String question, String[] options, IOHandler ioHandler) {
         String input;
         int choice;
-
-        while (true) {
-            ioHandler.printTyping("\n" + question);
-            for (int i = 0; i < options.length; i++) {
-                ioHandler.print((i + 1) + ". " + options[i]);
-            }
+        ioHandler.printTyping("\n" + question);
+        for (int i = 0; i < options.length; i++) {
+            ioHandler.print((i + 1) + ". " + options[i]);
+        }
             
+        while (true) {
             ioHandler.inlinePrint("--> ");
             input = ioHandler.readLine().trim();
 

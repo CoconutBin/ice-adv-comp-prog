@@ -8,11 +8,10 @@ public class TrueFalseQuestionStrategy implements QuestionStrategy {
     @Override
     public String askQuestion(String question, String[] options, IOHandler ioHandler) {
         String input;
-        
+        ioHandler.printTyping("\n" + question);
+        ioHandler.print(" (True / False)");  
         while (true) {
-            ioHandler.printTyping("\n" + question);
-            ioHandler.print(" (True / False)");
-            ioHandler.inlinePrint("\n--> ");
+            ioHandler.inlinePrint("--> ");
             input = ioHandler.readLine().trim().toLowerCase();
 
             // Check if it's empty or doesn't start with T or F

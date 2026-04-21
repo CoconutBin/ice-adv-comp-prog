@@ -8,10 +8,10 @@ public class WrittenQuestionStrategy implements QuestionStrategy {
     @Override
     public String askQuestion(String question, String[] options, IOHandler ioHandler) {
         String input;
+        ioHandler.printTyping("\n" + question);
+        ioHandler.print("Write your answer below");
         
         while (true) {
-            ioHandler.printTyping("\n" + question);
-            ioHandler.print("Write your answer below");
             ioHandler.inlinePrint("--> ");
             
             input = ioHandler.readLine();
@@ -21,7 +21,7 @@ public class WrittenQuestionStrategy implements QuestionStrategy {
                 return input.trim();
             }
 
-            ioHandler.print(TerminalColor.RED.apply(" You must type an answer to attack!"));
+            ioHandler.print(TerminalColor.RED.apply(" Please type something, even if you don't know the answer."));
         }
     }
 

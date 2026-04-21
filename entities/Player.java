@@ -1,9 +1,10 @@
 package entities;
 
 public class Player extends GameEntity {
-
-    public Player(String name, double initialHp) {
+    private final int path;
+    public Player(String name, double initialHp, int path) {
         super(initialHp, name);
+        this.path = path;
     }
 
     @Override
@@ -14,5 +15,9 @@ public class Player extends GameEntity {
     @Override
     public String getType(){
         return "player";
+    }
+
+    public int getPath(){
+        return path;
     }
 }
