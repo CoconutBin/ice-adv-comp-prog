@@ -32,8 +32,8 @@ public class App {
             visuals.showOpening();
             playerName = ioHandler.readLine();
         }
-        entities.Player player = new entities.Player(playerName.isEmpty() ? "Academic Probation" : playerName, 1, playerPath);
-        entities.boss.Boss boss = new entities.boss.Boss(attacks.question.QuoteBank.getBossName(chosenSubject),attacks.question.QuoteBank.getBossIntro(chosenSubject),1);
+        entities.Player player = new entities.Player(playerName.isEmpty() ? "Academic Probation" : playerName, 100, playerPath);
+        entities.boss.Boss boss = new entities.boss.Boss(attacks.question.QuoteBank.getBossName(chosenSubject),attacks.question.QuoteBank.getBossIntro(chosenSubject),100);
         if (!skip){
             visuals.playPrologue(player);     
         }
