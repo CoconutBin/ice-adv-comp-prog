@@ -1,397 +1,167 @@
 # Quiz Slayer
 
-A Java-based educational battle game that demonstrates Object-Oriented Programming (OOP) principles and design patterns. Players face a boss opponent through question-answering based combat interactions.
+A console-based educational battle game built in Java. Players fight subject-themed bosses by answering quiz questions — correct answers let you strike, wrong ones make you dodge.
 
----
-
-## Project Overview
-
-**Quiz Slayer** is an interactive console-based game that combines quiz mechanics with turn-based combat. Players answer questions from various subjects to attack an opponent, while incorrect answers result in counterattacks. The game implements dynamic difficulty through adaptive boss behaviors and supports multiple question formats.
-
-### Core Objective
-This project applies three or more Gang of Four design patterns within a game scenario, demonstrating software design principles and code organization for the course 2190103 Advanced Computer Programming at the International School of Engineering (ISE), Chulalongkorn University.
+**Course**: 2190103 Advanced Computer Programming — ISE, Chulalongkorn University
 
 ---
 
 ## Use Case Scenario
 
-### Player Journey
-1. **Character Creation**: Player enters their name and selects a subject to study (Math, Science, History, etc.)
-2. **Story Setup**: A boss encounter is initialized with introductory text
-3. **Battle Loop**: 
-   - The player receives a question (multiple choice, true/false, or essay-based)
-   - Correct answer → Player attacks the boss (with strategic aim selection)
-   - Incorrect answer → Boss counters; player must dodge
-4. **Dynamic Challenge**: Boss behavior adapts based on remaining HP (aggressive when strong, desperate when weakened)
-5. **Victory/Defeat**: Game concludes with appropriate ending sequence
+The player selects one of seven university subjects and is matched against a corresponding boss character. Each turn, a question is drawn from that subject's pool. A correct answer triggers a player attack phase; a wrong answer triggers a boss counter-attack phase. The boss's attack damage escalates as its HP drops. The game ends when either side reaches 0 HP.
+
+**Subjects**: Calculus I, Calculus II, Physics I (Engineering), Physics II (Electronics), Computer Programming, Advanced Computer Programming, Probability & Statistics for Data Analysis.
 
 ---
 
-## Design Patterns Implemented
+## Design Patterns
 
-### 1. **Strategy Pattern** (Question Types)
-**Location**: `attacks/question/strategies/`
+### 1. Strategy — Question Types
+`attacks/question/strategies/`
 
-Handles different question formats through interchangeable strategies:
-- **QuestionStrategy Interface**: Defines contract for question implementations
-- **Implementations**:
-  - `MultipleChoiceQuestionStrategy`: A, B, C, D option-based questions
-  - `TrueFalseQuestionStrategy`: True/False binary questions
-  - `WrittenQuestionStrategy`: Free-response answer validation
+The `QuestionStrategy` interface defines two methods: `askQuestion(...)` and `isCorrect(...)`. Each concrete strategy handles its own display and validation logic.
 
-**Justification**: Allows seamless addition of new question types without modifying the `Question` or `Battle` classes. Questions are instantiated at runtime based on strategy type, promoting the Open/Closed Principle.
+| Class | Type | Validation |
+|---|---|---|
+| `MultipleChoiceQuestionStrategy` | 4-option numbered choice | Matches selected option by index |
+| `TrueFalseQuestionStrategy` | True / False | Case-insensitive first-character match |
+| `WrittenQuestionStrategy` | Free text | Case-insensitive exact match |
 
----
+`Question` holds a strategy instance and delegates to it — `Battle` never knows or cares which type it's dealing with.
 
-### 2. **Strategy Pattern** (Boss Behavior)
-**Location**: `entities/boss/behavior/`
+### 2. Strategy — Boss Behavior
+`entities/boss/behavior/`
 
-Adapts boss combat behavior based on current health state:
-- **BossBehaviorStrategy Interface**: Defines boss action contract
-- **Implementations**:
-  - `DefaultBossBehavior`: Normal combat actions (health > 50%)
-  - `MidHPBossBehavior`: Escalated aggression (health 25-50%)
-  - `LowHPBossBehavior`: Desperate final assault (health < 25%)
+`BossBehaviorStrategy` defines `calculateDamage()`. `Boss` holds a reference to the current strategy and delegates its `attack()` to it. `BossBehaviorObserver` swaps the strategy whenever the boss's HP crosses a threshold.
 
-**Justification**: Enables dynamic difficulty scaling and engaging combat by changing boss tactics mid-battle. New behavioral strategies can be added without modifying core boss logic.
+| Class | Trigger | Damage Range |
+|---|---|---|
+| `DefaultBossBehavior` | HP > 50% | 5 – 7 |
+| `MidHPBossBehavior` | HP 20–50% | 5 – 10 |
+| `LowHPBossBehavior` | HP < 20% | 5 – 15 |
 
----
+### 3. Singleton — Question Bank
+`attacks/question/QuestionBank.java`
 
-### 3. **Singleton Pattern** (Question Bank)
-**Location**: `attacks/question/QuestionBank.java`
+`QuestionBank` is eagerly initialized as a private static field. `getInstance()` returns that single instance. It holds a `Map<Subject, Question[]>` pre-loaded with ~50 questions per subject (350+ total), and a second map tracking the remaining shuffled deck per subject so questions don't repeat within a run.
 
-Provides centralized, single-instance access to the question repository:
-```java
-public static QuestionBank getInstance() {
-    // Returns single instance
-}
-```
+### 4. Observer — Entity State
+`entities/observers/`
 
-**Justification**: Ensures one authoritative source for questions throughout the game, preventing duplicate data loading and synchronization issues. The global access point guarantees all game components query the same question pool.
+`GameEntity` maintains an `ArrayList<EntityObserver>` and calls `onHpChange(this)` inside `updateHp()` after every HP modification. Two observers are registered at startup via `GameSetup`:
+
+- **`BossBehaviorObserver`** — checks the boss's HP percentage and calls `setBossBehavior()` with the appropriate strategy.
+- **`EntityLoggerObserver`** — calls `Visuals.displayStatus()` to redraw the HP bar for whoever just took damage.
 
 ---
 
-### 4. **Observer Pattern** (Entity State Changes)
-**Location**: `entities/observers/`
+## OOP Principles
 
-Decouples entity state changes from their observers:
-- **EntityObserver Abstract Class**: Defines observer contract with methods:
-  - `onHpChange(GameEntity entity)`
-  - `onEntityDeath(GameEntity entity)`
-- **Concrete Observers**:
-  - `BossBehaviorObserver`: Updates boss strategy based on HP threshold changes
-  - `EntityLoggerObserver`: Logs all entity state changes for debugging/analytics
+**Encapsulation** — `hp` and `maxHp` are private in `GameEntity`. Nothing outside modifies HP directly; all changes go through `updateHp()`, which clamps the value and fires observers.
 
-**Justification**: Allows multiple independent components to react to entity state changes without tight coupling. New observers can be registered without modifying `GameEntity` or `Boss` classes.
+**Inheritance** — `Player` and `Boss` both extend `GameEntity`, inheriting HP management and the observer list. `attack()` is declared abstract and overridden differently by each: `Player` scales off its `PlayerGift` stat, `Boss` delegates to its current `BossBehaviorStrategy`.
+
+**Polymorphism** — `Battle` calls `question.askQuestion(io)` and `question.isCorrect(answer)` without ever checking the question type. `GameEntity.attack(target, modifier)` is called uniformly for both player and boss turns.
+
+**Abstraction** — `QuestionStrategy` and `BossBehaviorStrategy` are the only thing `Battle` and `Boss` interact with, respectively. The concrete implementations are invisible to the callers.
 
 ---
 
-## OOP Principles Demonstrated
-
-### Encapsulation
-- Private fields with controlled public accessor methods (getters/setters)
-- Example: `Player` and `Boss` classes encapsulate HP and name attributes
-- State modifications go through defined methods enabling validation and logging
-
-### Inheritance
-- `Player` and `Boss` both extend `GameEntity`
-- Shared behaviors (HP management, state observation) defined in base class
-- Promotes code reuse and establishes clear hierarchies
-
-### Polymorphism
-- Strategy implementations interchangeably used through interface references
-- Observer implementations handled polymorphically by base class methods
-- Runtime type determination enables flexible, extensible designs
-
-### Abstraction
-- `QuestionStrategy`, `BossBehaviorStrategy`, and `EntityObserver` abstract implementations
-- Internal complexities hidden; only essential interfaces exposed
-- Clients interact with abstractions, not concrete details
-
----
-
-## Project Architecture
+## Package Structure
 
 ```
-Project Root/
-│
-├── App.java                          # Application entry point
-│
-├── attacks/                          # Combat and question system
-│   └── question/
-│       ├── Question.java             # Core question entity
-│       ├── QuestionBank.java         # Singleton question repository
-│       ├── QuoteBank.java            # Boss quotes and names
-│       ├── Subject.java              # Subject enumeration
-│       └── strategies/
-│           ├── QuestionStrategy.java # Strategy interface
-│           ├── MultipleChoiceQuestionStrategy.java
-│           ├── TrueFalseQuestionStrategy.java
-│           └── WrittenQuestionStrategy.java
-│
-├── entities/                         # Game entities (Player, Boss)
-│   ├── GameEntity.java               # Base entity class
-│   ├── Player.java                   # Player character
-│   ├── boss/
-│   │   ├── Boss.java                 # Boss entity with behavior switching
-│   │   └── behavior/
-│   │       ├── BossBehaviorStrategy.java # Behavior strategy interface
-│   │       ├── DefaultBossBehavior.java
-│   │       ├── MidHPBossBehavior.java
-│   │       └── LowHPBossBehavior.java
-│   └── observers/
-│       ├── EntityObserver.java       # Observer base class
-│       ├── BossBehaviorObserver.java # Adapts boss behavior on state change
-│       └── EntityLoggerObserver.java # Logs entity events
-│
-└── game/                             # Game loop and UI
-    ├── io/
-    │   └── IOHandler.java            # Input/output management
-    ├── loop/
-    │   └── Battle.java               # Main game loop
-    ├── setup/
-    │   └── GameSetup.java            # Observer registration and setup
-    └── ui/
-        ├── Menu.java                 # Subject selection menu
-        ├── Visuals.java              # Display and formatting
-        └── TerminalColor.java        # Color constants and styling
+App.java
+attacks/
+├── AttackResult.java               # Enum: DODGE / HIT / CRITICAL_HIT with damage modifiers
+└── question/
+    ├── Question.java               # Holds strategy, text, options, answer
+    ├── QuestionBank.java           # Singleton; 350+ questions across 7 subjects
+    ├── QuoteBank.java              # Boss names, intros, victory/defeat lines per subject
+    ├── Subject.java                # Enum for the 7 subjects
+    └── strategies/
+        ├── QuestionStrategy.java   # Interface
+        ├── MultipleChoiceQuestionStrategy.java
+        ├── TrueFalseQuestionStrategy.java
+        └── WrittenQuestionStrategy.java
+entities/
+├── GameEntity.java                 # Abstract base: HP, observers, attack()
+├── Player.java                     # attack() scales off PlayerGift
+├── Boss.java                       # attack() delegates to BossBehaviorStrategy
+├── PlayerGift.java                 # Enum: INTELLIGENCE / STRENGTH / CHARISMA
+├── boss/behavior/
+│   ├── BossBehaviorStrategy.java   # Interface: calculateDamage()
+│   ├── DefaultBossBehavior.java
+│   ├── MidHPBossBehavior.java
+│   └── LowHPBossBehavior.java
+└── observers/
+    ├── EntityObserver.java         # Abstract: onHpChange(GameEntity)
+    ├── BossBehaviorObserver.java   # Swaps boss strategy on HP threshold
+    └── EntityLoggerObserver.java   # Redraws HP bar on any HP change
+game/
+├── io/IOHandler.java               # Wraps System.in/out; typing effect, ANSI clear
+├── loop/Battle.java                # Main game loop; handles question, strike, dodge, endgame
+├── setup/GameSetup.java            # Registers observers with player and boss
+└── ui/
+    ├── Menu.java                   # Subject and gift selection menus
+    ├── Visuals.java                # Logo, prologue, boss intro, HP bars, endgame screens
+    └── TerminalColor.java          # Enum of ANSI color codes with apply() helper
 ```
 
 ---
 
 ## How to Run
 
-### Prerequisites
-- Java 11 or higher
-- A terminal/command prompt
+**Requirements**: Java 11+, terminal set to 120 columns wide.
 
-### Compilation
-
-**Unix/Linux/MacOS:**
 ```bash
-javac -d bin $(find . -name "*.java" -type f)
-```
+# Compile (Unix)
+javac -d bin $(find . -name "*.java")
 
-**Windows (PowerShell):**
-```powershell
+# Compile (Windows PowerShell)
 javac -d bin (Get-ChildItem -Recurse -Filter *.java | ForEach-Object { $_.FullName })
-```
 
-### Execution
-
-```bash
+# Run
 java -cp bin App
 ```
 
-### Game Flow
-1. **Logo Display**: Welcome screen
-2. **Subject Selection**: Choose a subject to be tested on
-3. **Skip Introduction** (Optional): Skip the prologue for faster gameplay
-4. **Player Name Entry**: Enter your character name
-5. **Battle**: Answer questions to damage the boss; wrong answers trigger counterattacks
-6. **Victory/Defeat Screen**: View game results
+---
+
+## Combat Reference
+
+**Correct answer → Player attacks**
+- Pick a target: `[1] Head  [2] Body  [3] Legs`
+- Boss has one random weak point (Critical Hit, ×2 modifier) and one blocked point (no damage)
+- Any other target deals a normal hit (×1 modifier)
+
+**Wrong answer → Boss attacks, player dodges**
+- Pick a direction: `[1] Left  [2] Right  [3] Duck`
+- One random direction is safe (0 damage), one is a trap (Critical Hit, ×2 modifier)
+- Any other direction takes a glancing blow (×1 modifier)
+
+Actual damage = `attackStat × modifier`. Player attack stat is set by chosen `PlayerGift` (STRENGTH: 10, INTELLIGENCE/CHARISMA: 5). Boss damage comes from `BossBehaviorStrategy.calculateDamage()`.
+
+**Player Gifts** grant a passive bonus:
+- **INTELLIGENCE** — one free retry if the first answer is wrong
+- **STRENGTH** — higher base attack stat
+- **CHARISMA** — boss hints at a non-weak-point / non-safe direction before each phase
 
 ---
 
-## Game Mechanics
+## AI Usage Disclosure
 
-### Question Phase
-- A question from the selected subject is presented
-- Player provides an answer (format depends on question type)
-- Answer is validated against the correct response
+- **Question content**: AI-generated questions for all seven subject pools
+- **Debugging**: AI assisted with runtime error diagnosis
+- **Documentation**: AI generated and edited the README and class diagram
 
-### Combat Phase
-**Correct Answer** → Player Attacks:
-- Choose strike location: **[1] Head | [2] Body | [3] Legs**
-- Boss has a random weak point and blocked point
-- **Critical Hit** (Weak Point): -10 HP
-- **Blocked Hit**: 0 HP damage
-- **Normal Hit**: -5 HP damage
+Core architecture, design pattern selection, and game logic were written by the group.
 
-**Incorrect Answer** → Boss Counterattacks:
-- Choose dodge direction: **[1] Left | [2] Right | [3] Duck**
-- Boss has a random safe zone and trap zone
-- **Perfect Dodge**: 0 HP damage taken
-- **Trap Zone**: -10 HP damage
-- **Glancing Blow**: -5 HP damage
-
-### Victory/Defeat Conditions
-- **Victory**: Boss HP ≤ 0
-- **Defeat**: Player HP ≤ 0
+**Models used**: Claude Sonnet 4.6, Claude Haiku 4.5, Gemini Flash 3 Preview
 
 ---
 
-## Key Features
-
-- **Dynamic Boss Behavior**: Boss tactics adjust based on remaining health
-- **Multiple Question Types**: Support for different question formats
-- **Colored Terminal Output**: Visual feedback through terminal colors
-- **Singleton Question Pool**: Centralized question resource management
-- **Observer-based Event System**: Decoupled state change notifications
-- **Extensible Design**: Architecture supports addition of new subjects, question types, and behaviors  
-
----
-
-## Design Pattern Justifications
-
-| Pattern | Why Used | Benefit |
-|---------|----------|---------|
-| **Strategy (Questions)** | Different question formats need different answer validation | Add new question types without modifying existing code |
-| **Strategy (Boss)** | Boss tactics should vary with HP state | Dynamic difficulty and engaging gameplay |
-| **Singleton** | One authoritative source for game questions | Prevents duplication; ensures consistency across the game |
-| **Observer** | Entity state changes affect multiple systems (UI, boss AI, logging) | Loose coupling; systems can independently react to changes |
-
----
-
-## OOP Principles in Action
-
-### Real-World Examples from Code
-
-**Encapsulation**:
-```
-GameEntity.updateHp(-10)  // Hides implementation; controls how HP changes
-Player extends GameEntity  // Inherits encapsulated HP management
-```
-
-**Inheritance**:
-```
-Player extends GameEntity
-Boss extends GameEntity
-// Both inherit updateHp(), getName(), getHp() from base class
-```
-
-**Polymorphism**:
-```
-QuestionStrategy strategy = new MultipleChoiceQuestionStrategy();
-strategy = new TrueFalseQuestionStrategy();  // Same reference, different behavior
-```
-
-**Abstraction**:
-```
-BossBehaviorStrategy interface defines behavior contract
-// Concrete implementations hidden; Battle class doesn't care about internals
-```
-
----
-
-## Development Notes
-
-### Testing Scenarios
-- Player defeats boss with correct answers
-- Player loses via incorrect answers and failed dodges
-- Boss behavior transitions at HP thresholds (50%, 25%)
-- Observer notifications activate on state changes
-- Multiple subjects load corresponding question pools
-
-### Future Enhancement Opportunities
-1. **Additional Question Types**: Add image-based questions, matching questions, etc.
-2. **Multiplayer Mode**: Enable PvP battles with pattern-based question selection
-3. **Difficulty Levels**: Adjust question complexity and damage values
-4. **Question Editor**: In-game UI for creating custom questions
-5. **Score Tracking**: Persist player statistics and achievements
-6. **Additional Boss Behaviors**: Implement special attacks at specific HP thresholds
-
----
-
-## Technical Stack
-
-- **Language**: Java 11+
-- **Paradigm**: Object-Oriented Programming
-- **Architecture**: Design Patterns (Strategy, Singleton, Observer)
-- **UI**: Terminal-based with ANSI color codes
-- **Input Method**: Console-based user interaction
-
----
-
-## Project Rubric Alignment
-
-| Rubric Criterion | Status | Evidence |
-|-----------------|--------|----------|
-| **Use Case Scenario** | Complete | Interactive game with defined player interactions |
-| **3+ Design Patterns** | 4 Patterns Implemented | Strategy (2x), Singleton, Observer |
-| **OOP Principles** | All Demonstrated | Encapsulation, Inheritance, Polymorphism, Abstraction |
-| **Class Diagram** | Separate Document | Refer to project documentation |
-| **Program Output** | Functional | Run with `java -cp bin App` |
-| **Presentation** | Separate Component | Refer to presentation files |
-
----
-
-## Code Quality & Best Practices
-
-- Clear package structure with separation of concerns
-- Meaningful class and method names following Java conventions
-- Strategic use of access modifiers (private/public/protected)
-- Minimal coupling through interface-based design
-- High cohesion within packages
-- Single Responsibility Principle adherence
-
----
-
-## How to Extend
-
-### Adding a New Question Type
-1. Create `NewQuestionStrategy.java` in `attacks/question/strategies/`
-2. Implement `QuestionStrategy` interface
-3. Register in `QuestionBank.getQuestion()` instantiation logic
-4. No changes needed to `Battle` or `Question` classes
-
-### Adding a New Boss Behavior
-1. Create `NewBossBehavior.java` in `entities/boss/behavior/`
-2. Implement `BossBehaviorStrategy` interface
-3. Update `BossBehaviorObserver` to trigger new behavior at appropriate HP threshold
-4. No changes needed to `Boss` core logic
-
-### Adding a New Observer
-1. Create `NewObserver.java` extending `EntityObserver`
-2. Implement `onHpChange()` and `onEntityDeath()` methods
-3. Register in `GameSetup.setupObservers()`
-4. No changes needed to `GameEntity` or `Boss` classes
-
----
-
-## Implementation Notes
-
-This project demonstrates:
-- Application of design patterns in software architecture
-- Role of abstraction and interfaces in code organization
-- Benefits of loose coupling in system design
-- Importance of separation of concerns in modular systems
-
-The implementation combines quiz mechanics with game mechanics to create an interactive learning environment.
-
----
-
-## AI/LLM Usage Disclosure
-
-This project utilized AI assistance in the following capacities:
-
-- **Debugging and Troubleshooting**: AI was used to identify and resolve runtime errors and logic issues
-- **Question Creation**: AI assisted in generating questions for the QuestionBank across various subjects
-- **Creative Direction**: AI provided suggestions for game mechanics, user experience enhancements, and visual feedback
-- **Documentation and README**: AI generated the comprehensive README file, project audit report, and provided feedback on project structure and rubric alignment
-
-The following aspects were developed without AI assistance:
-- **Technical Architecture**: System design, package structure, and overall architecture
-- **Design Pattern Implementation**: Strategy, Singleton, and Observer pattern implementations
-- **Core Game Logic**: Battle mechanics, player interaction flow, and boss behavior logic
-
-### Specific AI Contributions in This Session
-
-- Performed comprehensive code audit against project rubric
-- Generated complete README.md with project overview, architecture documentation, and design pattern explanations
-- Analyzed project structure and provided recommendations for improvements
-- Edited README based on course-specific requirements (course number, institution, program name)
-
-**Models Used**: Claude Haiku 4.5, Gemini Flash 3 Preview
-
----
-
-**Version**: 1.0  
-**Last Updated**: April 2026  
-**Course**: 2190103 Advanced Computer Programming  
-**Institution**: International School of Engineering (ISE), Chulalongkorn University  
-**Program**: Information and Communication Engineering (ICE)  
-**Status**: Functional
+**Course**: 2190103 Advanced Computer Programming
+**Institution**: International School of Engineering (ISE), Chulalongkorn University
+**Program**: Information and Communication Engineering (ICE)
 
 ---
 
@@ -399,229 +169,297 @@ The following aspects were developed without AI assistance:
 
 ```mermaid
 classDiagram
-    %% Abstract Base Classes
+    %% ── ENTITY LAYER ───────────────────────────────────────────────────────────
+
     class GameEntity {
         <<abstract>>
-        #name: String
-        #hp: double
-        +getName() String
+        #observers : ArrayList~EntityObserver~
+        -maxHp : double
+        -hp : double
+        -name : String
         +getHp() double
-        +updateHp(damage: int) void
-        +notifyObservers() void
+        +getMaxHp() double
+        +getName() String
+        +setName(name : String) void
+        +addObserver(observer : EntityObserver) void
+        +removeObserver(observer : EntityObserver) void
+        #updateHp(hpChange : double) void
+        +attack(target : GameEntity, modifier : double)* void
     }
 
-    class EntityObserver {
-        <<abstract>>
-        +onHpChange(entity: GameEntity) void
-        +onEntityDeath(entity: GameEntity) void
-    }
-
-    %% Concrete Entities
     class Player {
-        -level: int
-        -score: int
+        -playerGift : PlayerGift
+        +attack(target : GameEntity, modifier : double) void
+        +getPlayerGift() PlayerGift
     }
 
     class Boss {
-        -intro: String
-        -currentBehavior: BossBehaviorStrategy
+        -intro : String
+        -bossBehavior : BossBehaviorStrategy
         +getIntro() String
-        +setBehavior(behavior: BossBehaviorStrategy) void
-        +performAction() void
+        +attack(target : GameEntity, modifier : double) void
+        +setBossBehavior(behavior : BossBehaviorStrategy) void
     }
 
-    %% Concrete Observers
+    class PlayerGift {
+        <<enumeration>>
+        INTELLIGENCE
+        STRENGTH
+        CHARISMA
+        -id : int
+        -attackStat : int
+        +getId() int
+        +getAttackStat() int
+        +fromId(id : int)$ PlayerGift
+    }
+
+    %% ── OBSERVER PATTERN ───────────────────────────────────────────────────────
+
+    class EntityObserver {
+        <<abstract>>
+        +onHpChange(entity : GameEntity)* void
+    }
+
     class BossBehaviorObserver {
-        -boss: Boss
-        +onHpChange(entity: GameEntity) void
-        +onEntityDeath(entity: GameEntity) void
+        +onHpChange(entity : GameEntity) void
     }
 
     class EntityLoggerObserver {
-        +onHpChange(entity: GameEntity) void
-        +onEntityDeath(entity: GameEntity) void
+        -visuals : Visuals
+        +onHpChange(entity : GameEntity) void
     }
 
-    %% Boss Behavior Strategy Pattern
+    %% ── BOSS BEHAVIOR STRATEGY PATTERN ────────────────────────────────────────
+
     class BossBehaviorStrategy {
         <<interface>>
-        +execute(boss: Boss) void
+        +calculateDamage() double
     }
 
     class DefaultBossBehavior {
-        +execute(boss: Boss) void
+        +calculateDamage() double
     }
 
     class MidHPBossBehavior {
-        +execute(boss: Boss) void
+        +calculateDamage() double
     }
 
     class LowHPBossBehavior {
-        +execute(boss: Boss) void
+        +calculateDamage() double
     }
 
-    %% Question Strategy Pattern
+    %% ── QUESTION STRATEGY PATTERN ──────────────────────────────────────────────
+
     class QuestionStrategy {
         <<interface>>
-        +askQuestion(io: IOHandler) String
-        +isCorrect(answer: String) boolean
-        +getAnswer() String
+        +askQuestion(question : String, options : String[], io : IOHandler) String
+        +isCorrect(question : String, options : String[], answer : String, playerAnswer : String) boolean
     }
 
     class MultipleChoiceQuestionStrategy {
-        +askQuestion(io: IOHandler) String
-        +isCorrect(answer: String) boolean
-        +getAnswer() String
+        +askQuestion(question : String, options : String[], io : IOHandler) String
+        +isCorrect(question : String, options : String[], answer : String, playerAnswer : String) boolean
     }
 
     class TrueFalseQuestionStrategy {
-        +askQuestion(io: IOHandler) String
-        +isCorrect(answer: String) boolean
-        +getAnswer() String
+        +askQuestion(question : String, options : String[], io : IOHandler) String
+        +isCorrect(question : String, options : String[], answer : String, playerAnswer : String) boolean
     }
 
     class WrittenQuestionStrategy {
-        +askQuestion(io: IOHandler) String
-        +isCorrect(answer: String) boolean
-        +getAnswer() String
+        +askQuestion(question : String, options : String[], io : IOHandler) String
+        +isCorrect(question : String, options : String[], answer : String, playerAnswer : String) boolean
     }
 
-    %% Question Related Classes
+    %% ── ATTACK / QUESTION LAYER ────────────────────────────────────────────────
+
+    class AttackResult {
+        <<enumeration>>
+        DODGE
+        HIT
+        CRITICAL_HIT
+        -hitModifier : double
+        +getHitModifier() double
+    }
+
     class Question {
-        -content: String
-        -strategy: QuestionStrategy
-        +askQuestion(io: IOHandler) String
-        +isCorrect(answer: String) boolean
+        -strategy : QuestionStrategy
+        -question : String
+        -options : String[]
+        -answer : String
+        +askQuestion(ioHandler : IOHandler) String
+        +isCorrect(playerAnswer : String) boolean
+        +getQuestion() String
+        +getOptions() String[]
         +getAnswer() String
     }
 
     class Subject {
         <<enumeration>>
-        MATH
-        SCIENCE
-        HISTORY
-        LITERATURE
+        CALCULUS_I
+        PHYSICS_I
+        CALCULUS_II
+        PHYSICS_II
+        COMP_PROG
+        ADV_COMP_PROG
+        PROB_STAT_DATA
+        -id : int
+        -displayName : String
+        +getId() int
         +getDisplayName() String
+        +fromId(id : int)$ Subject
     }
 
     class QuestionBank {
         <<singleton>>
-        -instance: QuestionBank
-        -questions: Map
-        +getInstance() QuestionBank
-        +getUniqueQuestion(subject: Subject) Question
-        +loadQuestions() void
+        -instance : QuestionBank$
+        -subjectData : Map~Subject, Question[]~
+        -remainingQuestions : Map~Subject, List~Question~~
+        +getInstance()$ QuestionBank
+        +getQuestionsBySubject(subject : Subject) Question[]
+        +getUniqueQuestion(subject : Subject) Question
+        +resetSubjectDeck(subject : Subject) void
     }
 
     class QuoteBank {
-        <<static>>
-        +getBossName(subject: Subject) String
-        +getBossIntro(subject: Subject) String
+        +getBossName(subject : Subject)$ String
+        +getBossIntro(subject : Subject)$ String
+        +getBossVictory(subject : Subject)$ String
+        +getBossDefeat(subject : Subject)$ String
     }
 
-    %% Game Management Classes
+    %% ── GAME LAYER ─────────────────────────────────────────────────────────────
+
     class Battle {
-        -io: IOHandler
-        -rand: Random
-        -visuals: Visuals
-        +startLoop(player: Player, boss: Boss, subject: Subject) void
-        -handlePlayerStrike(player: Player, boss: Boss, answer: String) void
-        -handleBossCounter(player: Player, boss: Boss, answer: String) void
-        -handleEndgame(player: Player, boss: Boss) void
+        -io : IOHandler
+        -rand : Random
+        -visuals : Visuals
+        +startLoop(player : Player, boss : Boss, subject : Subject) void
+        -handlePlayerStrike(player : Player, boss : Boss, answer : String) void
+        -handleBossCounter(player : Player, boss : Boss, answer : String) void
+        -handleEndgame(player : Player, boss : Boss, subject : Subject) void
     }
 
     class GameSetup {
-        -player: Player
-        -boss: Boss
-        -io: IOHandler
+        -player : Player
+        -boss : Boss
+        -ioHandler : IOHandler
         +setupObservers() void
-        -registerObserver(observer: EntityObserver) void
-    }
-
-    class TerminalColor {
-        <<static>>
-        RED: TerminalColor
-        GREEN: TerminalColor
-        BLUE: TerminalColor
-        CYAN: TerminalColor
-        YELLOW: TerminalColor
-        +apply(text: String) String
-    }
-
-    class Visuals {
-        -ioHandler: IOHandler
-        +showLogo() void
-        +playPrologue(player: Player, boss: Boss) void
-        +showSubjectHeader(subject: String) void
-        +displayStatus(entity: String, hp: double, name: String) void
-        +showVictory(player: Player, boss: Boss) void
-        +showDefeat(player: Player, boss: Boss) void
-    }
-
-    class IOHandler {
-        +print(text: String) void
-        +printTyping(text: String) void
-        +readLine() String
-        +readInt() int
-        +clearTerminal() void
-        +fullClear() void
-        +wait(ms: int) void
     }
 
     class Menu {
-        -ioHandler: IOHandler
-        +SubjectSelection() Subject
-        +shouldSkip(io: IOHandler) boolean
+        -io : IOHandler
+        +subjectSelection() Subject
+        +selectSpecialty() PlayerGift
+        +shouldSkip(io : IOHandler) boolean
+    }
+
+    %% ── UI / IO LAYER ──────────────────────────────────────────────────────────
+
+    class IOHandler {
+        -scanner : Scanner
+        +print(message : String) void
+        +inlinePrint(message : String) void
+        +printTyping(message : String) void
+        +readLine() String
+        +center(text : String, width : int, symbol : String) String
+        +wait(ms : int) void
+        +clearTerminal() void
+        +fullClear() void
+    }
+
+    class Visuals {
+        -ioHandler : IOHandler
+        +showLogo() void
+        +playPrologue(player : Player) void
+        +playBossIntro(boss : Boss) void
+        +showSubjectHeader(subjectName : String) void
+        +showOpening() void
+        +displayStatus(isPlayer : boolean, hp : double, name : String) void
+        +showVictory(player : Player, boss : Boss, subject : Subject) void
+        +showDefeat(player : Player, boss : Boss, subject : Subject) void
+    }
+
+    class TerminalColor {
+        <<enumeration>>
+        RESET
+        RED
+        YELLOW
+        GREEN
+        CYAN
+        BLUE
+        PURPLE
+        ORANGE
+        PINK
+        LIGHT_GREY
+        -code : String
+        +apply(message : String) String
     }
 
     class App {
-        +main(args: String[]) void
+        +main(args : String[])$ void
     }
 
-    %% Relationships
+    %% ── RELATIONSHIPS ──────────────────────────────────────────────────────────
+
+    %% Inheritance
     GameEntity <|-- Player
     GameEntity <|-- Boss
+
+    %% Observer pattern
     EntityObserver <|-- BossBehaviorObserver
     EntityObserver <|-- EntityLoggerObserver
-    
+    GameEntity "1" o-- "*" EntityObserver : notifies
+
+    %% Boss Behavior Strategy pattern
     BossBehaviorStrategy <|.. DefaultBossBehavior
     BossBehaviorStrategy <|.. MidHPBossBehavior
     BossBehaviorStrategy <|.. LowHPBossBehavior
-    
+    Boss --> BossBehaviorStrategy : delegates to
+    BossBehaviorObserver ..> Boss : inspects and updates
+
+    %% Question Strategy pattern
     QuestionStrategy <|.. MultipleChoiceQuestionStrategy
     QuestionStrategy <|.. TrueFalseQuestionStrategy
     QuestionStrategy <|.. WrittenQuestionStrategy
-    
-    Question --> QuestionStrategy : uses
-    Question --> Subject : references
-    
-    Boss --> BossBehaviorStrategy : uses
-    BossBehaviorObserver --> Boss : observes
-    
-    Battle --> Player : uses
-    Battle --> Boss : uses
-    Battle --> Question : uses
-    Battle --> QuestionBank : uses
-    Battle --> Visuals : uses
-    Battle --> IOHandler : uses
-    Battle --> Subject : uses
-    
-    GameSetup --> Player : initializes
-    GameSetup --> Boss : initializes
-    GameSetup --> EntityObserver : registers
-    
-    Visuals --> IOHandler : uses
-    Visuals --> TerminalColor : uses
-    Visuals --> Player : displays
-    Visuals --> Boss : displays
-    
-    Menu --> IOHandler : uses
-    Menu --> Subject : returns
-    
-    App --> GameSetup : orchestrates
-    App --> Battle : orchestrates
-    App --> Menu : uses
-    App --> Visuals : uses
-    App --> Player : creates
-    App --> Boss : creates
+    Question *-- QuestionStrategy : composed of
+
+    %% Entity associations
+    Player --> PlayerGift : has
+    EntityLoggerObserver --> Visuals : uses
+
+    %% Question / data layer
+    QuestionBank *-- Question : manages
+    QuestionBank --> Subject : keyed by
+
+    %% Game layer
+    Battle --> IOHandler
+    Battle --> Visuals
+    Battle --> QuestionBank : queries
+    Battle ..> Player
+    Battle ..> Boss
+    Battle ..> Subject
+    Battle ..> AttackResult
+
+    GameSetup --> IOHandler
+    GameSetup ..> Player : registers observers on
+    GameSetup ..> Boss : registers observers on
+
+    Menu --> IOHandler
+    Menu ..> Subject : returns
+    Menu ..> PlayerGift : returns
+
+    %% UI layer
+    Visuals --> IOHandler
+    Visuals --> TerminalColor
+
+    %% Entry point
+    App --> IOHandler
+    App --> Visuals
+    App --> Menu
+    App --> GameSetup
+    App --> Battle
+    App ..> Player : creates
+    App ..> Boss : creates
+    App ..> QuoteBank : uses
 ```
