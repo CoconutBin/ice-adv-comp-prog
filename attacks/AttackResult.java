@@ -5,13 +5,17 @@ public enum AttackResult {
     HIT(1),
     CRITICAL_HIT(2);
 
-    private double hitModifier;
+    private double baseHitModifier;
 
-    AttackResult(double hitModifier) {
-        this.hitModifier = hitModifier;
+    AttackResult(double baseHitModifier) {
+        this.baseHitModifier = baseHitModifier;
     }
 
-    public double getHitModifier() {
-        return hitModifier;
+    public double getBaseHitModifier() {
+        return baseHitModifier;
+    }
+
+    public double getHitModifierWithBonus(double bonus) {
+        return baseHitModifier + bonus;
     }
 }
