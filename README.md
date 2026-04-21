@@ -36,9 +36,9 @@ The `QuestionStrategy` interface defines two methods: `askQuestion(...)` and `is
 
 | Class | Trigger | Damage Range |
 |---|---|---|
-| `DefaultBossBehavior` | HP > 50% | 5 – 7 |
-| `MidHPBossBehavior` | HP 20–50% | 5 – 10 |
-| `LowHPBossBehavior` | HP < 20% | 5 – 15 |
+| `DefaultBossBehavior` | HP > 50% | 5 (Fixed) |
+| `MidHPBossBehavior` | HP 20–50% | 7 – 12 |
+| `LowHPBossBehavior` | HP < 20% | 8 – 15 |
 
 ### 3. Singleton — Question Bank
 `attacks/question/QuestionBank.java`
@@ -63,7 +63,7 @@ The `QuestionStrategy` interface defines two methods: `askQuestion(...)` and `is
 
 **Polymorphism** — `Battle` calls `question.askQuestion(io)` and `question.isCorrect(answer)` without ever checking the question type. `GameEntity.attack(target, modifier)` is called uniformly for both player and boss turns.
 
-**Abstraction** — `QuestionStrategy` and `BossBehaviorStrategy` are the only thing `Battle` and `Boss` interact with, respectively. The concrete implementations are invisible to the callers.
+**Abstraction** — `QuestionStrategy` and `BossBehaviorStrategy` (which returns an `int`) are the only thing `Battle` and `Boss` interact with, respectively. The concrete implementations are invisible to the callers.
 
 ---
 
@@ -138,12 +138,13 @@ java -cp bin App
 - One random direction is safe (0 damage), one is a trap (Critical Hit, ×2 modifier)
 - Any other direction takes a glancing blow (×1 modifier)
 
-Actual damage = `attackStat × modifier`. Player attack stat is set by chosen `PlayerGift` (STRENGTH: 10, INTELLIGENCE/CHARISMA: 5). Boss damage comes from `BossBehaviorStrategy.calculateDamage()`.
+Actual damage = `attackStat × modifier`. Player attack stat is set by chosen `PlayerGift` (STRENGTH: 7, INTELLIGENCE/CHARISMA/NONE: 5). Boss damage comes from `BossBehaviorStrategy.calculateDamage()`.
 
 **Player Gifts** grant a passive bonus:
-- **INTELLIGENCE** — one free retry if the first answer is wrong
-- **STRENGTH** — higher base attack stat
-- **CHARISMA** — boss hints at a non-weak-point / non-safe direction before each phase
+- **INTELLIGENCE** — one free retry if the first answer is wrong; +0.25 Critical Hit modifier on attack; -0.5 Critical Hit modifier when hit by boss.
+- **STRENGTH** — higher base attack stat (7 vs 5).
+- **CHARISMA** — boss hints at a non-weak-point / non-safe direction before each phase.
+- **NONE** — "Hard Mode". No bonuses; grants a special "S-Rank" victory screen upon completion.
 
 ---
 
@@ -205,10 +206,13 @@ classDiagram
         <<enumeration>>
         INTELLIGENCE
         STRENGTH
-        CHARISMA
+        NONE
         -id : int
         -attackStat : int
+        -description : String
         +getId() int
+        +getAttackStat() int
+        +getDescription() String
         +getAttackStat() int
         +fromId(id : int)$ PlayerGift
     }
@@ -237,11 +241,15 @@ classDiagram
     }
 
     class DefaultBossBehavior {
-        +calculateDamage() double
+        +calculateDamage() int
     }
 
     class MidHPBossBehavior {
-        +calculateDamage() double
+        +calculateDamage() int
+    }
+
+    class LowHPBossBehavior {
+        +calculateDamage() int
     }
 
     class LowHPBossBehavior {
@@ -275,8 +283,9 @@ classDiagram
 
     class AttackResult {
         <<enumeration>>
-        DODGE
-        HIT
+        DbaseHitModifier : double
+        +getBaseHitModifier() double
+        +getHitModifierWithBonus(bonus : double
         CRITICAL_HIT
         -hitModifier : double
         +getHitModifier() double
