@@ -4,7 +4,7 @@ import game.io.IOHandler;
 import entities.BossPhase;
 import entities.Boss;
 
-public class BossBehaviorObserver implements EntityObserver {
+public class BossBehaviorObserver implements BossObserver {
     private IOHandler ioHandler;
     private Boss boss;
  

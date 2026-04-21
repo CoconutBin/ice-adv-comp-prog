@@ -9,6 +9,7 @@ public class EntityLoggerObserver implements EntityObserver {
 
     public EntityLoggerObserver(Visuals visuals, GameEntity entity) {
         this.visuals = visuals;
+        this.entity = entity;
     }
 
     @Override

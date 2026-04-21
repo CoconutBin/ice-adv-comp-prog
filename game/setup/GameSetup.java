@@ -25,6 +25,6 @@ public class GameSetup {
 
         // Behavior: switches boss attack strategy based on HP %
         BossBehaviorObserver behaviorObserver = new BossBehaviorObserver(ioHandler, boss);
-        boss.addObserver(behaviorObserver);
+        boss.addBossObserver(behaviorObserver);
     }
 }

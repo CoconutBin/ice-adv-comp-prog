@@ -1,11 +1,15 @@
 package entities;
 
+import java.util.ArrayList;
+
 import entities.boss.behavior.*;
+import entities.observers.BossObserver;
 
 public class Boss extends GameEntity {
     private final String intro;
     private BossBehaviorStrategy bossBehavior = new DefaultBossBehavior();
     private BossPhase bossPhase = BossPhase.DEFAULT;
+    private ArrayList<BossObserver> bossObservers = new ArrayList<>();
 
     // Updated constructor to include name and intro
     public Boss(String name, String intro, double initHp) {
@@ -31,6 +35,17 @@ public class Boss extends GameEntity {
 
     public void setBossBehavior(BossBehaviorStrategy behavior) {
         this.bossBehavior = behavior;
+        informBossObservers();
+    }
+
+    public void addBossObserver(BossObserver bossObserver){
+        this.bossObservers.add(bossObserver);
+    }
+
+    private void informBossObservers(){
+        for(BossObserver observer : bossObservers){
+            observer.update();
+        }
     }
 
     @Override
@@ -40,6 +55,7 @@ public class Boss extends GameEntity {
 
         if (hpPercentage <= 0.0) {
             this.bossPhase = BossPhase.DEFEAT;
+            setBossBehavior(new DefaultBossBehavior());
         } 
         else if (hpPercentage <= 0.2) {
             this.bossPhase = BossPhase.LOW_HP;
