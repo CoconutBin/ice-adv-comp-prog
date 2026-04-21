@@ -54,12 +54,6 @@ public class IOHandler {
         return scanner.nextLine();
     }
 
-    public int readInt() {
-        int value = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
-        return value;
-    }
-
     public void fullClear() {
         System.out.print("\033[H\033[2J\033[3J");
         System.out.flush();
