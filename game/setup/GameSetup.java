@@ -20,12 +20,11 @@ public class GameSetup {
      */
     public void setupObservers() {
         // Logger: logs all HP changes for debugging/UI
-        EntityLoggerObserver loggerObserver = new EntityLoggerObserver(new game.ui.Visuals(ioHandler));
-        player.addObserver(loggerObserver);
-        boss.addObserver(loggerObserver);
+        player.addObserver(new EntityLoggerObserver(new game.ui.Visuals(ioHandler), player));
+        boss.addObserver(new EntityLoggerObserver(new game.ui.Visuals(ioHandler), boss));
 
         // Behavior: switches boss attack strategy based on HP %
-        BossBehaviorObserver behaviorObserver = new BossBehaviorObserver();
+        BossBehaviorObserver behaviorObserver = new BossBehaviorObserver(ioHandler, boss);
         boss.addObserver(behaviorObserver);
     }
 }

@@ -1,21 +1,21 @@
 package entities.observers;
 
+import game.io.IOHandler;
+import entities.BossPhase;
 import entities.Boss;
-import entities.GameEntity;
-import entities.boss.behavior.*;
 
-public class BossBehaviorObserver extends EntityObserver {
+public class BossBehaviorObserver implements EntityObserver {
+    private IOHandler ioHandler;
+    private Boss boss;
+ 
+    public BossBehaviorObserver(IOHandler ioHandler, Boss boss) {
+        this.ioHandler = ioHandler;
+        this.boss = boss;
+    }
+
     @Override
-    public void onHpChange(GameEntity entity) {
-        if (!(entity instanceof Boss)) return;
-        Boss boss = (Boss) entity;
-        double hpPercentage = boss.getHp() / boss.getMaxHp();
-        if (hpPercentage > 0.5) {
-            boss.setBossBehavior(new DefaultBossBehavior());
-        } else if (hpPercentage > 0.2) {
-            boss.setBossBehavior(new MidHPBossBehavior());
-        } else {
-            boss.setBossBehavior(new LowHPBossBehavior());
-        }
+    public void update() {
+        BossPhase bossPhase = boss.getBossPhase();
+        ioHandler.printTyping(bossPhase.getColor().apply("[!] " + boss.getName() + ": " + bossPhase.getDialogue()));
     }
 }

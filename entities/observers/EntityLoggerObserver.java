@@ -3,15 +3,16 @@ package entities.observers;
 import entities.GameEntity;
 import game.ui.Visuals;
 
-public class EntityLoggerObserver extends EntityObserver {
+public class EntityLoggerObserver implements EntityObserver {
     private final Visuals visuals;
+    private GameEntity entity;
 
-    public EntityLoggerObserver(Visuals visuals) {
+    public EntityLoggerObserver(Visuals visuals, GameEntity entity) {
         this.visuals = visuals;
     }
 
     @Override
-    public void onHpChange(GameEntity entity) {
+    public void update() {
         boolean isPlayer = entity instanceof entities.Player;
         visuals.displayStatus(isPlayer, entity.getHp(), entity.getName());
     }
