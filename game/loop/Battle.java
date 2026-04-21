@@ -31,7 +31,7 @@ public class Battle {
             String playerAnswer = question.askQuestion(io);
             boolean isCorrect = question.isCorrect(playerAnswer);
             if (!isCorrect && PlayerGift.INTELLIGENCE == player.getPlayerGift()) {
-                io.printTyping(TerminalColor.CYAN.apply("[!] Your high Intelligence questions your answer."));
+                io.printTyping(TerminalColor.CYAN.apply("[!] The spirits above you question your choices, maybe reconsider?"));
                 playerAnswer = question.askQuestion(io);
                 isCorrect = question.isCorrect(playerAnswer);
             }
@@ -62,7 +62,7 @@ public class Battle {
         BodyPart weakPoint = BodyPart.getRandomPart(rand);
         BodyPart blockedPoint = BodyPart.getRandomPartExcluding(rand, weakPoint);
         if (PlayerGift.CHARISMA == player.getPlayerGift()) {
-            io.printTyping(TerminalColor.CYAN.apply("[!] Seeing that you look super charming,\n" + boss.getName()
+            io.printTyping(TerminalColor.CYAN.apply("[!] Seeing as you look quite charming,\n" + boss.getName()
                     + " has decided to tell you that their " + BodyPart.getRandomPartExcluding(rand, weakPoint) + " is not their weak point."));
         }
         io.printTyping("Prepare your strike!");
@@ -90,15 +90,15 @@ public class Battle {
 
         if (aimTarget == weakPoint) {
             io.printTyping(TerminalColor.YELLOW.apply("CRITICAL HIT! You found the weak spot!"));
-            player.attack(boss, AttackResult.CRITICAL_HIT.getHitModifier());
+            player.attack(boss, AttackResult.CRITICAL_HIT.getHitModifierWithBonus(PlayerGift.INTELLIGENCE == player.getPlayerGift() ? 0.25 : 0));
         } 
         else if (aimTarget == blockedPoint) {
             io.printTyping(TerminalColor.LIGHT_GREY.apply(boss.getName() + " dodged your attack perfectly!"));
-            player.attack(boss, AttackResult.DODGE.getHitModifier());
+            player.attack(boss, AttackResult.DODGE.getBaseHitModifier());
         } 
         else {
             io.printTyping(TerminalColor.RESET.apply("A strike to the " + aimTarget + "!"));
-            player.attack(boss, AttackResult.HIT.getHitModifier());
+            player.attack(boss, AttackResult.HIT.getBaseHitModifier());
         }
     }
 
@@ -150,8 +150,8 @@ public class Battle {
         DodgeDirection trapZone = DodgeDirection.getRandomDirectionExcluding(rand, safeZone);
 
         if (PlayerGift.CHARISMA == player.getPlayerGift()) {
-            io.printTyping(TerminalColor.CYAN.apply("[!] Seeing that you look super charming,\n" + boss.getName()
-                    + " has decided to tell you that he'll strike " + DodgeDirection.getRandomDirectionExcluding(rand, safeZone) + "."));
+            io.printTyping(TerminalColor.CYAN.apply("[!] Seeing as you look quite charming,\n" + boss.getName()
+                    + " has decided to tell you that their strike will hit " + trapZone + " the hardest."));
         }
         DodgeDirection dodgeDirection = null;
         io.printTyping("Prepare to dodge!");
@@ -177,13 +177,13 @@ public class Battle {
 
         if (dodgeDirection == safeZone) {
             io.printTyping(TerminalColor.GREEN.apply("PERFECT DODGE!"));
-            boss.attack(player, AttackResult.DODGE.getHitModifier());
+            boss.attack(player, AttackResult.DODGE.getBaseHitModifier());
         } else if (dodgeDirection == trapZone) {
             io.printTyping(TerminalColor.RED.apply("??? You jumped into the blade!"));
-            boss.attack(player, AttackResult.CRITICAL_HIT.getHitModifier());
+            boss.attack(player, AttackResult.CRITICAL_HIT.getHitModifierWithBonus(PlayerGift.INTELLIGENCE == player.getPlayerGift() ? -0.5 : 0));
         } else {
             io.printTyping(TerminalColor.RESET.apply("A glancing blow."));
-            boss.attack(player, AttackResult.HIT.getHitModifier());
+            boss.attack(player, AttackResult.HIT.getBaseHitModifier());
         }
     }
 
