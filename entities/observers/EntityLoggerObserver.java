@@ -6,12 +6,13 @@ import game.ui.Visuals;
 public class EntityLoggerObserver extends EntityObserver {
     private final Visuals visuals;
 
-    public EntityLoggerObserver(game.io.IOHandler ioHandler) {
-        this.visuals = new Visuals(ioHandler);
+    public EntityLoggerObserver(Visuals visuals) {
+        this.visuals = visuals;
     }
 
     @Override
     public void onHpChange(GameEntity entity) {
-        visuals.displayStatus(entity.getType(), entity.getHp(), entity.getName());
+        boolean isPlayer = entity instanceof entities.Player;
+        visuals.displayStatus(isPlayer, entity.getHp(), entity.getName());
     }
 }

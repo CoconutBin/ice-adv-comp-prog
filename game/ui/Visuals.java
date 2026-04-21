@@ -55,14 +55,14 @@ public void showLogo() {
         ioHandler.printTyping("A voice echoes: 'State your name, mortal, so we can misspell it on your final certificate.'");
         ioHandler.inlinePrint(TerminalColor.CYAN.apply("--> "));
     }
-    public void displayStatus(String entity, double hp, String name) {
+    public void displayStatus(boolean isPlayer, double hp, String name) {
         String bar = "";
         String missing = "";
         for (int i = 0; i < 20; i++) {
             if (i < Math.max(0, hp / 5)) bar += "█";
             else missing += "█";
         }
-        if (entity.equals("player")){
+        if (isPlayer){
             ioHandler.print(TerminalColor.GREEN + name + " HP: " + bar + TerminalColor.LIGHT_GREY + missing + TerminalColor.RESET);
         }
         else{
