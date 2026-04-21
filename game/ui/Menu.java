@@ -24,7 +24,7 @@ public class Menu {
     public PlayerGift selectSpecialty() {
         io.print(TerminalColor.YELLOW.apply(io.center(" PICK YOUR GIFT ", 120, "=")));
         for(PlayerGift gift : PlayerGift.values()) {
-            io.print(TerminalColor.PURPLE.apply("[" + gift.getId() + "]") + " " + gift);
+            io.print(TerminalColor.PURPLE.apply("[" + gift.getId() + "]") + " " + gift + " " + "(" + gift.getDescription() + ")");
         }
         io.print(TerminalColor.YELLOW.apply(io.center("", 120, "=")));
 

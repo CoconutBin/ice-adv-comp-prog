@@ -1,17 +1,20 @@
 package entities;
 
 public enum PlayerGift {
-    INTELLIGENCE(1, 5),
-    STRENGTH(2, 10),
-    CHARISMA(3, 5);
+    INTELLIGENCE(1, 5, "Be blessed with the scholarly knowledge of realms beyond."),
+    STRENGTH(2, 7, "Hone your true potential and unleash a stronger strike when opportunity arises."),
+    CHARISMA(3, 5, "Possess a charm so wonderful, even your enemies slip and leak their secrets."),
+    NONE(4, 5, "Defy fate and receive no advantages.");
 
-    PlayerGift(int id, int attackStat){
+    PlayerGift(int id, int attackStat, String description){
         this.id = id;
         this.attackStat = attackStat;
+        this.description = description;
     }
 
     private final int id;
     private final int attackStat;
+    private final String description;
 
     public int getId() {
         return id;
@@ -19,6 +22,10 @@ public enum PlayerGift {
 
     public int getAttackStat() {
         return attackStat;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String toString(){
