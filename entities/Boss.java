@@ -17,16 +17,11 @@ public class Boss extends GameEntity {
     }
   
     @Override
-    public void attack(GameEntity target, double Modifier) {
+    public void attack(GameEntity target, double modifier) {
         if (bossBehavior != null) {
-            double damage = bossBehavior.calculateDamage() * Modifier;
+            double damage = bossBehavior.calculateDamage() * modifier;
             target.updateHp(-damage);
         }
-    }
-
-    @Override
-    public String getType(){
-        return "boss";
     }
 
     public void setBossBehavior(BossBehaviorStrategy behavior) {

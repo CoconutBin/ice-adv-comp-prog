@@ -9,13 +9,8 @@ public class Player extends GameEntity {
     }
 
     @Override
-    public void attack(GameEntity target, double Modifier) {
-        target.updateHp(-1 * playerGift.getAttackStat() * Modifier);
-    }
-
-    @Override
-    public String getType(){
-        return "player";
+    public void attack(GameEntity target, double modifier) {
+        target.updateHp(-1 * playerGift.getAttackStat() * modifier);
     }
 
     public PlayerGift getPlayerGift(){

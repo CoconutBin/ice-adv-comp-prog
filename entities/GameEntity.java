@@ -15,8 +15,8 @@ public abstract class GameEntity {
         this.name = name;
         this.observers = new ArrayList<>();
     }
-    
-    public abstract void attack(GameEntity target, double Modifier);
+
+    public abstract void attack(GameEntity target, double modifier);
 
     public double getHp() {
         return hp;
@@ -32,10 +32,6 @@ public abstract class GameEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getType() {
-        return "";
     }
 
     public void addObserver(EntityObserver observer) {
