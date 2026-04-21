@@ -1,9 +1,7 @@
 package game.setup;
 
-import entities.Player;
-import entities.boss.Boss;
-import entities.observers.EntityLoggerObserver;
-import entities.observers.BossBehaviorObserver;
+import entities.*;
+import entities.observers.*;
 import game.io.IOHandler;
 
 public class GameSetup {
@@ -22,7 +20,7 @@ public class GameSetup {
      */
     public void setupObservers() {
         // Logger: logs all HP changes for debugging/UI
-        EntityLoggerObserver loggerObserver = new EntityLoggerObserver(ioHandler);
+        EntityLoggerObserver loggerObserver = new EntityLoggerObserver(new game.ui.Visuals(ioHandler));
         player.addObserver(loggerObserver);
         boss.addObserver(loggerObserver);
 

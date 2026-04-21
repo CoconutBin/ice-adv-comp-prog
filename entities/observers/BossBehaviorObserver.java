@@ -1,7 +1,7 @@
 package entities.observers;
 
+import entities.Boss;
 import entities.GameEntity;
-import entities.boss.Boss;
 import entities.boss.behavior.*;
 
 public class BossBehaviorObserver extends EntityObserver {

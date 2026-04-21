@@ -3,12 +3,14 @@ package game.loop;
 import attacks.question.Question;
 import attacks.question.QuestionBank;
 import attacks.question.Subject;
+import entities.Boss;
 import entities.Player;
-import entities.boss.Boss;
+import entities.PlayerGift;
 import game.io.IOHandler;
 import game.ui.TerminalColor;
 import game.ui.Visuals;
 import java.util.Random;
+import attacks.AttackResult;
 
 public class Battle {
     private final IOHandler io;
@@ -23,13 +25,13 @@ public class Battle {
 
     public void startLoop(Player player, Boss boss, Subject subject) {
         while (boss.getHp() > 0 && player.getHp() > 0) {
-            
+
             // 1. Question Phase
             Question question = QuestionBank.getInstance().getUniqueQuestion(subject);
             String playerAnswer = question.askQuestion(io);
             boolean isCorrect = question.isCorrect(playerAnswer);
-            if (!isCorrect && 1 == player.getPath()) {
-                io.printTyping(TerminalColor.CYAN.apply("[!] Your high Intelligence questions your answer."));
+            if (!isCorrect && PlayerGift.INTELLIGENCE == player.getPlayerGift()) {
+                io.printTyping(TerminalColor.CYAN.apply("[!] The spirits above you question your choices, maybe reconsider?"));
                 playerAnswer = question.askQuestion(io);
                 isCorrect = question.isCorrect(playerAnswer);
             }
@@ -40,8 +42,8 @@ public class Battle {
             } else {
                 handleBossCounter(player, boss, question.getAnswer());
             }
-            
-            if (!(boss.getHp() > 0 && player.getHp() > 0)){
+
+            if (!(boss.getHp() > 0 && player.getHp() > 0)) {
                 break;
             }
             io.print(TerminalColor.LIGHT_GREY.apply("\n[ Press ENTER to continue ]"));
@@ -56,106 +58,167 @@ public class Battle {
     private void handlePlayerStrike(Player player, Boss boss, String answer) {
         io.printTyping(TerminalColor.GREEN.apply("[!] CORRECT! The answer is: ") + TerminalColor.YELLOW.apply(answer));
         io.wait(500);
-        int DMG;
-            switch (player.getPath()) {
-                        case 1 -> {
-                            DMG = 5;
-                        }
-                        case 2 -> {
-                            DMG = 10;
-                        }
-                        case 3 -> {
-                            DMG = 5;
-                        }
-                        default -> DMG = 5;
-                    }
-        int aim = -1;
-        int weakPoint = rand.nextInt(3) + 1;
-        int blockedPoint = (weakPoint % 3) + 1;
-        if (3 == player.getPath()) {
-
-            java.util.List<Integer> NormalZones = new java.util.ArrayList<>(java.util.Arrays.asList(1, 2, 3));
-            NormalZones.remove(Integer.valueOf(weakPoint));
-            int revealedZone = NormalZones.get(new java.util.Random().nextInt(NormalZones.size()));
-            String area = (revealedZone == 1 ? "Head" : revealedZone == 2 ? "Body" : "Legs");
-            io.printTyping(TerminalColor.CYAN.apply("[!] Seeing that you looking super charming,\n" + boss.getName() +" decided to tell you that his weakpoint is not " + area + "."));
+        BodyPart aimTarget = null;
+        BodyPart weakPoint = BodyPart.getRandomPart(rand);
+        BodyPart blockedPoint = BodyPart.getRandomPartExcluding(rand, weakPoint);
+        if (PlayerGift.CHARISMA == player.getPlayerGift()) {
+            io.printTyping(TerminalColor.CYAN.apply("[!] Seeing as you look quite charming,\n" + boss.getName()
+                    + " has decided to tell you that their " + BodyPart.getRandomPartExcluding(rand, weakPoint) + " is not their weak point."));
         }
         io.printTyping("Prepare your strike!");
-        io.print("Striking [1] Head [2] Body [3] Legs");
-        while (aim < 1 || aim > 3) {
-            
+        String strikeMessage = "Striking";
+        for(BodyPart part : BodyPart.values()) {
+            strikeMessage += " [" + part.getId() + "] " + part;
+        }
+        io.print(strikeMessage);
+        while (aimTarget == null) {
             try {
-                
-                String input = io.readLine(); 
-                aim = Integer.parseInt(input);
-                
-                if (aim < 1 || aim > 3) {
-                    io.printTyping(TerminalColor.RED.apply("Invalid target! Focus your aim on 1, 2, or 3."));
-                }
+
+                String input = io.readLine();
+                aimTarget = BodyPart.fromId(Integer.parseInt(input));
+
             } catch (NumberFormatException e) {
-                // Catches "apple", empty strings, or symbols
-                io.printTyping(TerminalColor.RED.apply("You hesitate! Enter a valid target NUMBER (1, 2, or 3)."));
-                aim = -1; 
+                // Catches "apple", empty strings, or symbols or things that can't be parsed into an int;
+                io.printTyping(TerminalColor.RED.apply("You hesitated! Enter a valid target NUMBER (1, 2, or 3)."));
+
+            } catch (IllegalArgumentException e) {
+
+                io.printTyping(TerminalColor.RED.apply("Invalid target! Focus your aim on 1, 2, or 3."));
+
             }
         }
 
-
-        if (aim == weakPoint) {
+        if (aimTarget == weakPoint) {
             io.printTyping(TerminalColor.YELLOW.apply("CRITICAL HIT! You found the weak spot!"));
-            boss.updateHp(-2 * DMG);
-        } else if (aim == blockedPoint) {
-            io.printTyping(TerminalColor.LIGHT_GREY.apply(boss.getName() + " blocked your attack perfectly!"));
-            boss.updateHp(0);
-        } else {
-            String part = (aim == 1 ? "Head" : aim == 2 ? "Body" : "Legs");
-            io.printTyping(TerminalColor.RESET.apply("A strike to the " + part + "."));
-            boss.updateHp(-1 * DMG);
+            player.attack(boss, AttackResult.CRITICAL_HIT.getHitModifierWithBonus(PlayerGift.INTELLIGENCE == player.getPlayerGift() ? 0.25 : 0));
+        } 
+        else if (aimTarget == blockedPoint) {
+            io.printTyping(TerminalColor.LIGHT_GREY.apply(boss.getName() + " dodged your attack perfectly!"));
+            player.attack(boss, AttackResult.DODGE.getBaseHitModifier());
+        } 
+        else {
+            io.printTyping(TerminalColor.RESET.apply("A strike to the " + aimTarget + "!"));
+            player.attack(boss, AttackResult.HIT.getBaseHitModifier());
+        }
+    }
+
+    private enum BodyPart {
+        HEAD(1, "Head"), BODY(2, "Body"), LEGS(3, "Legs");
+
+        private final int id;
+        private String name;
+
+        BodyPart(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String toString() {
+            return name;
+        }
+
+        public static BodyPart fromId(int id) {
+            for (BodyPart part : values()) {
+                if (part.getId() == id) {
+                    return part;
+                }
+            }
+            throw new IllegalArgumentException("Invalid BodyPart ID: " + id);
+        }
+
+        public static BodyPart getRandomPart(Random rand) {
+            return values()[rand.nextInt(values().length)];
+        }
+
+        public static BodyPart getRandomPartExcluding(Random rand, BodyPart exclude) {
+            BodyPart part = exclude;
+            while (part == exclude){
+                part = values()[rand.nextInt(values().length)];
+            };
+            return part;
         }
     }
 
     private void handleBossCounter(Player player, Boss boss, String answer) {
         io.printTyping(TerminalColor.RED.apply("[!] WRONG! The answer is ") + TerminalColor.CYAN.apply(answer));
         io.wait(500);
-        int safeZone = rand.nextInt(3) + 1;
-        int trapZone = (safeZone % 3) + 1;
+        DodgeDirection safeZone = DodgeDirection.getRandomDirection(rand);
+        DodgeDirection trapZone = DodgeDirection.getRandomDirectionExcluding(rand, safeZone);
 
-        if (3 == player.getPath()) {
-
-            java.util.List<Integer> dangerZones = new java.util.ArrayList<>(java.util.Arrays.asList(1, 2, 3));
-            dangerZones.remove(Integer.valueOf(safeZone));
-            int revealedZone = dangerZones.get(new java.util.Random().nextInt(dangerZones.size()));
-            String direction = (revealedZone == 1 ? "left" : revealedZone == 2 ? "right" : "down");
-            io.printTyping(TerminalColor.CYAN.apply("[!] Seeing that you looking super charming,\n" + boss.getName() +" decided to tell you that he's probably striking " + direction + "."));
+        if (PlayerGift.CHARISMA == player.getPlayerGift()) {
+            io.printTyping(TerminalColor.CYAN.apply("[!] Seeing as you look quite charming,\n" + boss.getName()
+                    + " has decided to tell you that their strike will hit " + trapZone + " the hardest."));
         }
-        int dodge = -1;
+        DodgeDirection dodgeDirection = null;
         io.printTyping("Prepare to dodge!");
-        io.print("Dodge to [1] Left [2] Right [3] Duck");
+        String dodgeMessage = "Dodge to";
+        for(DodgeDirection dir : DodgeDirection.values()) {
+            dodgeMessage += " [" + dir.getId() + "] " + dir;
+        }
+        io.print(dodgeMessage);
 
-        while (dodge < 1 || dodge > 3) {
+        while (dodgeDirection == null) {
             try {
-    
-                String input = io.readLine(); 
-                dodge = Integer.parseInt(input);
                 
-                if (dodge < 1 || dodge > 3) {
-                    io.printTyping(TerminalColor.RED.apply("That's not a dodge zone! Choose 1, 2, or 3."));
-                }
+                String input = io.readLine();
+                int dodge = Integer.parseInt(input);
+                dodgeDirection = DodgeDirection.fromId(dodge);
+
             } catch (NumberFormatException e) {
                 io.printTyping(TerminalColor.RED.apply("Panic makes you freeze! Enter a NUMBER (1, 2, or 3)."));
-                dodge = -1;
+            } catch (IllegalArgumentException e){
+                io.printTyping(TerminalColor.RED.apply("Invalid dodge! Focus on dodging to 1, 2, or 3."));
             }
         }
 
-
-        if (dodge == safeZone) {
+        if (dodgeDirection == safeZone) {
             io.printTyping(TerminalColor.GREEN.apply("PERFECT DODGE!"));
-            player.updateHp(0);
-        } else if (dodge == trapZone) {
+            boss.attack(player, AttackResult.DODGE.getBaseHitModifier());
+        } else if (dodgeDirection == trapZone) {
             io.printTyping(TerminalColor.RED.apply("??? You jumped into the blade!"));
-            player.updateHp(-10);
+            boss.attack(player, AttackResult.CRITICAL_HIT.getHitModifierWithBonus(PlayerGift.INTELLIGENCE == player.getPlayerGift() ? -0.5 : 0));
         } else {
             io.printTyping(TerminalColor.RESET.apply("A glancing blow."));
-            player.updateHp(-5);
+            boss.attack(player, AttackResult.HIT.getBaseHitModifier());
+        }
+    }
+
+    private enum DodgeDirection {
+        LEFT(1), RIGHT(2), DUCK(3);
+
+        private final int id;
+
+        DodgeDirection(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public static DodgeDirection fromId(int id) {
+            for (DodgeDirection dir : values()) {
+                if (dir.getId() == id) {
+                    return dir;
+                }
+            }
+            throw new IllegalArgumentException("Invalid DodgeDirection ID: " + id);
+        }
+
+        public static DodgeDirection getRandomDirection(Random rand) {
+            return values()[rand.nextInt(values().length)];
+        }
+
+        public static DodgeDirection getRandomDirectionExcluding(Random rand, DodgeDirection exclude) {
+            DodgeDirection dir = exclude;
+            while (dir == exclude){
+                dir = values()[rand.nextInt(values().length)];
+            };
+            return dir;
         }
     }
 
@@ -165,6 +228,6 @@ public class Battle {
         } else {
             visuals.showVictory(player, boss, subject);
         }
-        System.exit(0);
+        return;
     }
 }

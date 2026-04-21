@@ -1,8 +1,9 @@
 package game.ui;
 import attacks.question.QuoteBank;
 import attacks.question.Subject;
+import entities.Boss;
 import entities.Player;
-import entities.boss.Boss;
+import entities.PlayerGift;
 import game.io.IOHandler;
 
 
@@ -53,16 +54,16 @@ public void showLogo() {
         ioHandler.printTyping(TerminalColor.PURPLE.apply("[!] THE VOID OPENS (smells like cheap coffee and regret)..."));
         ioHandler.wait(500);
         ioHandler.printTyping("A voice echoes: 'State your name, mortal, so we can misspell it on your final certificate.'");
-        System.out.print(TerminalColor.CYAN.apply("--> "));
+        ioHandler.inlinePrint(TerminalColor.CYAN.apply("--> "));
     }
-    public void displayStatus(String entity, double hp, String name) {
+    public void displayStatus(boolean isPlayer, double hp, String name) {
         String bar = "";
         String missing = "";
         for (int i = 0; i < 20; i++) {
             if (i < Math.max(0, hp / 5)) bar += "█";
             else missing += "█";
         }
-        if (entity.equals("player")){
+        if (isPlayer){
             ioHandler.print(TerminalColor.GREEN + name + " HP: " + bar + TerminalColor.LIGHT_GREY + missing + TerminalColor.RESET);
         }
         else{
@@ -85,19 +86,37 @@ public void showLogo() {
     }
 
     public void showVictory(Player player, Boss boss, Subject subject) {
-        ioHandler.print("\n" + TerminalColor.YELLOW.apply(ioHandler.center("", 120, "=")));
-        ioHandler.print("");
-        ioHandler.printTyping(TerminalColor.YELLOW.apply(ioHandler.center("[!] " + boss.getName() + " HAS BEEN DEFEATED!", 120 , " ")));
-        ioHandler.printTyping(ioHandler.center(QuoteBank.getBossDefeat(subject), 120, " "));
-        ioHandler.print("");
-        ioHandler.wait(500);
-        ioHandler.printTyping(ioHandler.center(player.getName() + " is aiming for that A!", 120 , " "));
-        ioHandler.print("");
-        ioHandler.wait(1000);
-        ioHandler.printTyping(TerminalColor.YELLOW.apply(ioHandler.center("A V E R A G E   A C H I E V E D", 120 , " ")));
-        ioHandler.wait(500);
-        ioHandler.printTyping(TerminalColor.PURPLE.apply(ioHandler.center("Remaining Health: " + (int)player.getHp() + " HP (and 0 dignity remaining)", 120, " ")));
-        ioHandler.print("");
-        ioHandler.print(TerminalColor.YELLOW.apply(ioHandler.center("", 120, "=")));
+        if(player.getPlayerGift() == PlayerGift.NONE){
+            ioHandler.print("\n" + TerminalColor.GREEN.apply(ioHandler.center("", 120, "=")));
+            ioHandler.print("");
+            ioHandler.printTyping(TerminalColor.GREEN.apply(ioHandler.center("[!] " + boss.getName() + " HAS BEEN DEFEATED!", 120 , " ")));
+            ioHandler.printTyping(ioHandler.center(QuoteBank.getBossDefeat(subject), 120, " "));
+            ioHandler.print("");
+            ioHandler.wait(500);
+            ioHandler.printTyping(ioHandler.center(player.getName() + " is aiming for that S!", 120 , " "));
+            ioHandler.print("");
+            ioHandler.wait(1000);
+            ioHandler.printTyping(TerminalColor.GREEN.apply(ioHandler.center("S U R V I V E D   A C H I E V E D", 120 , " ")));
+            ioHandler.wait(500);
+            ioHandler.printTyping(TerminalColor.CYAN.apply(ioHandler.center("Remaining Health: " + (int)player.getHp() + " HP (and maybe some dignity remaining)", 120, " ")));
+            ioHandler.print("");
+            ioHandler.print(TerminalColor.GREEN.apply(ioHandler.center("", 120, "=")));
+        }
+        else {
+            ioHandler.print("\n" + TerminalColor.YELLOW.apply(ioHandler.center("", 120, "=")));
+            ioHandler.print("");
+            ioHandler.printTyping(TerminalColor.YELLOW.apply(ioHandler.center("[!] " + boss.getName() + " HAS BEEN DEFEATED!", 120 , " ")));
+            ioHandler.printTyping(ioHandler.center(QuoteBank.getBossDefeat(subject), 120, " "));
+            ioHandler.print("");
+            ioHandler.wait(500);
+            ioHandler.printTyping(ioHandler.center(player.getName() + " is aiming for that A!", 120 , " "));
+            ioHandler.print("");
+            ioHandler.wait(1000);
+            ioHandler.printTyping(TerminalColor.YELLOW.apply(ioHandler.center("A V E R A G E   A C H I E V E D", 120 , " ")));
+            ioHandler.wait(500);
+            ioHandler.printTyping(TerminalColor.PURPLE.apply(ioHandler.center("Remaining Health: " + (int)player.getHp() + " HP (and 0 dignity remaining)", 120, " ")));
+            ioHandler.print("");
+            ioHandler.print(TerminalColor.YELLOW.apply(ioHandler.center("", 120, "=")));
+        }
     }
 }
