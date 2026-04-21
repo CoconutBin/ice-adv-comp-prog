@@ -18,523 +18,422 @@ public class QuestionBank {
         remainingQuestions = new HashMap<>();
 
         subjectData.put(Subject.CALCULUS_I, new Question[] {
-            // --- LIMITS & CONTINUITY ---
+            // --- 1. LIMITS & CONTINUITY ---
             new Question(new MultipleChoiceQuestionStrategy(), "If the left-hand limit and right-hand limit at x=c exist but are not equal, what exists at c?", new String[] {"A jump discontinuity", "A removable discontinuity", "An infinite discontinuity", "A vertical asymptote"}, "A jump discontinuity"),
             new Question(new TrueFalseQuestionStrategy(), "True or False: If a function is continuous at x=c, it must be differentiable at x=c.", "False"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: If a function is differentiable at x=c, it must be continuous at x=c.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which theorem guarantees a function takes on every value between f(a) and f(b)?", new String[] {"Mean Value Theorem", "Intermediate Value Theorem", "Rolle's Theorem", "Extreme Value Theorem"}, "Intermediate Value Theorem"),
-            new Question(new MultipleChoiceQuestionStrategy(), "A limit of the form 0/0 is called:", new String[] {"Undefined", "An indeterminate form", "Infinity", "Zero"}, "An indeterminate form"),
             new Question(new MultipleChoiceQuestionStrategy(), "If the limit of f(x) as x approaches c is L, what must be true about f(c)?", new String[] {"f(c) = L", "f(c) must exist", "f(c) is undefined", "Nothing necessarily"}, "Nothing necessarily"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A function can have more than two horizontal asymptotes.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which theorem guarantees a continuous function takes on every value between f(a) and f(b)?", new String[] {"Mean Value Theorem", "Intermediate Value Theorem", "Rolle's Theorem", "Extreme Value Theorem"}, "Intermediate Value Theorem"),
             
-            // --- DERIVATIVES ---
+            // --- 2. DERIVATIVES ---
             new Question(new MultipleChoiceQuestionStrategy(), "The derivative of a function at a point represents the:", new String[] {"Area under the curve", "Slope of the tangent line", "Y-intercept", "Length of the curve"}, "Slope of the tangent line"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Where can the absolute extremum of a continuous function on a closed interval occur?", new String[] {"Only at critical points", "Only at endpoints", "Critical points or endpoints", "Only where f'(x)=0"}, "Critical points or endpoints"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If f'(c) = 0 and f''(c) > 0, then at x=c there is a:", new String[] {"Local Maximum", "Local Minimum", "Inflection Point", "Vertical Tangent"}, "Local Minimum"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If f''(x) changes sign at x=c, then (c, f(c)) is:", new String[] {"A critical point", "A cusp", "An inflection point", "A hole"}, "An inflection point"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which theorem requires f(a) to equal f(b) and a derivative of zero to exist between them?", new String[] {"Mean Value Theorem", "Squeeze Theorem", "Rolle's Theorem", "Taylor's Theorem"}, "Rolle's Theorem"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: If f'(x) > 0 for all x in an interval, the function is increasing on that interval.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "A function has a 'sharp corner' or 'cusp' at x=c. The derivative f'(c) is:", new String[] {"Zero", "Positive", "Negative", "Undefined"}, "Undefined"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If the velocity of a particle is constant, its acceleration is:", new String[] {"Positive", "Negative", "Zero", "Increasing"}, "Zero"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The derivative of an even function is always:", new String[] {"Even", "Odd", "Constant", "Positive"}, "Odd"),
-            
-            // --- INTEGRATION ---
-            new Question(new MultipleChoiceQuestionStrategy(), "The Fundamental Theorem of Calculus relates which two concepts?", new String[] {"Limits and Derivatives", "Differentiation and Integration", "Slope and Concavity", "Area and Volume"}, "Differentiation and Integration"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The definite integral can represent a negative value.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The '+ C' in an indefinite integral represents:", new String[] {"A specific constant", "An arbitrary constant of integration", "The speed of light", "The slope"}, "An arbitrary constant of integration"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The area under a velocity-time graph represents:", new String[] {"Acceleration", "Position", "Displacement", "Jerk"}, "Displacement"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If f(x) is an odd function, the integral from -a to a of f(x) dx is:", new String[] {"2 * f(a)", "a^2", "Zero", "Undefined"}, "Zero"),
-            new Question(new MultipleChoiceQuestionStrategy(), "A Riemann sum with an infinite number of subintervals is equivalent to:", new String[] {"A derivative", "A limit of a sequence", "A definite integral", "A tangent line"}, "A definite integral"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Every continuous function has an antiderivative.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Integration by substitution is essentially the reverse of:", new String[] {"The Power Rule", "The Product Rule", "The Chain Rule", "The Quotient Rule"}, "The Chain Rule"),
-            
-            // --- GENERAL CONCEPTS ---
-            new Question(new MultipleChoiceQuestionStrategy(), "If f(x) is concave up, then its derivative f'(x) is:", new String[] {"Negative", "Zero", "Increasing", "Decreasing"}, "Increasing"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Linearization is the process of approximating a curve using a:", new String[] {"Parabola", "Tangent line", "Horizontal line", "Secant line"}, "Tangent line"),
-            new Question(new MultipleChoiceQuestionStrategy(), "L'Hopital's Rule is used to evaluate:", new String[] {"Complex derivatives", "Indeterminate limits", "Area under curves", "Volume of solids"}, "Indeterminate limits"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: All critical points are local extrema.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If a function is increasing and concave down, its slope is:", new String[] {"Positive and increasing", "Positive and decreasing", "Negative and increasing", "Negative and decreasing"}, "Positive and decreasing"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The Mean Value Theorem states there is at least one point where the instantaneous rate of change equals the:", new String[] {"Initial rate of change", "Average rate of change", "Final rate of change", "Zero rate of change"}, "Average rate of change"),
-            // --- OPTIMIZATION & RELATED RATES ---
-            new Question(new MultipleChoiceQuestionStrategy(), "In an optimization problem, if the domain of the primary equation is a closed interval, you must check:", new String[] {"Only critical points", "Only endpoints", "Both critical points and endpoints", "The y-intercept"}, "Both critical points and endpoints"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Related rates problems are typically solved using which technique?", new String[] {"Integration by parts", "Implicit differentiation", "Logarithmic differentiation", "Partial fractions"}, "Implicit differentiation"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: If the volume of a sphere is increasing at a constant rate, its radius is also increasing at a constant rate.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "When minimizing the distance from a point to a curve, it is mathematically easier to minimize the:", new String[] {"Square root of the distance", "Square of the distance", "Slope of the distance", "Reciprocal of the distance"}, "Square of the distance"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If a searchlight rotates at a constant rate, the speed of the light beam along a wall:", new String[] {"Is constant", "Increases as it moves further from the light", "Decreases as it moves further", "Is always zero"}, "Increases as it moves further from the light"),
-
-            // --- THEOREMS & DEFINITIONS ---
             new Question(new MultipleChoiceQuestionStrategy(), "The limit definition of a derivative uses the slope of a _____ line to find the slope of a _____ line.", new String[] {"Tangent, Secant", "Secant, Tangent", "Horizontal, Vertical", "Normal, Tangent"}, "Secant, Tangent"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: If a function is continuous on a closed interval [a, b], it must have an absolute maximum and minimum.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the derivative of any constant value?", new String[] {"1", "The constant itself", "Zero", "Undefined"}, "Zero"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The Power Rule states that the derivative of x^n is:", new String[] {"n*x^n", "n*x^(n-1)", "x^(n+1)/(n+1)", "n^x"}, "n*x^(n-1)"),
+            new Question(new MultipleChoiceQuestionStrategy(), "What rule is used to find the derivative of a composite function f(g(x))?", new String[] {"Power Rule", "Product Rule", "Quotient Rule", "Chain Rule"}, "Chain Rule"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The differential dy of a function y = f(x) is defined as:", new String[] {"f'(x) dx", "f(x) dx", "f'(x) / dx", "f(x+dx) - f(x)"}, "f'(x) dx"),
             new Question(new TrueFalseQuestionStrategy(), "True or False: The derivative of a sum is the sum of the derivatives.", "True"),
 
-            // --- GRAPHICAL ANALYSIS ---
-            new Question(new MultipleChoiceQuestionStrategy(), "If f'(x) is decreasing, then the graph of f(x) is:", new String[] {"Increasing", "Concave Up", "Concave Down", "Linear"}, "Concave Down"),
-            new Question(new MultipleChoiceQuestionStrategy(), "A point where the graph has a tangent line but f'(x) is infinite is called a:", new String[] {"Horizontal tangent", "Vertical tangent", "Hole", "Asymptote"}, "Vertical tangent"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If the graph of f(x) has a horizontal asymptote y = L, then the limit as x approaches infinity of f(x) is:", new String[] {"Infinity", "Zero", "L", "Undefined"}, "L"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If f(x) has a vertical asymptote at x = c, then f(c) is:", new String[] {"Zero", "Positive", "Negative", "Undefined"}, "Undefined"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A function can cross its own horizontal asymptote.", "True"),
+            // --- 3. INTEGRATIONS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "The Fundamental Theorem of Calculus relates which two concepts?", new String[] {"Limits and Derivatives", "Differentiation and Integration", "Slope and Concavity", "Area and Volume"}, "Differentiation and Integration"),
+            new Question(new MultipleChoiceQuestionStrategy(), "A Riemann sum with an infinite number of subintervals evaluates to:", new String[] {"A derivative", "A limit of a sequence", "A definite integral", "A tangent line"}, "A definite integral"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The '+ C' in an indefinite integral represents:", new String[] {"A specific constant", "An arbitrary constant of integration", "The limit of integration", "The derivative"}, "An arbitrary constant of integration"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The definite integral of a function can represent a negative value.", "True"),
 
-            // --- INTEGRATION CONCEPTS ---
-            new Question(new MultipleChoiceQuestionStrategy(), "The 'Net Change Theorem' states that the integral of a rate of change is the:", new String[] {"Total accumulation", "Net change in the original function", "Average value", "Derivative of the function"}, "Net change in the original function"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The process of finding a function given its derivative is called:", new String[] {"Differentiation", "Antidifferentiation", "Simplification", "Linearization"}, "Antidifferentiation"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The 'Average Value' of a function f(x) on [a, b] involves dividing the integral by:", new String[] {"f(b) - f(a)", "b - a", "a + b", "2"}, "b - a"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If the upper and lower limits of a definite integral are the same, the integral equals:", new String[] {"1", "The value of the function", "Zero", "Infinity"}, "Zero"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Integration is the inverse process of differentiation.", "True"),
+            // --- 4. TRANSCENDENTAL FUNCTIONS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "What is the derivative of the natural logarithmic function, ln(x)?", new String[] {"1/x", "e^x", "x", "ln(x)"}, "1/x"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The antiderivative of the exponential function e^x is:", new String[] {"e^x + C", "x*e^(x-1) + C", "ln(x) + C", "e^(x+1)/(x+1) + C"}, "e^x + C"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The derivative of sin(x) is cos(x), and the derivative of cos(x) is sin(x).", "False"),
+
+            // --- 5. APPLICATIONS OF DIFFERENTIATION ---
+            new Question(new MultipleChoiceQuestionStrategy(), "Where can the absolute extremum of a continuous function on a closed interval occur?", new String[] {"Only at critical points", "Only at endpoints", "Critical points or endpoints", "Only where f'(x)=0"}, "Critical points or endpoints"),
+            new Question(new MultipleChoiceQuestionStrategy(), "If f''(x) changes sign at x=c, then the point (c, f(c)) on the curve is:", new String[] {"A critical point", "A cusp", "An inflection point", "A local maximum"}, "An inflection point"),
+            new Question(new MultipleChoiceQuestionStrategy(), "A limit of the indeterminate form 0/0 or ∞/∞ can often be evaluated using:", new String[] {"The Chain Rule", "L'Hôpital's Rule", "Integration by parts", "Partial fractions"}, "L'Hôpital's Rule"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Related rates problems are typically solved using which differentiation technique?", new String[] {"Integration by parts", "Implicit differentiation", "Logarithmic differentiation", "Partial fractions"}, "Implicit differentiation"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: If f'(x) > 0 for all x in an interval, the function is decreasing on that interval.", "False"),
+
+            // --- 6. TECHNIQUES OF INTEGRATION ---
+            new Question(new MultipleChoiceQuestionStrategy(), "The integration by parts formula is mathematically derived from which differentiation rule?", new String[] {"The Chain Rule", "The Product Rule", "The Quotient Rule", "The Power Rule"}, "The Product Rule"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which technique is best suited for integrating a rational function where the denominator can be factored?", new String[] {"Trigonometric substitution", "Integration by parts", "Partial fractions", "L'Hôpital's rule"}, "Partial fractions"),
+            new Question(new MultipleChoiceQuestionStrategy(), "To evaluate the integral of √(a^2 - x^2), which trigonometric substitution is generally used?", new String[] {"x = a tan(θ)", "x = a sec(θ)", "x = a sin(θ)", "x = a cos(θ)"}, "x = a sin(θ)"),
             
-            //Written
+            // --- 7. APPLICATIONS OF THE INTEGRATIONS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "When calculating the volume of a solid of revolution using the cylindrical shells method, the representative rectangle is taken:", new String[] {"Parallel to the axis of revolution", "Perpendicular to the axis of revolution", "Tangent to the curve", "Diagonal to the axis"}, "Parallel to the axis of revolution"),
+            new Question(new MultipleChoiceQuestionStrategy(), "When using the disk/washer method for a solid rotated around the x-axis, you integrate with respect to:", new String[] {"x", "y", "The radius", "The circumference"}, "x"),
+            
+            // --- 8. IMPROPER INTEGRALS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "An improper integral of Type I is characterized by having:", new String[] {"An infinite limit of integration", "An infinite discontinuity in the integrand", "A bounded continuous domain", "Complex roots"}, "An infinite limit of integration"),
+            new Question(new MultipleChoiceQuestionStrategy(), "If an improper integral evaluates to a finite real number, the integral is said to:", new String[] {"Diverge", "Converge", "Oscillate", "Asymptote"}, "Converge"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: An improper integral of Type II contains an infinite discontinuity (vertical asymptote) within its interval of integration.", "True"),
+
+            // --- WRITTEN CONCEPTS ---
             new Question(new WrittenQuestionStrategy(), "What is the derivative of sin(x)?", "cos(x)"),
             new Question(new WrittenQuestionStrategy(), "What is the limit of 1/x as x approaches infinity?", "0"),
-            new Question(new WrittenQuestionStrategy(), "What rule is used to find the derivative of f(g(x))?", "Chain Rule"),
             new Question(new WrittenQuestionStrategy(), "What is the derivative of any constant value?", "0"),
-            new Question(new WrittenQuestionStrategy(), "If f'(x) is positive, is the function increasing or decreasing?", "Increasing")
+            new Question(new WrittenQuestionStrategy(), "If f'(x) is positive on an interval, is the function increasing or decreasing?", "Increasing"),
+            new Question(new WrittenQuestionStrategy(), "What rule is used to find the limit of an indeterminate form like 0/0?", "L'Hopital's Rule")
         });
 
         subjectData.put(Subject.PHYSICS_I, new Question[] {
-            // --- PHYSICS I COMPLETE DATASET (50 QUESTIONS) ---
+            // --- 1. DIMENSIONAL ANALYSIS & 1D MOTION ---
+            new Question(new MultipleChoiceQuestionStrategy(), "What are the base SI dimensions for Force?", new String[] {"kg * m/s", "kg * m^2/s^2", "kg * m/s^2", "kg / (m*s)"}, "kg * m/s^2"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: An object can have a velocity of zero while still having a non-zero acceleration.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "What does the area under a Velocity vs. Time graph represent?", new String[] {"Position", "Acceleration", "Force", "Displacement"}, "Displacement"),
+            new Question(new MultipleChoiceQuestionStrategy(), "In one-dimensional kinematics, if a car is moving in the negative x-direction and braking, its acceleration is:", new String[] {"Positive", "Negative", "Zero", "Undefined"}, "Positive"),
 
-            // KINEMATICS & NEWTON'S LAWS
-            new Question(new TrueFalseQuestionStrategy(), "True or False: An object can have a velocity of zero while still accelerating.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What does the slope of a Velocity vs. Time graph represent?", new String[] {"Position", "Acceleration", "Force", "Displacement"}, "Acceleration"),
-            new Question(new MultipleChoiceQuestionStrategy(), "In a vacuum, if a hammer and a feather are dropped simultaneously, which hits first?", new String[] {"Hammer", "Feather", "Both at once", "Neither"}, "Both at once"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A bug hitting a bus windshield experiences a greater force than the bus.", "False"),
+            // --- 2. VECTORS & 2D/3D MOTION ---
+            new Question(new MultipleChoiceQuestionStrategy(), "The dot product of two mutually perpendicular vectors is always:", new String[] {"1", "-1", "0", "Equal to their cross product"}, "0"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The horizontal and vertical components of a projectile's motion are completely independent of each other.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "At the peak of a projectile's flight (ignoring air resistance), its vertical velocity is:", new String[] {"9.8 m/s", "0 m/s", "Equal to its initial vertical velocity", "Undefined"}, "0 m/s"),
+
+            // --- 3. NEWTON'S LAWS & CIRCULAR MOTION ---
             new Question(new MultipleChoiceQuestionStrategy(), "What property of an object resists any change in its state of motion?", new String[] {"Gravity", "Velocity", "Inertia", "Weight"}, "Inertia"),
-            new Question(new MultipleChoiceQuestionStrategy(), "An object is moving at a constant velocity. What is the net force acting on it?", new String[] {"Zero", "Equal to mass", "Gravity", "Constant force"}, "Zero"),
-            new Question(new MultipleChoiceQuestionStrategy(), "At the peak of a projectile's flight, its vertical acceleration is:", new String[] {"0", "9.8 m/s^2 downward", "9.8 m/s^2 upward", "Changing"}, "9.8 m/s^2 downward"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: An object in free fall is technically in a state of weightlessness.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If a ball is thrown upward, its acceleration on the way down is:", new String[] {"Greater than 9.8", "Less than 9.8", "Exactly 9.8", "Zero"}, "Exactly 9.8"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Mass is a measure of an object's inertia.", "True"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A bug hitting a bus windshield experiences a greater magnitude of force than the bus experiences.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "In uniform circular motion, the centripetal acceleration vector always points:", new String[] {"Tangential to the path", "Away from the center", "Toward the center", "In the direction of velocity"}, "Toward the center"),
 
-            // FORCES & FRICTION
-            new Question(new MultipleChoiceQuestionStrategy(), "Which force always acts perpendicular to the surface of contact?", new String[] {"Friction", "Tension", "Normal Force", "Gravity"}, "Normal Force"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Kinetic friction is typically higher than static friction for the same surfaces.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The coefficient of friction depends primarily on:", new String[] {"The surface area", "The speed of motion", "The nature of the materials", "The weight"}, "The nature of the materials"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the net force on an object in terminal velocity?", new String[] {"9.8 N", "Equal to its weight", "0", "Dependent on height"}, "0"),
-
-            // CIRCULAR MOTION & GRAVITY
-            new Question(new MultipleChoiceQuestionStrategy(), "In which direction does centripetal force always point?", new String[] {"Tangential to path", "Away from center", "Toward the center", "Downwards"}, "Toward the center"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: If the distance between two planets doubles, the gravitational force quadruples.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If the distance between two masses doubles, the gravity between them drops by a factor of:", new String[] {"2", "4", "8", "16"}, "4"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: If you go to the Moon, your mass remains the same.", "True"),
-
-            // WORK, POWER & ENERGY
-            new Question(new MultipleChoiceQuestionStrategy(), "How much work is done by a person holding a 50kg barbell perfectly still?", new String[] {"50 Joules", "9.8 Joules", "Zero", "2500 Joules"}, "Zero"),
+            // --- 4. ENERGY & CONSERVATION ---
+            new Question(new MultipleChoiceQuestionStrategy(), "How much work is done by the normal force on a block sliding horizontally across a flat table?", new String[] {"Depends on friction", "Zero", "mg * distance", "Negative work"}, "Zero"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Non-conservative forces, like friction, change the total mechanical energy of a system.", "True"),
             new Question(new MultipleChoiceQuestionStrategy(), "If you triple the speed of an object, its Kinetic Energy increases by a factor of:", new String[] {"3", "6", "9", "27"}, "9"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Total mechanical energy is conserved even when friction is present.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If you push a wall with 100N of force but it doesn't move, the work done is:", new String[] {"100J", "10J", "Zero", "Dependent on time"}, "Zero"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Power is defined as the rate at which what is done?", new String[] {"Force", "Work", "Velocity", "Acceleration"}, "Work"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Gravitational potential energy depends on the choice of a reference level.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "A total of 100J of energy enters a machine. If 20J is lost to heat, the efficiency is:", new String[] {"20%", "50%", "80%", "100%"}, "80%"),
 
-            // MOMENTUM & COLLISIONS
-            new Question(new MultipleChoiceQuestionStrategy(), "In an inelastic collision, what happens to the objects?", new String[] {"They bounce away", "They stick together", "They explode", "They vanish"}, "Stick together"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Crumple zones in cars protect passengers by increasing:", new String[] {"Velocity", "Force", "Collision Time", "Mass"}, "Collision Time"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Impulse is equivalent to the change in an object's:", new String[] {"Velocity", "Mass", "Kinetic Energy", "Momentum"}, "Momentum"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: In an elastic collision, both momentum and kinetic energy are conserved.", "True"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: In a closed system, total momentum is always conserved.", "True"),
+            // --- 5. LINEAR MOMENTUM, IMPULSE & COLLISIONS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "Impulse is mathematically equivalent to the change in an object's:", new String[] {"Velocity", "Mass", "Kinetic Energy", "Momentum"}, "Momentum"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: In a perfectly elastic collision, both total momentum and total kinetic energy are conserved.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "In an inelastic collision, the objects involved typically:", new String[] {"Bounce off with equal speeds", "Deform and lose kinetic energy", "Gain kinetic energy", "Convert all mass to energy"}, "Deform and lose kinetic energy"),
 
-            // ROTATION & TORQUE
-            new Question(new MultipleChoiceQuestionStrategy(), "A figure skater pulls their arms in to spin faster. This effectively:", new String[] {"Increases Torque", "Decreases Mass", "Decreases Moment of Inertia", "Increases Friction"}, "Decreases Moment of Inertia"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The center of mass of an object must always be located within the physical material.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The center of mass of a uniform donut is located:", new String[] {"On the outer rim", "Inside the dough", "In the hole", "On the bottom"}, "In the hole"),
-            new Question(new MultipleChoiceQuestionStrategy(), "To maximize torque on a wrench, you should apply force:", new String[] {"Near the bolt", "At the end of the handle", "Parallel to the handle", "At a 45 degree angle"}, "At the end of the handle"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: An object can be in translational equilibrium but not rotational equilibrium.", "True"),
+            // --- 6. ROTATION & 7. TORQUE/ANGULAR MOMENTUM ---
+            new Question(new MultipleChoiceQuestionStrategy(), "Which quantity is the rotational equivalent of mass?", new String[] {"Torque", "Angular Velocity", "Moment of Inertia", "Angular Momentum"}, "Moment of Inertia"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A solid sphere and a hollow sphere of the same mass and radius will roll down an incline at the exact same speed.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "A figure skater pulls their arms in to spin faster. This demonstrates the conservation of:", new String[] {"Linear Momentum", "Rotational Kinetic Energy", "Angular Momentum", "Torque"}, "Angular Momentum"),
+            new Question(new MultipleChoiceQuestionStrategy(), "To maximize torque on a wrench, you should apply force:", new String[] {"Near the bolt", "Perpendicular to the handle at the end", "Parallel to the handle", "At the center of mass"}, "Perpendicular to the handle at the end"),
 
-            // FLUIDS
-            new Question(new MultipleChoiceQuestionStrategy(), "According to Bernoulli, as the speed of a moving fluid increases, its pressure:", new String[] {"Increases", "Decreases", "Stays the same", "Becomes zero"}, "Decreases"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: An object floats if it is less dense than the fluid it is in.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Archimedes' Principle states the buoyant force equals the weight of the:", new String[] {"Object", "Fluid displaced", "Entire container", "Atmosphere"}, "Fluid displaced"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Pressure in a fluid increases with depth.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Hydraulic systems operate based on which principle?", new String[] {"Bernoulli's", "Newton's", "Pascal's", "Archimedes'"}, "Pascal's"),
+            // --- 8. FLUID MECHANICS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "According to Bernoulli's principle, as the speed of a moving fluid increases, its internal pressure:", new String[] {"Increases", "Decreases", "Stays the same", "Fluctuates"}, "Decreases"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Archimedes' Principle states the buoyant force equals the weight of the fluid displaced by the object.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Hydraulic lifts operate primarily based on which principle?", new String[] {"Bernoulli's Principle", "Newton's Third Law", "Pascal's Principle", "Archimedes' Principle"}, "Pascal's Principle"),
 
-            // WAVES & SOUND
-            new Question(new MultipleChoiceQuestionStrategy(), "Which property of a wave determines the pitch of a sound?", new String[] {"Amplitude", "Velocity", "Frequency", "Phase"}, "Frequency"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What type of wave is a sound wave?", new String[] {"Transverse", "Longitudinal", "Electromagnetic", "Surface"}, "Longitudinal"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Sound waves can travel through a vacuum.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The time it takes for one complete cycle of motion is called the:", new String[] {"Frequency", "Amplitude", "Wavelength", "Period"}, "Period"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: In a transverse wave, the particles move parallel to the wave direction.", "False"),
+            // --- 9. OSCILLATORY MOTION ---
+            new Question(new MultipleChoiceQuestionStrategy(), "In Simple Harmonic Motion (SHM), acceleration is directly proportional to:", new String[] {"Velocity", "Mass", "Displacement from equilibrium", "Time"}, "Displacement from equilibrium"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The period of a simple pendulum depends heavily on the mass of the bob.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The restoring force of an ideal spring is described by:", new String[] {"Newton's Law of Gravitation", "Hooke's Law", "Faraday's Law", "Boyle's Law"}, "Hooke's Law"),
 
-            // THERMODYNAMICS
-            new Question(new MultipleChoiceQuestionStrategy(), "Temperature is a measure of the molecules' average:", new String[] {"Potential Energy", "Kinetic Energy", "Mass", "Volume"}, "Kinetic Energy"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The Second Law of Thermodynamics states that the entropy of the universe always increases.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which method of heat transfer involves the movement of fluids?", new String[] {"Conduction", "Radiation", "Convection", "Insulation"}, "Convection"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Absolute Zero is the temperature where molecular motion reaches its minimum.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The process of a gas turning directly into a solid is called:", new String[] {"Melting", "Sublimation", "Deposition", "Evaporation"}, "Deposition"),
-            new Question(new WrittenQuestionStrategy(), "What is the standard unit of Force?", "Newton"),
+            // --- 10. WAVE MOTION & 11. SOUND WAVES ---
+            new Question(new MultipleChoiceQuestionStrategy(), "What type of wave is a sound wave traveling through air?", new String[] {"Transverse", "Longitudinal", "Electromagnetic", "Surface"}, "Longitudinal"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: In a standing wave, the points that remain completely stationary are called antinodes.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "When two waves overlap and their amplitudes add together to create a larger wave, this is called:", new String[] {"Destructive interference", "Diffraction", "Constructive interference", "Refraction"}, "Constructive interference"),
 
-            //Written
+            // --- 12. KINETIC THEORY OF GASES ---
+            new Question(new MultipleChoiceQuestionStrategy(), "The Kinetic Theory of Gases assumes that collisions between ideal gas molecules are:", new String[] {"Perfectly inelastic", "Perfectly elastic", "Non-existent", "Friction-heavy"}, "Perfectly elastic"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The absolute temperature of an ideal gas is directly proportional to the average kinetic energy of its molecules.", "True"),
+
+            // --- 13. TEMPERATURE & 1ST LAW OF THERMODYNAMICS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "The First Law of Thermodynamics is essentially a restatement of:", new String[] {"Newton's First Law", "Conservation of Momentum", "Conservation of Energy", "The Ideal Gas Law"}, "Conservation of Energy"),
+            new Question(new MultipleChoiceQuestionStrategy(), "An isothermal process is one in which the system's:", new String[] {"Pressure remains constant", "Volume remains constant", "Temperature remains constant", "Heat exchange is zero"}, "Temperature remains constant"),
+
+            // --- 14. ENTROPY & 2ND LAW OF THERMODYNAMICS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "The Second Law of Thermodynamics states that for any spontaneous process, the total entropy of the universe:", new String[] {"Decreases", "Increases", "Remains constant", "Reaches absolute zero"}, "Increases"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Entropy can be thought of as a measure of the disorder or randomness in a system.", "True"),
+
+            // --- 15. HEAT ENGINES ---
+            new Question(new MultipleChoiceQuestionStrategy(), "What idealized cycle provides the maximum possible efficiency for a heat engine operating between two temperatures?", new String[] {"Otto Cycle", "Diesel Cycle", "Carnot Cycle", "Brayton Cycle"}, "Carnot Cycle"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Why can a real heat engine never be 100% efficient?", new String[] {"Friction is unavoidable", "Some heat is always expelled to a cold reservoir", "Metals melt at high heat", "Engines are too heavy"}, "Some heat is always expelled to a cold reservoir"),
+
+            // --- WRITTEN CONCEPTS ---
             new Question(new WrittenQuestionStrategy(), "Energy due to motion is called _____ energy.", "Kinetic"),
             new Question(new WrittenQuestionStrategy(), "Which of Newton's laws is also known as the Law of Inertia?", "First"),
-            new Question(new WrittenQuestionStrategy(), "What is the numerical value of acceleration due to gravity on Earth (m/s^2)?", "9.8"),
-            new Question(new WrittenQuestionStrategy(), "What is the product of mass and velocity?", "Momentum")
+            new Question(new WrittenQuestionStrategy(), "What is the standard SI unit for measuring Energy and Work?", "Joule"),
+            new Question(new WrittenQuestionStrategy(), "What is the numerical value of acceleration due to gravity on Earth (in m/s^2)?", "9.8"),
+            new Question(new WrittenQuestionStrategy(), "What thermodynamic state variable is a measure of a system's thermal energy per molecule?", "Temperature")
         });
 
         subjectData.put(Subject.CALCULUS_II, new Question[] {
-            // --- CALCULUS II COMPLETE DATASET (50 QUESTIONS) ---
-
-            // INTEGRATION TECHNIQUES (U-SUB, PARTS, TRIG)
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Integration by Parts is essentially the reverse of the Product Rule.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "When using Integration by Parts on 'x * sin(x)', which is the best choice for 'u'?", new String[] {"sin(x)", "x", "cos(x)", "1"}, "x"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The integral of 1/x dx is:", new String[] {"x^2/2", "ln|x|", "e^x", "-1/x^2"}, "ln|x|"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: U-substitution is the inverse process of the Chain Rule.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which technique is best for integrating (x^2 + 1) / (x - 1)(x + 2)?", new String[] {"Parts", "U-Sub", "Partial Fractions", "Trig Sub"}, "Partial Fractions"),
-            new Question(new MultipleChoiceQuestionStrategy(), "To solve the integral of sqrt(a^2 - x^2), which trig substitution is used?", new String[] {"x = a*tan(t)", "x = a*sec(t)", "x = a*sin(t)", "x = a*cos(t)"}, "x = a*sin(t)"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The integral of sec^2(x) is tan(x).", "True"),
-
-            // IMPROPER INTEGRALS & APPLICATIONS
-            new Question(new MultipleChoiceQuestionStrategy(), "An integral is 'improper' if:", new String[] {"It has a jump", "An interval limit is infinity", "It is negative", "The function is linear"}, "An interval limit is infinity"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: If an improper integral equals a finite number, it is said to 'diverge'.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The Disk Method for volume revolves a region around an axis. What is the cross-section shape?", new String[] {"Square", "Triangle", "Circle", "Trapezoid"}, "Circle"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which method is better when the rectangle of a region is parallel to the axis of revolution?", new String[] {"Disk Method", "Washer Method", "Shell Method", "Arc Length"}, "Shell Method"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Arc length can be found by integrating the square root of (1 + [f'(x)]^2).", "True"),
-
-            // SEQUENCES & SERIES (THE DREADED CHAPTER)
-            new Question(new MultipleChoiceQuestionStrategy(), "A geometric series converges if the absolute value of the ratio 'r' is:", new String[] {"Greater than 1", "Less than 1", "Equal to 0", "Negative"}, "Less than 1"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: If the limit of the terms of a series is NOT zero, the series must diverge.", "True"),
+            // --- WEEK 1-3: SEQUENCES, SERIES & FUNCTION APPROXIMATION ---
+            new Question(new MultipleChoiceQuestionStrategy(), "In mathematical induction, what is the step where you assume the statement is true for n = k?", new String[] {"Base Step", "Inductive Hypothesis", "Inductive Step", "Conclusion"}, "Inductive Hypothesis"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: If the limit of the terms of a sequence approaches a specific number, the sequence converges.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "A geometric series converges if the absolute value of the common ratio 'r' is:", new String[] {"Greater than 1", "Less than 1", "Equal to 0", "Negative"}, "Less than 1"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The Divergence Test can prove that a series converges.", "False"),
             new Question(new MultipleChoiceQuestionStrategy(), "The p-series 1/n^p converges if:", new String[] {"p < 1", "p = 1", "p > 1", "p is negative"}, "p > 1"),
             new Question(new TrueFalseQuestionStrategy(), "True or False: The Harmonic Series (1/n) converges.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which test is most effective for series involving factorials?", new String[] {"Integral Test", "Ratio Test", "Root Test", "P-series Test"}, "Ratio Test"),
-            new Question(new MultipleChoiceQuestionStrategy(), "An alternating series converges if the terms decrease to:", new String[] {"Infinity", "One", "Zero", "The first term"}, "Zero"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Absolute convergence implies conditional convergence.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The Taylor Series centered at x = 0 is specifically called a:", new String[] {"Power Series", "Fourier Series", "Maclaurin Series", "Newton Series"}, "Maclaurin Series"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A power series always converges at its center.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which test is most effective for series involving factorials, such as n!?", new String[] {"Integral Test", "Ratio Test", "Root Test", "P-series Test"}, "Ratio Test"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Absolute convergence of a series implies conditional convergence.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The Taylor Series centered specifically at x = 0 is called a:", new String[] {"Power Series", "Fourier Series", "Maclaurin Series", "Newton Series"}, "Maclaurin Series"),
+            new Question(new MultipleChoiceQuestionStrategy(), "What is the Maclaurin series representation for e^x?", new String[] {"Sum of x^n", "Sum of x^n / n!", "Sum of (-1)^n x^n", "Sum of 1/n"}, "Sum of x^n / n!"),
 
-            // POWER SERIES & ERROR
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the Maclaurin series for e^x?", new String[] {"Sum of x^n", "Sum of x^n / n!", "Sum of (-1)^n x^n", "Sum of 1/n"}, "Sum of x^n / n!"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The Ratio Test results in '1' means the test is inconclusive.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The distance from the center to the edge of convergence for a power series is the:", new String[] {"Interval", "Diameter", "Radius of Convergence", "Midpoint"}, "Radius of Convergence"),
+            // --- WEEK 4-5: 3D SPACE & VECTOR FUNCTIONS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "The dot product of two orthogonal (perpendicular) vectors is always:", new String[] {"1", "0", "-1", "Infinity"}, "0"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The cross product of two vectors results in a scalar quantity.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "To determine the equation of a plane, you need a point on the plane and a:", new String[] {"Parallel vector", "Unit vector", "Normal vector", "Tangent vector"}, "Normal vector"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The cross product of a vector with itself (v x v) is:", new String[] {"|v|^2", "1", "0 (the zero vector)", "2v"}, "0 (the zero vector)"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The derivative of a vector function is found by differentiating each of its component functions.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The integral of a vector function produces a result that includes an arbitrary:", new String[] {"Scalar constant", "Vector constant", "Function", "Matrix"}, "Vector constant"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The curvature of a straight line in space is always zero.", "True"),
 
-            // PARAMETRIC, POLAR & VECTORS
-            new Question(new MultipleChoiceQuestionStrategy(), "In Polar coordinates, the equation r = 3 represents a:", new String[] {"Line", "Point", "Circle", "Spiral"}, "Circle"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The polar point (r, theta) is the same as (-r, theta + pi).", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "To convert Polar to Cartesian, x equals:", new String[] {"r * sin(theta)", "r * cos(theta)", "r / tan(theta)", "theta"}, "r * cos(theta)"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Parametric equations allow a curve to fail the Vertical Line Test.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The area of a polar region is found using the integral of:", new String[] {"r^2", "1/2 * r^2", "2 * pi * r", "sqrt(r)"}, "1/2 * r^2"),
+            // --- WEEK 6-8: FUNCTIONS OF SEVERAL VARIABLES ---
+            new Question(new MultipleChoiceQuestionStrategy(), "For a limit of a function f(x,y) to exist at a point, it must approach the same value along:", new String[] {"The x-axis only", "The y-axis only", "Two specific paths", "Every possible path"}, "Every possible path"),
+            new Question(new MultipleChoiceQuestionStrategy(), "When computing the partial derivative of f(x,y) with respect to x, you treat y as:", new String[] {"A variable", "Zero", "A constant", "Infinity"}, "A constant"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Clairaut's Theorem states that if mixed partial derivatives are continuous, then f_xy = f_yx.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The Gradient vector of a function points in the direction of:", new String[] {"Zero change", "Maximum rate of increase", "Maximum rate of decrease", "The origin"}, "Maximum rate of increase"),
+            new Question(new MultipleChoiceQuestionStrategy(), "To find the directional derivative of f in the direction of vector u, 'u' must be:", new String[] {"A unit vector", "A zero vector", "An orthogonal vector", "A normal vector"}, "A unit vector"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The chain rule for z = f(x,y) where x = g(t) and y = h(t) involves both partial and ordinary derivatives.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "To find the critical points of a function f(x,y), you must set:", new String[] {"f(x,y) = 0", "f_x = 0 and f_y = 0", "f_xx = 0 and f_yy = 0", "The gradient to 1"}, "f_x = 0 and f_y = 0"),
 
-            // MISCELLANEOUS CONCEPTS
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the derivative of the integral from 'a' to 'x' of f(t) dt?", new String[] {"f(x)", "F(x)", "f'(x)", "0"}, "f(x)"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Every continuous function has an antiderivative.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which of these series is absolutely convergent?", new String[] {"1/n", "(-1)^n / n", "(-1)^n / n^2", "1/sqrt(n)"}, "(-1)^n / n^2"),
-            new Question(new MultipleChoiceQuestionStrategy(), "In trig sub, if you see sqrt(x^2 - a^2), you use:", new String[] {"Sine", "Tangent", "Secant", "Cosine"}, "Secant"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The integral of an odd function over [-a, a] is always zero.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The limit of (sin x)/x as x approaches 0 is:", new String[] {"0", "Infinity", "1", "Undefined"}, "1"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A sequence that is monotonic and bounded must converge.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The interval of convergence for a series is (-1, 1). Does it converge at x=2?", new String[] {"Yes", "No", "Maybe", "Only if alternating"}, "No"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which test compares a series to an easier known series?", new String[] {"Ratio Test", "Limit Comparison Test", "Divergence Test", "Integral Test"}, "Limit Comparison Test"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: L'Hopital's Rule can be used for the limit of a sequence.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the sum of the geometric series 1 + 1/2 + 1/4 + 1/8...?", new String[] {"1", "2", "1.5", "Infinity"}, "2"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Integration by parts can be used multiple times on one problem.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The integral of tan(x) dx is:", new String[] {"sec^2(x)", "ln|sec x|", "-ln|cos x|", "Both B and C"}, "Both B and C"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The Alternating Harmonic Series converges.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The 'n-th term test' can prove:", new String[] {"Convergence", "Divergence", "Both", "Neither"}, "Divergence"),
-            new Question(new MultipleChoiceQuestionStrategy(), "A series with all positive terms can:", new String[] {"Converge conditionally", "Converge absolutely", "Both", "Neither"}, "Converge absolutely"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Partial fraction decomposition requires the degree of the numerator to be less than the denominator.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The derivative of ln(u) is:", new String[] {"1/u", "u'/u", "e^u", "1"}, "u'/u"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which series represents the Alternating Harmonic series?", new String[] {"Sum 1/n", "Sum (-1)^n / n", "Sum (-1)^n / n!", "Sum 1/n^2"}, "Sum (-1)^n / n"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: If the radius of convergence is infinity, the series converges for all real x.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The error in an alternating series is always less than the:", new String[] {"First term", "Last term", "Next term", "Total sum"}, "Next term"),
-            
-            //Written
-            new Question(new WrittenQuestionStrategy(), "What is the integral of 1/x dx?", "ln|x|"),
-            new Question(new WrittenQuestionStrategy(), "Integration by ____ is the reverse of the product rule.", "Parts"),
+            // --- WEEK 9: DOUBLE INTEGRALS ---
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Fubini's Theorem states that for continuous functions, the order of integration in an iterated integral does not matter.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The double integral of the function f(x,y) = 1 over a general region D represents the:", new String[] {"Volume of D", "Area of D", "Perimeter of D", "Center of mass of D"}, "Area of D"),
+            new Question(new MultipleChoiceQuestionStrategy(), "When changing the order of integration from dy dx to dx dy, what must you do first?", new String[] {"Invert the function", "Multiply by -1", "Sketch the region of integration", "Take the derivative"}, "Sketch the region of integration"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A Type I region in a double integral is bounded by vertical lines on the left and right.", "True"),
+
+            // --- WEEK 10: FIRST-ORDER DIFFERENTIAL EQUATIONS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "A differential equation is called 'separable' if it can be written in the form:", new String[] {"dy/dx = f(x)g(y)", "dy/dx = f(x) + g(y)", "dy/dx = x/y", "dy/dx = f(y)"}, "dy/dx = f(x)g(y)"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A differential equation M(x,y)dx + N(x,y)dy = 0 is Exact if the partial derivative M_y equals N_x.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "To solve a first-order linear differential equation, you typically multiply the entire equation by an:", new String[] {"Exponential factor", "Integrating factor", "Eigenvalue", "Inverse function"}, "Integrating factor"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The substitution v = y/x is typically used to solve which type of differential equation?", new String[] {"Linear", "Exact", "Homogeneous", "Bernoulli"}, "Homogeneous"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A Bernoulli differential equation can be transformed into a linear differential equation using a specific substitution.", "True"),
+
+            // --- WRITTEN QUESTIONS ---
+            new Question(new WrittenQuestionStrategy(), "What test compares the limit of the ratio of a series' consecutive terms to 1?", "Ratio"),
             new Question(new WrittenQuestionStrategy(), "A Taylor series centered at x = 0 is called a ____ series.", "Maclaurin"),
-            new Question(new WrittenQuestionStrategy(), "Does the harmonic series (1/n) converge or diverge?", "Diverge"),
-            new Question(new WrittenQuestionStrategy(), "What is the integral of e^x dx?", "e^x")
+            new Question(new WrittenQuestionStrategy(), "What vector operation between two 3D vectors results in a scalar?", "Dot Product"),
+            new Question(new WrittenQuestionStrategy(), "What vector denotes the direction of the maximum rate of change for a function of two variables?", "Gradient"),
+            new Question(new WrittenQuestionStrategy(), "If f_xy and f_yx are continuous, what theorem states they are equal?", "Clairaut")
             });
 
         subjectData.put(Subject.PHYSICS_II, new Question[] {
-            // --- PHYSICS II COMPLETE DATASET (50 QUESTIONS) ---
+            // --- 1. ELECTROSTATICS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "According to Gauss's Law, the total electric flux through a closed surface is proportional to:", new String[] {"The surface area", "The enclosed charge", "The electric potential", "The volume"}, "The enclosed charge"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The electric field inside a solid conducting sphere in electrostatic equilibrium is zero.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "What happens to the electric potential energy of a system if two like charges are brought closer together?", new String[] {"It increases", "It decreases", "It becomes zero", "It remains constant"}, "It increases"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The unit of electric potential is the Volt, which is equivalent to:", new String[] {"Coulombs per Newton", "Joules per Coulomb", "Amperes per Ohm", "Newtons per meter"}, "Joules per Coulomb"),
 
-            // ELECTRIC CHARGE & FIELDS
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Electric field lines always point away from positive charges.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If the distance between two charges triples, the electric force between them becomes:", new String[] {"1/3", "1/6", "1/9", "3 times stronger"}, "1/9"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the net electric charge inside a conductor in electrostatic equilibrium?", new String[] {"Positive", "Negative", "Zero", "Dependent on shape"}, "Zero"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Excess charge on a conductor resides entirely on its outer surface.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The unit of Electric Field strength is:", new String[] {"Volts", "Newtons per Coulomb", "Joules", "Amperes"}, "Newtons per Coulomb"),
+            // --- 2. ELECTRODYNAMICS (DC CIRCUITS) ---
+            new Question(new MultipleChoiceQuestionStrategy(), "Kirchhoff's Junction Rule is a direct consequence of the conservation of:", new String[] {"Energy", "Momentum", "Mass", "Charge"}, "Charge"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Kirchhoff's Loop Rule states that the sum of potential differences around any closed loop in a circuit must be zero.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "If the voltage across a standard ohmic resistor is doubled, the current flowing through it:", new String[] {"Halves", "Stays the same", "Doubles", "Quadruples"}, "Doubles"),
 
-            // ELECTRIC POTENTIAL & CAPACITANCE
-            new Question(new MultipleChoiceQuestionStrategy(), "Electric potential (Voltage) is defined as electric potential energy per unit of:", new String[] {"Distance", "Time", "Charge", "Mass"}, "Charge"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Equipotential surfaces are always perpendicular to electric field lines.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Adding a dielectric material between the plates of a capacitor always:", new String[] {"Decreases capacitance", "Increases capacitance", "Discharges it", "Zeroes the voltage"}, "Increases capacitance"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Capacitors in parallel all share the same voltage.", "True"),
+            // --- 3. MAGNETIC FIELDS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "The magnetic force on a moving charge is maximized when the charge's velocity is:", new String[] {"Parallel to the magnetic field", "Anti-parallel to the magnetic field", "Perpendicular to the magnetic field", "Zero"}, "Perpendicular to the magnetic field"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which law states that an induced electromotive force (EMF) always gives rise to a current whose magnetic field opposes the change in original magnetic flux?", new String[] {"Faraday's Law", "Ampere's Law", "Lenz's Law", "Biot-Savart Law"}, "Lenz's Law"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A stationary electron placed in a uniform magnetic field will experience a magnetic force.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Ampere's Law relates the magnetic field along a closed loop to the:", new String[] {"Electric flux", "Enclosed electric charge", "Enclosed current", "Change in magnetic flux"}, "Enclosed current"),
 
-            // CURRENT & DC CIRCUITS
-            new Question(new MultipleChoiceQuestionStrategy(), "According to Ohm's Law, if resistance increases while voltage is constant, current:", new String[] {"Increases", "Decreases", "Stays the same", "Doubles"}, "Decreases"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: In a series circuit, the current is the same through every resistor.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which of Kirchhoff's laws is a statement of Conservation of Charge?", new String[] {"Loop Rule", "Junction Rule", "Ohm's Law", "Faraday's Law"}, "Junction Rule"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What device is used to measure the electric current in a circuit?", new String[] {"Voltmeter", "Ohmmeter", "Ammeter", "Galvanometer"}, "Ammeter"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A voltmeter should be connected in parallel with the component being measured.", "True"),
+            // --- 4. INDUCTANCE & AC CIRCUITS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "The energy in an inductor is stored in its:", new String[] {"Electric field", "Magnetic field", "Voltage", "Resistance"}, "Magnetic field"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: In a purely inductive AC circuit, the current lags the voltage by 90 degrees.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "At the resonant frequency of an RLC series circuit, the total impedance is purely:", new String[] {"Capacitive", "Inductive", "Resistive", "Infinite"}, "Resistive"),
 
-            // MAGNETISM & ELECTROMAGNETISM
-            new Question(new MultipleChoiceQuestionStrategy(), "Magnetic field lines always form closed loops from:", new String[] {"North to South", "South to North", "Positive to Negative", "Inward to Outward"}, "North to South"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A stationary electric charge creates a magnetic field.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The force on a moving charge in a magnetic field is zero if the velocity is:", new String[] {"Perpendicular to the field", "Parallel to the field", "Circular", "Very fast"}, "Parallel to the field"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Magnetic monopoles (a single North or South pole) have never been observed.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which principle states that an induced current opposes the change that created it?", new String[] {"Ampere's Law", "Lenz's Law", "Gauss's Law", "Ohm's Law"}, "Lenz's Law"),
+            // --- 5. ELECTROMAGNETIC WAVES ---
+            new Question(new MultipleChoiceQuestionStrategy(), "In an electromagnetic wave, the Poynting vector represents the:", new String[] {"Direction of the electric field", "Direction of the magnetic field", "Rate of energy transport per unit area", "Wavelength"}, "Rate of energy transport per unit area"),
+            new Question(new MultipleChoiceQuestionStrategy(), "If an electromagnetic wave is traveling in the +x direction and the electric field is in the +y direction, the magnetic field must be in the:", new String[] {"+x direction", "-y direction", "+z direction", "-z direction"}, "+z direction"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The intensity of an electromagnetic wave is directly proportional to the square of its electric field amplitude.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which of the following electromagnetic waves has the highest frequency?", new String[] {"Microwaves", "X-rays", "Visible Light", "Radio Waves"}, "X-rays"),
 
-            // ELECTROMAGNETIC WAVES & LIGHT
-            new Question(new MultipleChoiceQuestionStrategy(), "Electromagnetic waves consist of oscillating electric and magnetic fields that are:", new String[] {"Parallel", "Perpendicular", "Circular", "Random"}, "Perpendicular"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: All electromagnetic waves travel at the speed of light in a vacuum.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which part of the EM spectrum has the highest frequency?", new String[] {"Radio waves", "Visible light", "Gamma rays", "Infrared"}, "Gamma rays"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The bending of light as it passes from one medium to another is called:", new String[] {"Reflection", "Refraction", "Diffraction", "Polarization"}, "Refraction"),
+            // --- 6. OPTICS (INTERFERENCE, DIFFRACTION, POLARIZATION) ---
+            new Question(new MultipleChoiceQuestionStrategy(), "In Young's double-slit experiment, a dark fringe (destructive interference) occurs when the path difference is:", new String[] {"An integer multiple of the wavelength", "A half-integer multiple of the wavelength", "Zero", "Equal to the slit separation"}, "A half-integer multiple of the wavelength"),
+            new Question(new MultipleChoiceQuestionStrategy(), "If the width of a single slit is decreased, the central bright fringe of the diffraction pattern will:", new String[] {"Become narrower", "Become wider", "Stay the same width", "Disappear completely"}, "Become wider"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Unpolarized light passing through an ideal polarizing filter loses exactly half of its intensity.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "When unpolarized light reflects off a surface at Brewster's angle, the reflected light is:", new String[] {"Unpolarized", "Completely linearly polarized", "Circularly polarized", "Absorbed completely"}, "Completely linearly polarized"),
+            new Question(new MultipleChoiceQuestionStrategy(), "According to Malus's Law, the intensity of polarized light transmitted through a polarizer depends on the cosine squared of the:", new String[] {"Wavelength", "Frequency", "Angle between polarization axes", "Index of refraction"}, "Angle between polarization axes"),
 
-            // OPTICS (MIRRORS & LENSES)
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A convex mirror always produces a virtual, upright, and smaller image.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "When light reflects off a surface, the angle of incidence is always:", new String[] {"Greater than reflection", "Smaller than reflection", "Equal to reflection", "90 degrees"}, "Equal to reflection"),
-            new Question(new MultipleChoiceQuestionStrategy(), "A 'converging' lens is also known as a:", new String[] {"Concave lens", "Convex lens", "Planar lens", "Diverging lens"}, "Convex lens"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Total Internal Reflection can only occur when moving from a denser to a less dense medium.", "True"),
+            // --- 7. SPECIAL RELATIVITY ---
+            new Question(new MultipleChoiceQuestionStrategy(), "According to the Special Theory of Relativity, which of the following is constant for all inertial observers?", new String[] {"Time intervals", "Lengths of objects", "The speed of light in a vacuum", "Momentum"}, "The speed of light in a vacuum"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: An observer on Earth will measure a moving clock ticking slower than a clock at rest on Earth.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "If an object moves at a significant fraction of the speed of light, its measured length in the direction of motion will:", new String[] {"Increase", "Decrease (Length Contraction)", "Remain unchanged", "Become infinite"}, "Decrease (Length Contraction)"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The rest energy of a particle with mass m is given by the famous equation:", new String[] {"E = 1/2 mv^2", "E = mc^2", "E = hf", "E = p^2 / 2m"}, "E = mc^2"),
 
-            // INTERFERENCE & DIFFRACTION
-            new Question(new MultipleChoiceQuestionStrategy(), "Young's Double Slit experiment provided evidence that light is a:", new String[] {"Particle", "Wave", "Fluid", "Solid"}, "Wave"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Blue light has a shorter wavelength than red light.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The spreading of waves as they pass through an opening is called:", new String[] {"Refraction", "Dispersion", "Diffraction", "Reflection"}, "Diffraction"),
+            // --- 8. INTRODUCTORY QUANTUM MECHANICS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "In the photoelectric effect, the minimum energy required to eject an electron from a metal surface is called the:", new String[] {"Kinetic energy", "Stopping potential", "Work function", "Threshold wavelength"}, "Work function"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: In the photoelectric effect, increasing the intensity of the incident light (while keeping frequency constant) increases the maximum kinetic energy of the ejected electrons.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The energy of a photon is directly proportional to its:", new String[] {"Wavelength", "Mass", "Frequency", "Amplitude"}, "Frequency"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The de Broglie wavelength of a particle is inversely proportional to its:", new String[] {"Mass only", "Velocity only", "Momentum", "Kinetic energy"}, "Momentum"),
+            new Question(new MultipleChoiceQuestionStrategy(), "For a particle confined in a 1D infinite potential well, if the width of the well is doubled, the ground state energy:", new String[] {"Doubles", "Halves", "Becomes four times larger", "Becomes one-fourth as large"}, "Becomes one-fourth as large"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The lowest possible energy state (ground state) for a particle in an infinite potential well is zero.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "To jump from the ground state (n=1) to the first excited state (n=2) in an infinite well, an electron must absorb a photon with energy equal to:", new String[] {"E_1", "2*E_1", "3*E_1", "4*E_1"}, "3*E_1"),
 
-            // MODERN PHYSICS & QUANTUM
-            new Question(new MultipleChoiceQuestionStrategy(), "The Photoelectric Effect demonstrates that light can behave as a:", new String[] {"Wave", "Particle (Photon)", "Magnetic field", "Sound wave"}, "Particle (Photon)"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: According to Special Relativity, the speed of light is constant for all observers.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the primary evidence for the expanding universe?", new String[] {"Blue shift", "Red shift", "Gravity waves", "Static electricity"}, "Red shift"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Atoms consist mostly of empty space.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which particle is responsible for the identity of a chemical element?", new String[] {"Electron", "Neutron", "Proton", "Photon"}, "Proton"),
+            // --- 9. NUCLEAR PHYSICS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "Alpha decay involves the emission of an alpha particle, which is identical to the nucleus of:", new String[] {"Hydrogen", "Helium", "Lithium", "Carbon"}, "Helium"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: After two half-lives have passed, exactly one-quarter (25%) of the original radioactive sample remains undecayed.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The difference between the mass of an intact nucleus and the sum of the masses of its individual nucleons is called the:", new String[] {"Atomic mass", "Mass defect", "Binding energy", "Isotope gap"}, "Mass defect"),
+            new Question(new MultipleChoiceQuestionStrategy(), "In beta minus (β-) decay, a neutron in the nucleus transforms into a proton and emits:", new String[] {"An alpha particle", "A photon", "An electron", "A positron"}, "An electron"),
 
-            // THERMAL & SEMICONDUCTORS (ADDITIONAL)
-            new Question(new MultipleChoiceQuestionStrategy(), "Materials that have no electrical resistance at very low temperatures are:", new String[] {"Insulators", "Semiconductors", "Superconductors", "Ohmic conductors"}, "Superconductors"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: N-type semiconductors have an excess of positive 'holes'.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "A P-N junction that emits light when current flows through it is a:", new String[] {"Transistor", "Resistor", "LED", "Capacitor"}, "LED"),
+            // --- SUPPLEMENTARY / MIXED PHYSICS II CONCEPTS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "The unit of Capacitance is the:", new String[] {"Henry", "Farad", "Tesla", "Weber"}, "Farad"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The magnetic flux through a loop is maximum when the plane of the loop is parallel to the magnetic field.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which of the following determines the stopping potential in a photoelectric effect experiment?", new String[] {"The intensity of light", "The frequency of incident light", "The angle of incidence", "The area of the metal plate"}, "The frequency of incident light"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Isotopes of the same element have the same number of protons but a different number of:", new String[] {"Electrons", "Neutrons", "Positrons", "Quarks"}, "Neutrons"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The total energy of an electron moving at relativistic speeds is the sum of its kinetic energy and its:", new String[] {"Potential energy", "Thermal energy", "Rest energy", "Rotational energy"}, "Rest energy"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Photons have zero rest mass.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "When light transitions from a medium with a lower refractive index to one with a higher refractive index, its speed:", new String[] {"Increases", "Decreases", "Stays the same", "Becomes c"}, "Decreases"),
 
-            // FINAL ROUND CONCEPTS
-            new Question(new MultipleChoiceQuestionStrategy(), "The 'Work Function' in the photoelectric effect is the minimum energy to:", new String[] {"Stop a photon", "Eject an electron", "Create a magnetic field", "Heat a metal"}, "Eject an electron"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Gamma radiation is the most penetrating type of nuclear radiation.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What happens to the wavelength of light as it enters a medium with a higher refractive index?", new String[] {"Increases", "Decreases", "Stays the same", "Becomes infinite"}, "Decreases"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The process by which a nucleus splits into smaller parts is called:", new String[] {"Fusion", "Fission", "Ionization", "Excitation"}, "Fission"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Time dilation means time moves slower for an object moving at high speeds.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which force is responsible for holding the nucleus together?", new String[] {"Gravity", "Electromagnetic", "Strong Nuclear Force", "Weak Nuclear Force"}, "Strong Nuclear Force"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What does an step-up transformer increase?", new String[] {"Current", "Power", "Voltage", "Resistance"}, "Voltage"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: In an AC circuit, the current periodically reverses direction.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If you cut a bar magnet in half, you get:", new String[] {"One North and one South magnet", "Two smaller magnets each with N and S", "Two non-magnetic bars", "Two North poles"}, "Two smaller magnets each with N and S"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Dispersion is what causes a prism to separate white light into colors.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which constant relates the energy of a photon to its frequency?", new String[] {"Boltzmann", "Planck", "Coulomb", "Newton"}, "Planck"),
-            new Question(new MultipleChoiceQuestionStrategy(), "A region where no electric or magnetic fields can enter due to a conductive shell is a:", new String[] {"Black hole", "Faraday cage", "Vacuum", "Insulator"}, "Faraday cage"),
-
-            //Written
-            new Question(new WrittenQuestionStrategy(), "What is the unit of electrical resistance?", "Ohm"),
-            new Question(new WrittenQuestionStrategy(), "What type of mirror always forms a virtual, upright, and smaller image?", "Convex"),
-            new Question(new WrittenQuestionStrategy(), "In a ____ circuit, the current is the same through all components.", "Series"),
-            new Question(new WrittenQuestionStrategy(), "What particles are found in the nucleus of an atom besides neutrons?", "Protons"),
-            new Question(new WrittenQuestionStrategy(), "The bending of light as it passes between mediums is called ____.", "Refraction")
+            // --- WRITTEN CONCEPTS ---
+            new Question(new WrittenQuestionStrategy(), "What is the SI unit of magnetic field strength?", "Tesla"),
+            new Question(new WrittenQuestionStrategy(), "What term describes the minimum frequency of light required to cause the photoelectric effect?", "Threshold frequency"),
+            new Question(new WrittenQuestionStrategy(), "In a vacuum, what is the speed of an electromagnetic wave in m/s (approximate to 3x10^X)?", "3x10^8"),
+            new Question(new WrittenQuestionStrategy(), "What name is given to the time required for half of the atoms in a radioactive sample to decay?", "Half-life"),
+            new Question(new WrittenQuestionStrategy(), "According to Einstein, mass and energy are equivalent. What is the formula?", "E=mc^2")
         });
 
         subjectData.put(Subject.COMP_PROG, new Question[] {
-            // --- COMPUTER PROGRAMMING ---
-
-            // --- BASICS & SYNTAX ---
-            new Question(new MultipleChoiceQuestionStrategy(), "Which of the following is the correct way to start a function in Python?", new String[] {"function myFunc():", "def myFunc():", "void myFunc():", "func myFunc():"}, "def myFunc():"),
+            // --- CHAPTER 0 & 1: GETTING STARTED, DATA TYPES & EXPRESSIONS ---
             new Question(new TrueFalseQuestionStrategy(), "True or False: Python uses indentation to define code blocks instead of curly braces.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "How do you create a variable with the numeric value 5 in Python?", new String[] {"x = int(5)", "x = 5", "Both A and B", "num x = 5"}, "Both A and B"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which data type is used for a sequence of characters in Python?", new String[] {"char", "String", "str", "text"}, "str"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: In Python, '3' + '3' results in '33'.", "True"),
             new Question(new MultipleChoiceQuestionStrategy(), "What is the correct syntax to output 'Hello World' in Python?", new String[] {"p('Hello World')", "echo 'Hello World'", "print('Hello World')", "printf('Hello World')"}, "print('Hello World')"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Python is an interpreted language.", "True"),
             new Question(new MultipleChoiceQuestionStrategy(), "Which operator is used for 'Floor Division' in Python?", new String[] {"/", "//", "%", "div"}, "//"),
             new Question(new MultipleChoiceQuestionStrategy(), "What is the correct way to write a single-line comment in Python?", new String[] {"// comment", "/* comment */", "# comment", "-- comment"}, "# comment"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Python variable names are case-sensitive.", "True"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Floating-point calculations in computer programs can sometimes suffer from imprecision.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which compound assignment operator correctly adds 5 to the variable x?", new String[] {"x ++ 5", "x =+ 5", "x += 5", "x + 5 = x"}, "x += 5"),
 
-            // --- DATA TYPES & COLLECTIONS ---
-            new Question(new MultipleChoiceQuestionStrategy(), "Which collection is ordered, changeable, and allows duplicate members?", new String[] {"List", "Tuple", "Set", "Dictionary"}, "List"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A Python tuple can be changed after it is created.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which collection in Python stores key-value pairs?", new String[] {"List", "Set", "Dictionary", "Tuple"}, "Dictionary"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which method is used to add an element to the end of a list?", new String[] {"add()", "insert()", "append()", "push()"}, "append()"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A Set in Python is unordered and does not allow duplicate items.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the result of len(['apple', 'banana', 'cherry'])?", new String[] {"1", "2", "3", "18"}, "3"),
+            // --- CHAPTER 2 & 8: STRINGS & STRING PROCESSING ---
+            new Question(new MultipleChoiceQuestionStrategy(), "Which data type is used for a sequence of characters in Python?", new String[] {"char", "String", "str", "text"}, "str"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: In Python, the expression '3' + '3' results in '33'.", "True"),
             new Question(new MultipleChoiceQuestionStrategy(), "How do you start a multi-line string in Python?", new String[] {"///", "\"\"\"", "###", "&&&"}, "\"\"\""),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The bool() function returns False for an empty list [].", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which operator is used to check if a value exists within a list?", new String[] {"exists", "in", "has", "contains"}, "in"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the value of 10 % 3 in Python?", new String[] {"3", "1", "0", "3.33"}, "1"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Strings in Python are immutable, meaning they cannot be changed after creation.", "True"),
 
-            // --- LOGIC & LOOPS ---
-            new Question(new MultipleChoiceQuestionStrategy(), "To exit a loop prematurely in Python, you use the keyword:", new String[] {"exit", "stop", "break", "return"}, "break"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A 'while' loop will execute at least once even if the condition is False.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which keyword is used to skip the current iteration of a loop?", new String[] {"skip", "pass", "continue", "next"}, "continue"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the output of: print(2 ** 3)?", new String[] {"5", "6", "8", "9"}, "8"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Python supports 'switch' statements natively (before version 3.10).", "False"),
+            // --- CHAPTER 3: SELECTION (IF-ELSE) ---
             new Question(new MultipleChoiceQuestionStrategy(), "Which logical operator represents 'AND' in Python?", new String[] {"&&", "and", "&", "amp"}, "and"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The 'range(5)' function generates numbers from 0 to 5 (inclusive).", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "What operator is used to perform equality testing between two primitive values?", new String[] {"=", "==", "===", "equals"}, "=="),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which keyword is used to represent an alternative condition in Python if the initial 'if' fails?", new String[] {"else if", "elseif", "elif", "otherwise"}, "elif"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A nested if statement is an if statement placed entirely inside another if statement.", "True"),
 
-            // --- FUNCTIONS & SCOPE ---
-            new Question(new MultipleChoiceQuestionStrategy(), "Which keyword is used to return a value from a function?", new String[] {"get", "give", "return", "output"}, "return"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A function in Python can return multiple values separated by commas.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What keyword allows you to modify a variable outside the current function scope?", new String[] {"outer", "global", "extern", "this"}, "global"),
-            new Question(new MultipleChoiceQuestionStrategy(), "An 'anonymous' function in Python is created using which keyword?", new String[] {"anon", "def", "lambda", "inline"}, "lambda"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Python functions must always have a return statement.", "False"),
+            // --- CHAPTER 4 & 9: REPETITION & NESTED STRUCTURES ---
+            new Question(new MultipleChoiceQuestionStrategy(), "To exit a loop prematurely in Python, you use the keyword:", new String[] {"exit", "stop", "break", "return"}, "break"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A 'while' loop will execute at least once even if its initial condition is False.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which keyword is used to skip the current iteration of a loop and proceed to the next one?", new String[] {"skip", "pass", "continue", "next"}, "continue"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A nested loop is a loop inside the body of another loop.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "To simulate a generic 'do-while' loop in Python (which doesn't exist natively), you generally use:", new String[] {"A for loop", "A while True loop with a break condition at the end", "A switch statement", "A recursive function"}, "A while True loop with a break condition at the end"),
 
-            // --- ERRORS & EXCEPTIONS ---
-            new Question(new MultipleChoiceQuestionStrategy(), "In Python, which keyword is used to handle potential errors?", new String[] {"catch", "except", "error", "handle"}, "except"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The block of code that runs regardless of whether an exception occurred is:", new String[] {"finally", "always", "else", "end"}, "finally"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: You can raise your own exceptions using the 'raise' keyword.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which error occurs if you try to divide by zero?", new String[] {"MathError", "ZeroDivisionError", "NullError", "ValueError"}, "ZeroDivisionError"),
+            // --- CHAPTER 5 & 6: LIST PROCESSING, FUNCTIONS & RECURSION ---
+            new Question(new MultipleChoiceQuestionStrategy(), "Which method is used to add an element to the end of a list?", new String[] {"add()", "insert()", "append()", "push()"}, "append()"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which keyword is used to define a new function in Python?", new String[] {"function", "def", "void", "func"}, "def"),
+            new Question(new MultipleChoiceQuestionStrategy(), "What does a recursive function do?", new String[] {"Loops indefinitely", "Calls itself to solve a smaller instance of the same problem", "Returns multiple values", "Deletes data from an array"}, "Calls itself to solve a smaller instance of the same problem"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Arrays or lists can be passed as parameters to functions.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which built-in Python method sorts a list in place?", new String[] {"order()", "arrange()", "sort()", "sorted()"}, "sort()"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which operator easily checks if a specific element exists within a list (linear search)?", new String[] {"exists", "in", "has", "contains"}, "in"),
 
-            // --- OBJECT ORIENTED PROGRAMMING (OOP) ---
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the name of the special method used to initialize a Python class?", new String[] {"__start__", "__init__", "__class__", "__new__"}, "__init__"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Python supports multiple inheritance.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The 'self' parameter in a class method refers to:", new String[] {"The class itself", "The parent class", "The specific instance of the class", "The global scope"}, "The specific instance of the class"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: You can create a class without any methods in Python.", "True"),
+            // --- CHAPTER 10 & 11: TUPLE, SET, DICT & NUMPY ---
+            new Question(new MultipleChoiceQuestionStrategy(), "Which collection is ordered, changeable, and allows duplicate members?", new String[] {"List", "Tuple", "Set", "Dictionary"}, "List"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A Python tuple can be changed (mutated) after it is created.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which collection in Python stores key-value pairs?", new String[] {"List", "Set", "Dictionary", "Tuple"}, "Dictionary"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A Set in Python is unordered and does not allow duplicate items.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "NumPy arrays differ from standard Python lists primarily because they:", new String[] {"Cannot store numbers", "Are significantly faster and optimized for numerical operations", "Can only hold strings", "Are immutable"}, "Are significantly faster and optimized for numerical operations"),
 
-            // --- MISCELLANEOUS & BUILT-INS ---
-            new Question(new MultipleChoiceQuestionStrategy(), "Which function is used to convert a string to an integer?", new String[] {"str()", "float()", "int()", "num()"}, "int()"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Strings in Python are immutable.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "How do you open a file for 'reading' in Python?", new String[] {"open('file.txt', 'w')", "open('file.txt', 'r')", "open('file.txt', 'a')", "open('file.txt', 'x')"}, "open('file.txt', 'r')"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the default value returned by a function that doesn't have a return statement?", new String[] {"0", "False", "None", "Null"}, "None"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Python 3 and Python 2 are fully compatible with each other.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which module is used for generating random numbers in Python?", new String[] {"math", "rand", "random", "seed"}, "random"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: List comprehensions are a concise way to create lists.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the output of print(type(10))?", new String[] {"<class 'num'>", "<class 'float'>", "<class 'int'>", "<class 'str'>"}, "<class 'int'>"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which keyword is used to import a library in Python?", new String[] {"using", "include", "import", "require"}, "import"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: PEP 8 is the official style guide for Python code.", "True"),
+            // --- CHAPTER 12: CLASSES, OBJECTS & INHERITANCE ---
+            new Question(new MultipleChoiceQuestionStrategy(), "What is the name of the constructor method used to initialize an object's state in a Python class?", new String[] {"__start__", "__init__", "__class__", "__new__"}, "__init__"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The 'self' parameter in a class method refers to:", new String[] {"The class itself", "The parent class", "The specific instance (object) of the class", "The global scope"}, "The specific instance (object) of the class"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Inheritance in Object-Oriented Programming allows a new class to:", new String[] {"Delete an existing class", "Acquire the properties and methods of an existing class", "Prevent instance creation", "Bypass memory allocation"}, "Acquire the properties and methods of an existing class"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A child class can override a method defined in its parent class.", "True"),
 
-            //Written
-            new Question(new WrittenQuestionStrategy(), "Which keyword is used to define a function in Python?", "def"),
-            new Question(new WrittenQuestionStrategy(), "What data type is used to store key-value pairs?", "dict"),
-            new Question(new WrittenQuestionStrategy(), "What function is used to get the length of a list?", "len()"),
-            new Question(new WrittenQuestionStrategy(), "Is a Python Tuple mutable or immutable?", "Immutable"),
-            new Question(new WrittenQuestionStrategy(), "Which keyword is used to skip to the next iteration of a loop?", "continue")
+            // --- WRITTEN CONCEPTS ---
+            new Question(new WrittenQuestionStrategy(), "Which Python function gets user input from the keyboard?", "input()"),
+            new Question(new WrittenQuestionStrategy(), "What data type is used to store key-value pairs in Python?", "dict"),
+            new Question(new WrittenQuestionStrategy(), "What function is used to get the number of elements in a list?", "len()"),
+            new Question(new WrittenQuestionStrategy(), "If a function calls itself during execution, what programming concept is being used?", "Recursion"),
+            new Question(new WrittenQuestionStrategy(), "In Object-Oriented Programming, what term describes a blueprint used to create objects?", "Class")
         });
 
         subjectData.put(Subject.ADV_COMP_PROG, new Question[] {
             // --- ADVANCED COMPUTER PROGRAMMING ---
 
-            // --- OBJECT-ORIENTED PRINCIPLES ---
+            // --- WEEK 2-4: OOP FOUNDATIONS, INHERITANCE, POLYMORPHISM & COMPOSITION ---
             new Question(new MultipleChoiceQuestionStrategy(), "Which concept allows a subclass to provide a specific implementation of a method already defined in its superclass?", new String[] {"Overloading", "Overriding", "Encapsulation", "Abstraction"}, "Overriding"),
             new Question(new TrueFalseQuestionStrategy(), "True or False: A constructor can be inherited by a subclass.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the primary purpose of an 'Interface' in Java?", new String[] {"To store data", "To define a contract of behavior", "To prevent inheritance", "To speed up execution"}, "To define a contract of behavior"),
             new Question(new MultipleChoiceQuestionStrategy(), "Which access modifier makes a member visible only within its own class?", new String[] {"public", "protected", "default", "private"}, "private"),
             new Question(new TrueFalseQuestionStrategy(), "True or False: An abstract class can be instantiated using the 'new' keyword.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is 'Polymorphism' in Java?", new String[] {"Hiding data", "A class with many constructors", "One interface, multiple implementations", "Copying objects"}, "One interface, multiple implementations"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Java supports multiple inheritance through classes.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "What is 'Polymorphism' in Object-Oriented Programming?", new String[] {"Hiding data", "A class with many constructors", "One interface, multiple implementations", "Copying objects"}, "One interface, multiple implementations"),
             new Question(new MultipleChoiceQuestionStrategy(), "Which keyword is used to call the constructor of the parent class?", new String[] {"this", "parent", "super", "base"}, "super"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Composition is generally used to model which type of relationship between classes?", new String[] {"Is-a", "Has-a", "Works-with", "Becomes-a"}, "Has-a"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Composition provides better encapsulation and looser coupling compared to class inheritance.", "True"),
 
-            // --- MEMORY & KEYWORDS ---
-            new Question(new MultipleChoiceQuestionStrategy(), "Where are objects stored in Java memory?", new String[] {"Stack", "Heap", "Register", "Cache"}, "Heap"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The 'final' keyword on a class prevents it from being subclassed.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What does the 'static' keyword imply about a variable?", new String[] {"It changes constantly", "It belongs to the class, not an instance", "It is thread-safe", "It cannot be modified"}, "It belongs to the class, not an instance"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Primitive types (like int) are stored on the Stack.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The process of the JVM automatically reclaiming unused memory is called:", new String[] {"Memory Swapping", "Defragmentation", "Garbage Collection", "Caching"}, "Garbage Collection"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the result of using '==' to compare two String objects?", new String[] {"Compares their content", "Compares their memory addresses", "Throws an error", "Returns the length"}, "Compares their memory addresses"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Java is strictly 'Pass-by-Value'.", "True"),
-
-            // --- EXCEPTIONS & ERRORS ---
+            // --- WEEK 5: INTERFACE & EXCEPTION HANDLING ---
+            new Question(new MultipleChoiceQuestionStrategy(), "What is the primary purpose of an 'Interface' in OOP?", new String[] {"To store data", "To define a contract of behavior", "To prevent inheritance", "To speed up execution"}, "To define a contract of behavior"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which keyword is used to implement an interface?", new String[] {"extends", "implements", "uses", "requires"}, "implements"),
             new Question(new MultipleChoiceQuestionStrategy(), "Which block is used to enclose code that might throw an exception?", new String[] {"catch", "finally", "try", "throw"}, "try"),
             new Question(new TrueFalseQuestionStrategy(), "True or False: The 'finally' block executes even if no exception is caught.", "True"),
             new Question(new MultipleChoiceQuestionStrategy(), "Which of these is a 'Checked' exception?", new String[] {"NullPointerException", "ArithmeticException", "IOException", "ArrayIndexOutOfBoundsException"}, "IOException"),
             new Question(new MultipleChoiceQuestionStrategy(), "What keyword is used in a method signature to declare that it might throw an exception?", new String[] {"throw", "throws", "catch", "assert"}, "throws"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: 'Error' and 'Exception' are both subclasses of 'Throwable'.", "True"),
 
-            // --- STRATEGY & DESIGN ---
-            new Question(new MultipleChoiceQuestionStrategy(), "The Singleton pattern ensures that:", new String[] {"A class has only one instance", "A class is thread-safe", "Methods are static", "Memory is cleared"}, "A class has only one instance"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The Strategy Pattern involves defining a family of algorithms and making them interchangeable.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which keyword prevents a variable from being serialized?", new String[] {"volatile", "transient", "synchronized", "native"}, "transient"),
+            // --- WEEK 6: OO DESIGN PRINCIPLES (SRP, OCP) ---
+            new Question(new MultipleChoiceQuestionStrategy(), "What does the Single Responsibility Principle (SRP) state?", new String[] {"A class should have multiple ways to be modified", "A class should only have one reason to change", "Every class must inherit from a single parent", "Classes must have single-line methods"}, "A class should only have one reason to change"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The Open/Closed Principle (OCP) states that software entities should be open for ________ but closed for ________.", new String[] {"reading, writing", "testing, deployment", "extension, modification", "modification, extension"}, "extension, modification"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: Applying the Open/Closed Principle often involves using polymorphism and abstract interfaces.", "True"),
+
+            // --- WEEK 9-10: CONCURRENT (THREADING) & SOCKET PROGRAMMING ---
             new Question(new MultipleChoiceQuestionStrategy(), "The 'synchronized' keyword is used to achieve:", new String[] {"Polymorphism", "Thread Safety", "Faster loops", "Data Compression"}, "Thread Safety"),
-
-            // --- WRAPPING UP THE CONCEPTS ---
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Java Strings are immutable.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which method must you override to ensure objects work correctly in a HashMap?", new String[] {"toString()", "equals() and hashCode()", "clone()", "finalize()"}, "equals() and hashCode()"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The 'diamond operator' (<>) was introduced to:", new String[] {"Make code look pretty", "Type inference for generics", "Support bitwise math", "Mark private classes"}, "Type inference for generics"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A 'static' method can access non-static instance variables directly.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the base class of all classes in Java?", new String[] {"Main", "Base", "Object", "System"}, "Object"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: An Inner Class can access private members of the Outer Class.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which stream method is used to transform elements in Java Streams?", new String[] {"filter()", "map()", "collect()", "reduce()"}, "map()"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The 'volatile' keyword ensures that a variable is always read from:", new String[] {"The CPU cache", "Main memory", "The hard drive", "The stack"}, "Main memory"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: 'super()' must be the first statement in a constructor.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which of these is NOT a wrapper class?", new String[] {"Integer", "Boolean", "Double", "string"}, "string"),
             new Question(new MultipleChoiceQuestionStrategy(), "What happens if a thread calls 'wait()'?", new String[] {"It stops forever", "It releases the lock and waits", "It busy-waits", "It crashes"}, "It releases the lock and waits"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Java Reflection allows you to inspect classes at runtime.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the default value of a boolean instance variable?", new String[] {"true", "false", "null", "0"}, "false"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which keyword is used to implement an interface?", new String[] {"extends", "implements", "uses", "requires"}, "implements"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The '@Override' annotation is mandatory for the code to compile.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What does the 'break' statement do in a switch-case?", new String[] {"Restarts the program", "Exits the switch block", "Skips the next case", "Throws an error"}, "Exits the switch block"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: In concurrent programming, multiple threads share the same heap memory space.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "In Java Socket Programming, which class is used by the server to listen for incoming client connections?", new String[] {"Socket", "ClientSocket", "ServerSocket", "DatagramSocket"}, "ServerSocket"),
+            new Question(new MultipleChoiceQuestionStrategy(), "What is required to establish a TCP socket connection between a client and a server?", new String[] {"IP Address and Port Number", "MAC Address", "File Path", "Router Password"}, "IP Address and Port Number"),
 
-            //Written
+            // --- WEEK 11-14: DESIGN PATTERNS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "The Singleton pattern ensures that:", new String[] {"A class has only one instance", "A class is thread-safe", "Methods are static", "Objects are immutable"}, "A class has only one instance"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The Strategy Pattern involves defining a family of algorithms, encapsulating each one, and making them interchangeable.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which design pattern defines a one-to-many dependency so that when one object changes state, all its dependents are notified?", new String[] {"Factory", "Observer", "Decorator", "Iterator"}, "Observer"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which pattern allows behavior to be added to an individual object dynamically, without affecting the behavior of other objects from the same class?", new String[] {"Composite", "Strategy", "Decorator", "Singleton"}, "Decorator"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which design pattern is used to create objects without specifying the exact class of the object that will be created?", new String[] {"Factory Pattern", "Composite Pattern", "Iterator Pattern", "Observer Pattern"}, "Factory Pattern"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which pattern lets clients treat individual objects and compositions of objects uniformly (often used for tree structures)?", new String[] {"Strategy", "Composite", "Decorator", "Factory"}, "Composite"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The Iterator pattern provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation.", "True"),
+
+            // --- WRITTEN QUESTIONS ---
             new Question(new WrittenQuestionStrategy(), "What keyword is used to inherit a class in Java?", "extends"),
-            new Question(new WrittenQuestionStrategy(), "What is the root class of all classes in Java?", "Object"),
-            new Question(new WrittenQuestionStrategy(), "Which keyword is used to create a constant variable?", "final"),
-            new Question(new WrittenQuestionStrategy(), "What is the default value of a boolean instance variable?", "false"),
+            new Question(new WrittenQuestionStrategy(), "What design principle acronym stands for classes having only one reason to change?", "SRP"),
+            new Question(new WrittenQuestionStrategy(), "Which keyword is used to create a constant variable or prevent method overriding?", "final"),
+            new Question(new WrittenQuestionStrategy(), "What pattern encapsulates algorithms into their own interchangeable classes?", "Strategy"),
             new Question(new WrittenQuestionStrategy(), "Which access modifier allows access only within the same class?", "private")
         });
 
         subjectData.put(Subject.PROB_STAT_DATA, new Question[] {
-            // --- PROBABILITY AND STATISTICS COMPLETE DATASET (50 QUESTIONS) ---
-
-            // --- CENTRAL TENDENCY & DISPERSION ---
-            new Question(new MultipleChoiceQuestionStrategy(), "Which measure of central tendency is most affected by extreme outliers?", new String[] {"Median", "Mean", "Mode", "Range"}, "Mean"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The sum of the deviations of all data points from the mean is always zero.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which value represents the 'middle' of a sorted data set?", new String[] {"Mean", "Mode", "Median", "Standard Deviation"}, "Median"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Standard deviation is the square root of what?", new String[] {"Mean", "Variance", "Range", "Expected Value"}, "Variance"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: If the variance of a data set is 0, all data points are identical.", "True"),
-
-            // --- PROBABILITY BASICS ---
-            new Question(new MultipleChoiceQuestionStrategy(), "The probability of an event that is certain to occur is:", new String[] {"0", "0.5", "1", "100"}, "1"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Two events are mutually exclusive if they cannot happen at the same time.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If you flip a fair coin twice, what is the probability of getting two heads?", new String[] {"0.5", "0.25", "0.75", "1"}, "0.25"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What rule is used to find the probability of Event A OR Event B occurring?", new String[] {"Multiplication Rule", "Addition Rule", "Bayes' Theorem", "Power Rule"}, "Addition Rule"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The probability of an event and its complement always sum to 1.", "True"),
-
-            // --- DISTRIBUTIONS ---
-            new Question(new MultipleChoiceQuestionStrategy(), "In a perfectly Normal Distribution, which of the following is true?", new String[] {"Mean > Median", "Mean < Mode", "Mean = Median = Mode", "Standard Deviation = 0"}, "Mean = Median = Mode"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: In a skewed-right distribution, the tail is on the right side.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The '68-95-99.7 Rule' applies to which type of distribution?", new String[] {"Binomial", "Poisson", "Normal", "Uniform"}, "Normal"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the total area under a probability density function curve?", new String[] {"0.5", "1", "Depends on data", "100"}, "1"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A Z-score tells you how many standard deviations a value is from the mean.", "True"),
-
-            // --- SAMPLING & ESTIMATION ---
-            new Question(new MultipleChoiceQuestionStrategy(), "The Central Limit Theorem states that as sample size increases, the sampling distribution of the mean becomes:", new String[] {"Skewed", "Normal", "Uniform", "Bimodal"}, "Normal"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A larger sample size generally leads to a smaller margin of error.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which type of bias occurs when some members of a population are less likely to be chosen?", new String[] {"Response Bias", "Undercoverage Bias", "Non-response Bias", "Measurement Bias"}, "Undercoverage Bias"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A parameter describes a population, while a statistic describes a sample.", "True"),
-
-            // --- HYPOTHESIS TESTING ---
-            new Question(new MultipleChoiceQuestionStrategy(), "The probability of rejecting the Null Hypothesis when it is actually true is called:", new String[] {"Type I Error", "Type II Error", "Power", "Confidence Level"}, "Type I Error"),
-            new Question(new MultipleChoiceQuestionStrategy(), "In hypothesis testing, we reject the Null Hypothesis if the P-value is:", new String[] {"Less than alpha", "Greater than alpha", "Equal to 1", "Negative"}, "Less than alpha"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The Null Hypothesis usually represents 'no effect' or 'no difference'.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which error occurs when we fail to reject a false Null Hypothesis?", new String[] {"Type I Error", "Type II Error", "Standard Error", "Margin of Error"}, "Type II Error"),
-
-            // --- CORRELATION & REGRESSION ---
-            new Question(new MultipleChoiceQuestionStrategy(), "A correlation coefficient (r) of -1 indicates:", new String[] {"No relationship", "Weak positive relationship", "Perfect negative relationship", "Perfect positive relationship"}, "Perfect negative relationship"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Correlation implies causation.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "In a linear regression equation (y = mx + b), what does 'm' represent?", new String[] {"Y-intercept", "Slope", "Correlation", "Residual"}, "Slope"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The difference between an observed value and the value predicted by a regression model is the:", new String[] {"Outlier", "Residual", "Variance", "Standard Error"}, "Residual"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: R-squared (coefficient of determination) measures how well the model fits the data.", "True"),
-
-            // --- ADVANCED CONCEPTS ---
-            new Question(new MultipleChoiceQuestionStrategy(), "Which distribution is best for modeling the number of events occurring in a fixed interval of time?", new String[] {"Normal", "Binomial", "Poisson", "Exponential"}, "Poisson"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which theorem relates current probability to prior knowledge or conditions?", new String[] {"Chebyshev's Theorem", "Bayes' Theorem", "Binomial Theorem", "Law of Large Numbers"}, "Bayes' Theorem"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Discrete variables can only take on a countable number of values.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "A 'Double-Blind' study is used primarily to reduce:", new String[] {"Calculation errors", "Experimenter and participant bias", "Sample size", "Variance"}, "Experimenter and participant bias"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The median is a more robust statistic than the mean.", "True"),
-
-            // --- RANDOM WRAP-UP ---
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the probability of an event that is impossible?", new String[] {"0", "0.01", "-1", "Null"}, "0"),
+            // --- WEEKS 1-3: BASIC PROBABILITY, COUNTING & BAYES' THEOREM ---
             new Question(new MultipleChoiceQuestionStrategy(), "The set of all possible outcomes of an experiment is called the:", new String[] {"Population", "Sample Space", "Event Set", "Data Range"}, "Sample Space"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Quantitative data can be either discrete or continuous.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which plot is best for showing the distribution of a single quantitative variable?", new String[] {"Scatterplot", "Pie Chart", "Histogram", "Bar Chart"}, "Histogram"),
-            new Question(new MultipleChoiceQuestionStrategy(), "If A and B are independent, P(A and B) equals:", new String[] {"P(A) + P(B)", "P(A) / P(B)", "P(A) * P(B)", "P(A|B)"}, "P(A) * P(B)"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: A boxplot displays the 5-number summary of a data set.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the Z-score of the mean in any normal distribution?", new String[] {"1", "0", "-1", "95"}, "0"),
-            new Question(new MultipleChoiceQuestionStrategy(), "A coin is flipped 10 times and shows heads every time. The probability the next flip is heads is:", new String[] {"Higher than 0.5", "Lower than 0.5", "Exactly 0.5", "1.0"}, "Exactly 0.5"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Sensitivity and Specificity are measures of a test's performance.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which distribution describes the number of successes in a fixed number of independent trials?", new String[] {"Normal", "Binomial", "Geometric", "Uniform"}, "Binomial"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: The law of large numbers says averages settle down as trials increase.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "What is the term for a value that is significantly far from the rest of the data?", new String[] {"Mean", "Standard Deviation", "Outlier", "Mode"}, "Outlier"),
-            new Question(new MultipleChoiceQuestionStrategy(), "A 95% confidence interval means:", new String[] {"The mean is 95", "95% of data is in the interval", "We are 95% confident the interval contains the parameter", "There is a 5% chance the mean is 0"}, "We are 95% confident the interval contains the parameter"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Ordinal data is a type of qualitative data with a specific order.", "True"),
-            new Question(new MultipleChoiceQuestionStrategy(), "The IQR (Interquartile Range) is calculated as:", new String[] {"Q3 - Q1", "Q4 - Q0", "Mean - Median", "Max - Min"}, "Q3 - Q1"),
-            new Question(new TrueFalseQuestionStrategy(), "True or False: Nominal data has a natural order.", "False"),
-            new Question(new MultipleChoiceQuestionStrategy(), "Which of these is NOT a measure of spread?", new String[] {"Variance", "Range", "Mode", "Standard Deviation"}, "Mode"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which counting technique is used when the order of selection matters?", new String[] {"Combination", "Permutation", "Intersection", "Union"}, "Permutation"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: If two events are mutually exclusive, the probability of both occurring at the same time is 0.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "If events A and B are independent, what does P(A and B) equal?", new String[] {"P(A) + P(B)", "P(A) / P(B)", "P(A) * P(B)", "P(A|B)"}, "P(A) * P(B)"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which theorem is used to update the probability for a hypothesis as more evidence or information becomes available?", new String[] {"Chebyshev's Theorem", "Bayes' Theorem", "Binomial Theorem", "Law of Total Probability"}, "Bayes' Theorem"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The probability of an event and its complement must always sum to 1.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The formula P(A|B) = P(A and B) / P(B) is the definition of:", new String[] {"Total Probability", "Joint Probability", "Conditional Probability", "Marginal Probability"}, "Conditional Probability"),
 
-            //Written
+            // --- WEEKS 4-7: DISCRETE & CONTINUOUS RANDOM VARIABLES ---
+            new Question(new MultipleChoiceQuestionStrategy(), "A function that maps the outcomes of a random process to numerical values is called a:", new String[] {"Sample space", "Random variable", "Parameter", "Statistic"}, "Random variable"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The number of defective items in a batch of 50 is an example of a continuous random variable.", "False"),
+            new Question(new MultipleChoiceQuestionStrategy(), "For a discrete random variable, what is the equivalent of the probability density function (PDF)?", new String[] {"Cumulative Distribution Function", "Probability Mass Function", "Expected Value", "Variance"}, "Probability Mass Function"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which distribution is typically used to model the number of events occurring in a fixed interval of time?", new String[] {"Normal", "Binomial", "Poisson", "Exponential"}, "Poisson"),
+            new Question(new MultipleChoiceQuestionStrategy(), "What is the total area under a probability density function (PDF) curve for a continuous random variable?", new String[] {"0.5", "1", "Depends on the data", "100"}, "1"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: For a continuous random variable X, the probability that X equals any single exact value is 0.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The '68-95-99.7 Rule' applies to which type of distribution?", new String[] {"Binomial", "Poisson", "Normal", "Uniform"}, "Normal"),
+
+            // --- WEEKS 9-10: JOINT DISTRIBUTIONS, COVARIANCE & FUNCTIONS OF RV ---
+            new Question(new MultipleChoiceQuestionStrategy(), "A probability distribution that gives the probability of two or more random variables occurring simultaneously is a:", new String[] {"Marginal distribution", "Joint distribution", "Conditional distribution", "Normal distribution"}, "Joint distribution"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which metric measures the directional linear relationship between two random variables?", new String[] {"Variance", "Standard Deviation", "Covariance", "Expected Value"}, "Covariance"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: If two random variables are independent, their covariance is strictly zero.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "For a random variable X and constants a and b, what is the Expected Value E[aX + b]?", new String[] {"aE[X] + b", "aE[X]", "E[X] + b", "a^2E[X] + b"}, "aE[X] + b"),
+            new Question(new MultipleChoiceQuestionStrategy(), "For a random variable X and a constant 'a', what is the Variance Var(aX)?", new String[] {"a * Var(X)", "a^2 * Var(X)", "Var(X) / a", "a + Var(X)"}, "a^2 * Var(X)"),
+
+            // --- WEEK 11: DESCRIPTIVE STATISTICS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "Which measure of central tendency is most heavily affected by extreme outliers?", new String[] {"Median", "Mean", "Mode", "Interquartile Range"}, "Mean"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: If the variance of a data set is 0, all data points in that set must be identical.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The Interquartile Range (IQR) is calculated as:", new String[] {"Q3 - Q1", "Q4 - Q0", "Mean - Median", "Maximum - Minimum"}, "Q3 - Q1"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Which of the following plots is best for visualizing the 5-number summary of a dataset?", new String[] {"Scatterplot", "Pie Chart", "Histogram", "Boxplot"}, "Boxplot"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: In a skewed-right distribution, the mean is typically greater than the median.", "True"),
+
+            // --- WEEKS 13-14: POINT ESTIMATION & CONFIDENCE INTERVALS ---
+            new Question(new MultipleChoiceQuestionStrategy(), "Using the sample mean to estimate the population mean is an example of:", new String[] {"Hypothesis testing", "Point estimation", "Linear regression", "Interval estimation"}, "Point estimation"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: A larger sample size generally leads to a narrower confidence interval (smaller margin of error).", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "What does a 95% confidence interval indicate?", new String[] {"The sample mean is 95", "95% of the data falls within this range", "We are 95% confident the true population parameter lies in this interval", "There is a 95% chance the population mean is 0"}, "We are 95% confident the true population parameter lies in this interval"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The Central Limit Theorem states that as sample size increases, the sampling distribution of the mean approaches a:", new String[] {"Skewed distribution", "Normal distribution", "Uniform distribution", "Bimodal distribution"}, "Normal distribution"),
+
+            // --- WEEK 15: HYPOTHESIS TESTING I ---
+            new Question(new MultipleChoiceQuestionStrategy(), "In hypothesis testing, the probability of rejecting the Null Hypothesis when it is actually true is known as:", new String[] {"Type I Error", "Type II Error", "Statistical Power", "Confidence Level"}, "Type I Error"),
+            new Question(new MultipleChoiceQuestionStrategy(), "In a standard test, we reject the Null Hypothesis if the calculated P-value is:", new String[] {"Greater than the significance level (alpha)", "Less than the significance level (alpha)", "Equal to 1", "Negative"}, "Less than the significance level (alpha)"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The Null Hypothesis typically represents a position of 'no effect', 'no difference', or 'status quo'.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "Failing to reject a false Null Hypothesis is defined as a:", new String[] {"Type I Error", "Type II Error", "Standard Error", "Margin of Error"}, "Type II Error"),
+
+            // --- WEEK 16: LINEAR REGRESSION ---
+            new Question(new MultipleChoiceQuestionStrategy(), "In a simple linear regression equation (y = b0 + b1x), what does 'b1' represent?", new String[] {"Y-intercept", "Slope", "Correlation coefficient", "Residual"}, "Slope"),
+            new Question(new MultipleChoiceQuestionStrategy(), "The difference between an observed value and the value predicted by a regression model is called the:", new String[] {"Outlier", "Residual", "Variance", "Standard Error"}, "Residual"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: The method of Ordinary Least Squares (OLS) fits a line by minimizing the sum of the squared residuals.", "True"),
+            new Question(new MultipleChoiceQuestionStrategy(), "A correlation coefficient (r) of -1 indicates:", new String[] {"No relationship", "A weak positive relationship", "A perfect negative linear relationship", "A perfect positive linear relationship"}, "A perfect negative linear relationship"),
+            new Question(new TrueFalseQuestionStrategy(), "True or False: R-squared (the coefficient of determination) represents the proportion of the variance in the dependent variable that is predictable from the independent variable.", "True"),
+
+            // --- WRITTEN CONCEPTS ---
             new Question(new WrittenQuestionStrategy(), "What is the square root of Variance?", "Standard Deviation"),
-            new Question(new WrittenQuestionStrategy(), "What is the most frequent value in a data set called?", "Mode"),
-            new Question(new WrittenQuestionStrategy(), "A correlation of -1 indicates a perfect ____ relationship.", "Negative"),
-            new Question(new WrittenQuestionStrategy(), "The probability of an impossible event is ____.", "0"),
-            new Question(new WrittenQuestionStrategy(), "A bell-shaped curve represents a ____ distribution.", "Normal")
+            new Question(new WrittenQuestionStrategy(), "What is the most frequent value in a given dataset called?", "Mode"),
+            new Question(new WrittenQuestionStrategy(), "What rule determines the probability of Event A AND Event B occurring if they are independent?", "Multiplication Rule"),
+            new Question(new WrittenQuestionStrategy(), "The probability of an impossible event is exactly what number?", "0"),
+            new Question(new WrittenQuestionStrategy(), "What shape does a standard Normal Distribution curve have?", "Bell")
         });
     }
 
