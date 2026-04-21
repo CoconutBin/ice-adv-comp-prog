@@ -17,9 +17,9 @@ public class Boss extends GameEntity {
     }
   
     @Override
-    public void attack(GameEntity target) {
+    public void attack(GameEntity target, double Modifier) {
         if (bossBehavior != null) {
-            double damage = bossBehavior.calculateDamage();
+            double damage = bossBehavior.calculateDamage() * Modifier;
             target.updateHp(-damage);
         }
     }

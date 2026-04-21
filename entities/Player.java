@@ -1,15 +1,16 @@
 package entities;
 
 public class Player extends GameEntity {
-    private final int path;
-    public Player(String name, double initialHp, int path) {
+    private final PlayerGift playerGift;
+
+    public Player(String name, double initialHp, PlayerGift playerGift) {
         super(initialHp, name);
-        this.path = path;
+        this.playerGift = playerGift;
     }
 
     @Override
-    public void attack(GameEntity target) {
-        target.updateHp(-Math.random() * 7);
+    public void attack(GameEntity target, double Modifier) {
+        target.updateHp(-1 * playerGift.getAttackStat() * Modifier);
     }
 
     @Override
@@ -17,7 +18,7 @@ public class Player extends GameEntity {
         return "player";
     }
 
-    public int getPath(){
-        return path;
+    public PlayerGift getPlayerGift(){
+        return playerGift;
     }
 }
