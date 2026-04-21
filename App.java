@@ -51,5 +51,6 @@ public class App {
 
         Battle battle = new Battle(ioHandler);
         battle.startLoop(player, boss, chosenSubject);
+        System.exit(0);
     }
 }

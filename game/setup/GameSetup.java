@@ -20,7 +20,7 @@ public class GameSetup {
      */
     public void setupObservers() {
         // Logger: logs all HP changes for debugging/UI
-        EntityLoggerObserver loggerObserver = new EntityLoggerObserver(ioHandler);
+        EntityLoggerObserver loggerObserver = new EntityLoggerObserver(new game.ui.Visuals(ioHandler));
         player.addObserver(loggerObserver);
         boss.addObserver(loggerObserver);
 
