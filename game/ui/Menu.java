@@ -1,6 +1,7 @@
 package game.ui;
 
 import attacks.question.Subject;
+import entities.PlayerGift;
 import game.io.IOHandler;
 
 public class Menu {
@@ -20,11 +21,11 @@ public class Menu {
         return input.equalsIgnoreCase("x");
     }
 
-    public int selectSpecialty() {
+    public PlayerGift selectSpecialty() {
         io.print(TerminalColor.YELLOW.apply(io.center(" PICK YOUR GIFT ", 120, "=")));
-        io.print(TerminalColor.PURPLE.apply("[1]") + " INTELLIGENCE");
-        io.print(TerminalColor.PURPLE.apply("[2]") + " STRENGTH");
-        io.print(TerminalColor.PURPLE.apply("[3]") + " CHARISMA");
+        for(PlayerGift gift : PlayerGift.values()) {
+            io.print(TerminalColor.PURPLE.apply("[" + gift.getId() + "]") + " " + gift);
+        }
         io.print(TerminalColor.YELLOW.apply(io.center("", 120, "=")));
 
         while (true) {
@@ -32,20 +33,12 @@ public class Menu {
             try {
                 String input = io.readLine();
                 int choice = Integer.parseInt(input);
-
-                switch (choice) {
-                    case 1:
-                        return 1;
-                    case 2:
-                        return 2;
-                    case 3:
-                        return 3;
-                    default:
-                        io.print("Pick 1, 2, or 3!");
-                        break;
-                }
+                PlayerGift.fromId(choice);
+                return PlayerGift.fromId(choice);
             } catch (NumberFormatException e) {
                 io.print("Invalid input. Pick a number.");
+            } catch (IllegalArgumentException e) {
+                io.print("Pick 1, 2, or 3!");
             }
         }
     }
