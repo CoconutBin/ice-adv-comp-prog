@@ -33,7 +33,6 @@ public class Menu {
             try {
                 String input = io.readLine();
                 int choice = Integer.parseInt(input);
-                PlayerGift.fromId(choice);
                 return PlayerGift.fromId(choice);
             } catch (NumberFormatException e) {
                 io.print("Invalid input. Pick a number.");

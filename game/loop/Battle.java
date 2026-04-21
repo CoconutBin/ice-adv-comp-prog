@@ -81,7 +81,7 @@ public class Battle {
                 // Catches "apple", empty strings, or symbols or things that can't be parsed into an int;
                 io.printTyping(TerminalColor.RED.apply("You hesitated! Enter a valid target NUMBER (1, 2, or 3)."));
 
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
 
                 io.printTyping(TerminalColor.RED.apply("Invalid target! Focus your aim on 1, 2, or 3."));
 
@@ -94,6 +94,7 @@ public class Battle {
         } 
         else if (aimTarget == blockedPoint) {
             io.printTyping(TerminalColor.LIGHT_GREY.apply(boss.getName() + " dodged your attack perfectly!"));
+            player.attack(boss, AttackResult.DODGE.getHitModifier());
         } 
         else {
             io.printTyping(TerminalColor.RESET.apply("A strike to the " + aimTarget + "!"));
@@ -176,6 +177,7 @@ public class Battle {
 
         if (dodgeDirection == safeZone) {
             io.printTyping(TerminalColor.GREEN.apply("PERFECT DODGE!"));
+            boss.attack(player, AttackResult.DODGE.getHitModifier());
         } else if (dodgeDirection == trapZone) {
             io.printTyping(TerminalColor.RED.apply("??? You jumped into the blade!"));
             boss.attack(player, AttackResult.CRITICAL_HIT.getHitModifier());
@@ -226,6 +228,6 @@ public class Battle {
         } else {
             visuals.showVictory(player, boss, subject);
         }
-        System.exit(0);
+        return;
     }
 }
