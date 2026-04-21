@@ -3,6 +3,7 @@ import game.loop.Battle;
 import game.setup.GameSetup;
 import game.ui.TerminalColor;
 import game.ui.Visuals;
+import entities.PlayerGift;
 
 public class App {
 
@@ -24,7 +25,7 @@ public class App {
         game.ui.Menu menu = new game.ui.Menu(ioHandler);
         Subject chosenSubject = menu.subjectSelection();
         ioHandler.print("");
-        int playerPath = menu.selectSpecialty();
+        PlayerGift playerGift = menu.selectSpecialty();
         boolean skip = menu.shouldSkip(ioHandler);
         String playerName = "";
         if (!skip){
@@ -32,7 +33,7 @@ public class App {
             visuals.showOpening();
             playerName = ioHandler.readLine();
         }
-        entities.Player player = new entities.Player(playerName.isEmpty() ? "Academic Probation" : playerName, 100, playerPath);
+        entities.Player player = new entities.Player(playerName.isEmpty() ? "Academic Probation" : playerName, 100, playerGift);
         entities.Boss boss = new entities.Boss(attacks.question.QuoteBank.getBossName(chosenSubject),attacks.question.QuoteBank.getBossIntro(chosenSubject),100);
         if (!skip){
             visuals.playPrologue(player);     
