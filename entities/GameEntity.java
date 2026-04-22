@@ -44,7 +44,7 @@ public abstract class GameEntity {
 
     protected void notifyObservers(){
         for(EntityObserver observer: observers){
-            observer.update();
+            observer.onHpChange(this);
         }
     }
 
