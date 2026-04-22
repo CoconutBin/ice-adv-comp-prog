@@ -1,4 +1,6 @@
 package entities.boss.behavior;
+
+import game.ui.TerminalColor;
 import java.util.Random;
 
 public class LowHPBossBehavior implements BossBehaviorStrategy {
@@ -6,6 +8,16 @@ public class LowHPBossBehavior implements BossBehaviorStrategy {
 
     @Override
     public int calculateDamage() {
-        return 8 + random.nextInt(8); // Example damage calculation for low HP behavior
+        return 8 + random.nextInt(8);
+    }
+
+    @Override
+    public String getDialogue() {
+        return "You think you can defeat me? Go ahead, try me!";
+    }
+
+    @Override
+    public TerminalColor getColor() {
+        return TerminalColor.RED;
     }
 }

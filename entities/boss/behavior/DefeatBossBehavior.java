@@ -2,19 +2,19 @@ package entities.boss.behavior;
 
 import game.ui.TerminalColor;
 
-public class DefaultBossBehavior implements BossBehaviorStrategy {
+public class DefeatBossBehavior implements BossBehaviorStrategy {
     @Override
     public int calculateDamage() {
-        return 5;
+        return 0;
     }
 
     @Override
     public String getDialogue() {
-        return "Let's see what you're made of!";
+        return "But how? You were supposed to be bad!";
     }
 
     @Override
     public TerminalColor getColor() {
-        return TerminalColor.YELLOW;
+        return TerminalColor.LIGHT_GREY;
     }
 }
