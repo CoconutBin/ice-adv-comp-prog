@@ -1,5 +1,7 @@
 package entities.observers;
 
-public interface EntityObserver{
-    public abstract void update();
+import entities.GameEntity;
+
+public interface EntityObserver {
+    void onHpChange(GameEntity entity);
 }
