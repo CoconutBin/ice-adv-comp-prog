@@ -3,7 +3,6 @@ import attacks.question.QuoteBank;
 import attacks.question.Subject;
 import entities.Boss;
 import entities.Player;
-import entities.PlayerGift;
 import game.io.IOHandler;
 
 
@@ -86,7 +85,7 @@ public void showLogo() {
     }
 
     public void showVictory(Player player, Boss boss, Subject subject) {
-        if(player.getPlayerGift() == PlayerGift.NONE){
+        if (player.getPlayerGift().hasSpecialVictoryScreen()) {
             ioHandler.print("\n" + TerminalColor.GREEN.apply(ioHandler.center("", 120, "=")));
             ioHandler.print("");
             ioHandler.printTyping(TerminalColor.GREEN.apply(ioHandler.center("[!] " + boss.getName() + " HAS BEEN DEFEATED!", 120 , " ")));
