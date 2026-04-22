@@ -61,7 +61,7 @@ public class Battle {
         BodyPart weakPoint = BodyPart.getRandomPart(rand);
         BodyPart blockedPoint = BodyPart.getRandomPartExcluding(rand, weakPoint);
         if (player.getPlayerGift().hasCombatHints()) {
-            io.printTyping(TerminalColor.CYAN.apply("[!] Seeing as you look quite charming,\n" + boss.getName()
+            io.printTyping(TerminalColor.CYAN.apply("[!] Seeing as you look quite charming, " + boss.getName()
                     + " has decided to tell you that their " + BodyPart.getRandomPartExcluding(rand, weakPoint) + " is not their weak point."));
         }
         io.printTyping("Prepare your strike!");
