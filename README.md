@@ -34,11 +34,14 @@ The `QuestionStrategy` interface defines two methods: `askQuestion(...)` and `is
 
 `BossBehaviorStrategy` defines `calculateDamage()`. `Boss` holds a reference to the current strategy and delegates its `attack()` to it. `BossBehaviorObserver` swaps the strategy whenever the boss's HP crosses a threshold.
 
+Each strategy carries its own `getDialogue()` and `getColor()` so a single class encapsulates the full behaviour of a phase.
+
 | Class | Trigger | Damage Range |
 |---|---|---|
 | `DefaultBossBehavior` | HP > 50% | 5 (Fixed) |
 | `MidHPBossBehavior` | HP 20–50% | 7 – 12 |
 | `LowHPBossBehavior` | HP < 20% | 8 – 15 |
+| `DefeatBossBehavior` | HP = 0 | 0 (Boss defeated) |
 
 ### 3. Singleton — Question Bank
 `attacks/question/QuestionBank.java`
@@ -50,7 +53,7 @@ The `QuestionStrategy` interface defines two methods: `askQuestion(...)` and `is
 
 `GameEntity` maintains an `ArrayList<EntityObserver>` and calls `onHpChange(this)` inside `updateHp()` after every HP modification. Two observers are registered at startup via `GameSetup`:
 
-- **`BossBehaviorObserver`** — checks the boss's HP percentage via `onHpChange(GameEntity)`, calls `setBossBehavior()` with the appropriate strategy, and prints the `BossPhase` dialogue line.
+- **`BossBehaviorObserver`** — tracks phase transitions via an internal `currentPhase` counter. On each HP change, it computes the new phase; if it differs, it swaps the strategy via `setBossBehavior()` and prints the dialogue from the new strategy.
 - **`EntityLoggerObserver`** — calls `Visuals.displayStatus()` to redraw the HP bar for whoever just took damage.
 
 ---
@@ -88,12 +91,12 @@ entities/
 ├── Player.java                     # attack() scales off PlayerGift
 ├── Boss.java                       # attack() delegates to BossBehaviorStrategy
 ├── PlayerGift.java                 # Enum: INTELLIGENCE / STRENGTH / CHARISMA / NONE
-├── BossPhase.java                  # Enum: DEFAULT / MID_HP / LOW_HP / DEFEAT with dialogue + color
 ├── boss/behavior/
-│   ├── BossBehaviorStrategy.java   # Interface: calculateDamage() → int
+│   ├── BossBehaviorStrategy.java   # Interface: calculateDamage() → int, getDialogue(), getColor()
 │   ├── DefaultBossBehavior.java
 │   ├── MidHPBossBehavior.java
-│   └── LowHPBossBehavior.java
+│   ├── LowHPBossBehavior.java
+│   └── DefeatBossBehavior.java
 └── observers/
     ├── EntityObserver.java         # Interface: onHpChange(GameEntity)
     ├── BossBehaviorObserver.java   # Swaps boss strategy on HP threshold; prints phase dialogue
@@ -206,18 +209,6 @@ classDiagram
         +setBossBehavior(behavior : BossBehaviorStrategy) void
     }
 
-    class BossPhase {
-        <<enumeration>>
-        DEFAULT
-        MID_HP
-        LOW_HP
-        DEFEAT
-        -color : TerminalColor
-        -dialogue : String
-        +getColor() TerminalColor
-        +getDialogue() String
-    }
-
     class PlayerGift {
         <<enumeration>>
         INTELLIGENCE
@@ -248,6 +239,7 @@ classDiagram
     class BossBehaviorObserver {
         -ioHandler : IOHandler
         -boss : Boss
+        -currentPhase : int
         +onHpChange(entity : GameEntity) void
     }
 
@@ -262,18 +254,32 @@ classDiagram
     class BossBehaviorStrategy {
         <<interface>>
         +calculateDamage() int
+        +getDialogue() String
+        +getColor() TerminalColor
     }
 
     class DefaultBossBehavior {
         +calculateDamage() int
+        +getDialogue() String
+        +getColor() TerminalColor
     }
 
     class MidHPBossBehavior {
         +calculateDamage() int
+        +getDialogue() String
+        +getColor() TerminalColor
     }
 
     class LowHPBossBehavior {
         +calculateDamage() int
+        +getDialogue() String
+        +getColor() TerminalColor
+    }
+
+    class DefeatBossBehavior {
+        +calculateDamage() int
+        +getDialogue() String
+        +getColor() TerminalColor
     }
 
     %% ── QUESTION STRATEGY PATTERN ──────────────────────────────────────────────
@@ -406,7 +412,7 @@ classDiagram
         -io : IOHandler
         +subjectSelection() Subject
         +selectSpecialty() PlayerGift
-        +shouldSkip(io : IOHandler) boolean
+        +shouldSkip() boolean
     }
 
     %% ── UI / IO LAYER ──────────────────────────────────────────────────────────
@@ -465,13 +471,13 @@ classDiagram
     EntityObserver <|.. BossBehaviorObserver
     EntityObserver <|.. EntityLoggerObserver
     GameEntity "1" o-- "*" EntityObserver : notifies
-    BossBehaviorObserver --> BossPhase : reads
     BossBehaviorObserver ..> Boss : swaps strategy on
 
     %% Boss Behavior Strategy pattern
     BossBehaviorStrategy <|.. DefaultBossBehavior
     BossBehaviorStrategy <|.. MidHPBossBehavior
     BossBehaviorStrategy <|.. LowHPBossBehavior
+    BossBehaviorStrategy <|.. DefeatBossBehavior
     Boss --> BossBehaviorStrategy : delegates to
 
     %% Question Strategy pattern
