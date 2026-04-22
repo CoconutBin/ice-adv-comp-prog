@@ -64,8 +64,4 @@ public class IOHandler {
         System.out.flush();
     }
 
-    public void clearLine(int lineNum) {
-        System.out.print("\033[" + lineNum + ";1H\033[2K");
-        System.out.flush();
-    }
 }
