@@ -46,10 +46,10 @@ public class App {
         ioHandler.readLine(); 
         ioHandler.clearTerminal();
         // Setup game state (register observers, initialize systems)
-        GameSetup gameSetup = new GameSetup(player, boss, ioHandler);
+        GameSetup gameSetup = new GameSetup(player, boss, ioHandler, visuals);
         gameSetup.setupObservers();
 
-        Battle battle = new Battle(ioHandler);
+        Battle battle = new Battle(ioHandler, visuals);
         battle.startLoop(player, boss, chosenSubject);
         System.exit(0);
     }
