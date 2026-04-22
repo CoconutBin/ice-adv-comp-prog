@@ -25,14 +25,14 @@ The `QuestionStrategy` interface defines two methods: `askQuestion(...)` and `is
 |---|---|---|
 | `MultipleChoiceQuestionStrategy` | 4-option numbered choice | Matches selected option by index |
 | `TrueFalseQuestionStrategy` | True / False | Case-insensitive first-character match |
-| `WrittenQuestionStrategy` | Free text | Case-insensitive exact match |
+| `WrittenQuestionStrategy` | Free text | Case-insensitive exact match (trimmed) |
 
 `Question` holds a strategy instance and delegates to it — `Battle` never knows or cares which type it's dealing with.
 
 ### 2. Strategy — Boss Behavior
 `entities/boss/behavior/`
 
-`BossBehaviorStrategy` defines `calculateDamage()`. `Boss` holds a reference to the current strategy and delegates its `attack()` to it. `BossBehaviorObserver` swaps the strategy whenever the boss's HP crosses a threshold.
+`BossBehaviorStrategy` defines `calculateDamage()`. `Boss` holds a reference to the current strategy and delegates its `attack()` to it. Strategy swapping is handled internally by `Boss.updateHp()`, which checks the HP percentage after every damage update and calls `setBossBehavior()` with the appropriate strategy.
 
 | Class | Trigger | Damage Range |
 |---|---|---|
@@ -45,13 +45,21 @@ The `QuestionStrategy` interface defines two methods: `askQuestion(...)` and `is
 
 `QuestionBank` is eagerly initialized as a private static field. `getInstance()` returns that single instance. It holds a `Map<Subject, Question[]>` pre-loaded with ~50 questions per subject (350+ total), and a second map tracking the remaining shuffled deck per subject so questions don't repeat within a run.
 
-### 4. Observer — Entity State
+### 4. Observer — Entity HP Display
 `entities/observers/`
 
-`GameEntity` maintains an `ArrayList<EntityObserver>` and calls `onHpChange(this)` inside `updateHp()` after every HP modification. Two observers are registered at startup via `GameSetup`:
+`GameEntity` maintains an `ArrayList<EntityObserver>` and calls `notifyObservers()` inside `updateHp()` after every HP modification. `EntityObserver` is an interface with a single `update()` method. One observer is registered per entity at startup via `GameSetup`:
 
-- **`BossBehaviorObserver`** — checks the boss's HP percentage and calls `setBossBehavior()` with the appropriate strategy.
-- **`EntityLoggerObserver`** — calls `Visuals.displayStatus()` to redraw the HP bar for whoever just took damage.
+- **`EntityLoggerObserver`** — calls `Visuals.displayStatus()` to redraw the HP bar for the entity it is tracking.
+
+### 5. Observer — Boss Phase Dialogue
+`entities/observers/`, `entities/Boss.java`
+
+`Boss` maintains a separate `ArrayList<BossObserver>` and calls `informBossObservers()` whenever `setBossBehavior()` is invoked. `BossObserver` is a distinct interface from `EntityObserver`.
+
+- **`BossBehaviorObserver`** — reads the boss's current `BossPhase` and prints the corresponding phase dialogue to the terminal via `IOHandler`.
+
+Note: strategy swapping itself is not observer-driven. `Boss.updateHp()` calls `setBossBehavior()` directly; the `BossBehaviorObserver` only reacts to that call by printing dialogue.
 
 ---
 
@@ -59,11 +67,11 @@ The `QuestionStrategy` interface defines two methods: `askQuestion(...)` and `is
 
 **Encapsulation** — `hp` and `maxHp` are private in `GameEntity`. Nothing outside modifies HP directly; all changes go through `updateHp()`, which clamps the value and fires observers.
 
-**Inheritance** — `Player` and `Boss` both extend `GameEntity`, inheriting HP management and the observer list. `attack()` is declared abstract and overridden differently by each: `Player` scales off its `PlayerGift` stat, `Boss` delegates to its current `BossBehaviorStrategy`.
+**Inheritance** — `Player` and `Boss` both extend `GameEntity`, inheriting HP management and the observer list. `attack()` is declared abstract and overridden differently by each: `Player` scales off its `PlayerGift` stat, `Boss` delegates to its current `BossBehaviorStrategy`. `Boss` also overrides `updateHp()` to add phase-switching logic on top of the base behavior.
 
 **Polymorphism** — `Battle` calls `question.askQuestion(io)` and `question.isCorrect(answer)` without ever checking the question type. `GameEntity.attack(target, modifier)` is called uniformly for both player and boss turns.
 
-**Abstraction** — `QuestionStrategy` and `BossBehaviorStrategy` (which returns an `int`) are the only thing `Battle` and `Boss` interact with, respectively. The concrete implementations are invisible to the callers.
+**Abstraction** — `QuestionStrategy` and `BossBehaviorStrategy` are the only thing `Battle` and `Boss` interact with, respectively. The concrete implementations are invisible to the callers.
 
 ---
 
@@ -86,20 +94,23 @@ attacks/
 entities/
 ├── GameEntity.java                 # Abstract base: HP, observers, attack()
 ├── Player.java                     # attack() scales off PlayerGift
-├── Boss.java                       # attack() delegates to BossBehaviorStrategy
-├── PlayerGift.java                 # Enum: INTELLIGENCE / STRENGTH / CHARISMA
+├── Boss.java                       # attack() delegates to BossBehaviorStrategy; updateHp() handles phase switching
+├── BossPhase.java                  # Enum: DEFAULT / MID_HP / LOW_HP / DEFEAT with color and dialogue
+├── PlayerGift.java                 # Enum: INTELLIGENCE / STRENGTH / CHARISMA / NONE
 ├── boss/behavior/
 │   ├── BossBehaviorStrategy.java   # Interface: calculateDamage()
 │   ├── DefaultBossBehavior.java
 │   ├── MidHPBossBehavior.java
 │   └── LowHPBossBehavior.java
 └── observers/
-    ├── EntityObserver.java         # Abstract: onHpChange(GameEntity)
-    ├── BossBehaviorObserver.java   # Swaps boss strategy on HP threshold
+    ├── EntityObserver.java         # Interface: update()
+    ├── BossObserver.java           # Interface: update() — separate observer chain for boss phase events
+    ├── BossBehaviorObserver.java   # Prints boss phase dialogue when strategy changes
     └── EntityLoggerObserver.java   # Redraws HP bar on any HP change
 game/
 ├── io/IOHandler.java               # Wraps System.in/out; typing effect, ANSI clear
 ├── loop/Battle.java                # Main game loop; handles question, strike, dodge, endgame
+│                                   # Also contains private enums BodyPart and DodgeDirection
 ├── setup/GameSetup.java            # Registers observers with player and boss
 └── ui/
     ├── Menu.java                   # Subject and gift selection menus
@@ -161,7 +172,9 @@ Core architecture, design pattern selection, and game logic were written by the 
 ---
 
 **Course**: 2190103 Advanced Computer Programming
+
 **Institution**: International School of Engineering (ISE), Chulalongkorn University
+
 **Program**: Information and Communication Engineering (ICE)
 
 ---
@@ -184,6 +197,7 @@ classDiagram
         +setName(name : String) void
         +addObserver(observer : EntityObserver) void
         +removeObserver(observer : EntityObserver) void
+        #notifyObservers() void
         #updateHp(hpChange : double) void
         +attack(target : GameEntity, modifier : double)* void
     }
@@ -197,15 +211,33 @@ classDiagram
     class Boss {
         -intro : String
         -bossBehavior : BossBehaviorStrategy
+        -bossPhase : BossPhase
+        -bossObservers : ArrayList~BossObserver~
         +getIntro() String
+        +getBossPhase() BossPhase
         +attack(target : GameEntity, modifier : double) void
         +setBossBehavior(behavior : BossBehaviorStrategy) void
+        +addBossObserver(observer : BossObserver) void
+        #updateHp(hpChange : double) void
+    }
+
+    class BossPhase {
+        <<enumeration>>
+        DEFAULT
+        MID_HP
+        LOW_HP
+        DEFEAT
+        -color : TerminalColor
+        -dialogue : String
+        +getDialogue() String
+        +getColor() TerminalColor
     }
 
     class PlayerGift {
         <<enumeration>>
         INTELLIGENCE
         STRENGTH
+        CHARISMA
         NONE
         -id : int
         -attackStat : int
@@ -213,31 +245,40 @@ classDiagram
         +getId() int
         +getAttackStat() int
         +getDescription() String
-        +getAttackStat() int
         +fromId(id : int)$ PlayerGift
     }
 
-    %% ── OBSERVER PATTERN ───────────────────────────────────────────────────────
+    %% ── OBSERVER PATTERN (Entity) ──────────────────────────────────────────────
 
     class EntityObserver {
-        <<abstract>>
-        +onHpChange(entity : GameEntity)* void
-    }
-
-    class BossBehaviorObserver {
-        +onHpChange(entity : GameEntity) void
+        <<interface>>
+        +update() void
     }
 
     class EntityLoggerObserver {
         -visuals : Visuals
-        +onHpChange(entity : GameEntity) void
+        -entity : GameEntity
+        +update() void
     }
 
-    %% ── BOSS BEHAVIOR STRATEGY PATTERN ────────────────────────────────────────
+    %% ── OBSERVER PATTERN (Boss) ────────────────────────────────────────────────
+
+    class BossObserver {
+        <<interface>>
+        +update() void
+    }
+
+    class BossBehaviorObserver {
+        -ioHandler : IOHandler
+        -boss : Boss
+        +update() void
+    }
+
+    %% ── BOSS BEHAVIOR STRATEGY ─────────────────────────────────────────────────
 
     class BossBehaviorStrategy {
         <<interface>>
-        +calculateDamage() double
+        +calculateDamage() int
     }
 
     class DefaultBossBehavior {
@@ -252,30 +293,26 @@ classDiagram
         +calculateDamage() int
     }
 
-    class LowHPBossBehavior {
-        +calculateDamage() double
-    }
-
-    %% ── QUESTION STRATEGY PATTERN ──────────────────────────────────────────────
+    %% ── QUESTION STRATEGY ──────────────────────────────────────────────────────
 
     class QuestionStrategy {
         <<interface>>
-        +askQuestion(question : String, options : String[], io : IOHandler) String
+        +askQuestion(question : String, options : String[], ioHandler : IOHandler) String
         +isCorrect(question : String, options : String[], answer : String, playerAnswer : String) boolean
     }
 
     class MultipleChoiceQuestionStrategy {
-        +askQuestion(question : String, options : String[], io : IOHandler) String
+        +askQuestion(question : String, options : String[], ioHandler : IOHandler) String
         +isCorrect(question : String, options : String[], answer : String, playerAnswer : String) boolean
     }
 
     class TrueFalseQuestionStrategy {
-        +askQuestion(question : String, options : String[], io : IOHandler) String
+        +askQuestion(question : String, options : String[], ioHandler : IOHandler) String
         +isCorrect(question : String, options : String[], answer : String, playerAnswer : String) boolean
     }
 
     class WrittenQuestionStrategy {
-        +askQuestion(question : String, options : String[], io : IOHandler) String
+        +askQuestion(question : String, options : String[], ioHandler : IOHandler) String
         +isCorrect(question : String, options : String[], answer : String, playerAnswer : String) boolean
     }
 
@@ -283,12 +320,12 @@ classDiagram
 
     class AttackResult {
         <<enumeration>>
-        DbaseHitModifier : double
-        +getBaseHitModifier() double
-        +getHitModifierWithBonus(bonus : double
+        DODGE
+        HIT
         CRITICAL_HIT
-        -hitModifier : double
-        +getHitModifier() double
+        -baseHitModifier : double
+        +getBaseHitModifier() double
+        +getHitModifierWithBonus(bonus : double) double
     }
 
     class Question {
@@ -306,8 +343,8 @@ classDiagram
     class Subject {
         <<enumeration>>
         CALCULUS_I
-        PHYSICS_I
         CALCULUS_II
+        PHYSICS_I
         PHYSICS_II
         COMP_PROG
         ADV_COMP_PROG
@@ -370,11 +407,13 @@ classDiagram
         +print(message : String) void
         +inlinePrint(message : String) void
         +printTyping(message : String) void
+        +printTyping(message : String, delay : int) void
         +readLine() String
         +center(text : String, width : int, symbol : String) String
         +wait(ms : int) void
         +clearTerminal() void
         +fullClear() void
+        +clearLine(lineNum : int) void
     }
 
     class Visuals {
@@ -415,17 +454,28 @@ classDiagram
     GameEntity <|-- Player
     GameEntity <|-- Boss
 
-    %% Observer pattern
-    EntityObserver <|-- BossBehaviorObserver
-    EntityObserver <|-- EntityLoggerObserver
-    GameEntity "1" o-- "*" EntityObserver : notifies
+    %% Entity Observer pattern
+    EntityObserver <|.. EntityLoggerObserver
+    GameEntity "1" o-- "*" EntityObserver : notifies via update()
+    EntityLoggerObserver --> Visuals : uses
+    EntityLoggerObserver --> GameEntity : observes
+
+    %% Boss Observer pattern (separate system)
+    BossObserver <|.. BossBehaviorObserver
+    Boss "1" o-- "*" BossObserver : notifies via update()
+    BossBehaviorObserver --> Boss : reads phase from
+
+    %% Boss internals
+    Boss --> BossBehaviorStrategy : delegates attack to
+    Boss --> BossPhase : tracks phase
+    Boss ..> LowHPBossBehavior : creates
+    Boss ..> MidHPBossBehavior : creates
+    Boss ..> DefaultBossBehavior : creates
 
     %% Boss Behavior Strategy pattern
     BossBehaviorStrategy <|.. DefaultBossBehavior
     BossBehaviorStrategy <|.. MidHPBossBehavior
     BossBehaviorStrategy <|.. LowHPBossBehavior
-    Boss --> BossBehaviorStrategy : delegates to
-    BossBehaviorObserver ..> Boss : inspects and updates
 
     %% Question Strategy pattern
     QuestionStrategy <|.. MultipleChoiceQuestionStrategy
@@ -435,7 +485,6 @@ classDiagram
 
     %% Entity associations
     Player --> PlayerGift : has
-    EntityLoggerObserver --> Visuals : uses
 
     %% Question / data layer
     QuestionBank *-- Question : manages
@@ -461,6 +510,7 @@ classDiagram
     %% UI layer
     Visuals --> IOHandler
     Visuals --> TerminalColor
+    BossPhase --> TerminalColor
 
     %% Entry point
     App --> IOHandler
