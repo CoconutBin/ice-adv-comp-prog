@@ -6,7 +6,7 @@ public enum Subject {
     CALCULUS_II(3, "Calculus II"),
     PHYSICS_II(4, "Physics and Electronics for Engineers"),
     COMP_PROG(5, "Computer Programming"),
-    ADV_COMP_PROG(6, "Advance Computer Programming"),
+    ADV_COMP_PROG(6, "Advanced Computer Programming"),
     PROB_STAT_DATA(7, "Probability and Statistics for Data Analysis");
 
     private final int id;

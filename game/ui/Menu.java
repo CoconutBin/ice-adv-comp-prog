@@ -11,13 +11,10 @@ public class Menu {
         this.io = io;
     }
 
-    public boolean shouldSkip(game.io.IOHandler io) {
+    public boolean shouldSkip() {
         io.print(TerminalColor.LIGHT_GREY.apply("\n[ Press 'x' to skip intro]"));
         io.inlinePrint(TerminalColor.CYAN.apply("--> "));
-        
         String input = io.readLine();
-        
-        // Returns true if the user typed x
         return input.equalsIgnoreCase("x");
     }
 

@@ -1,6 +1,8 @@
 package attacks.question;
 
-import attacks.question.strategies.*;
+import attacks.question.strategies.MultipleChoiceQuestionStrategy;
+import attacks.question.strategies.TrueFalseQuestionStrategy;
+import attacks.question.strategies.WrittenQuestionStrategy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

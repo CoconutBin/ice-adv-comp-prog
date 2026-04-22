@@ -44,11 +44,12 @@ public abstract class GameEntity {
 
     protected void notifyObservers(){
         for(EntityObserver observer: observers){
-            observer.update();
+            observer.onHpChange(this);
         }
     }
 
     protected void updateHp(double hpChange) {
+        if (hpChange == 0) return;
         this.hp = Math.max(0, Math.min(this.hp + hpChange, maxHp));
         notifyObservers();
     }

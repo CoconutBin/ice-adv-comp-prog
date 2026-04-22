@@ -1,4 +1,6 @@
 package entities.boss.behavior;
+
+import game.ui.TerminalColor;
 import java.util.Random;
 
 public class MidHPBossBehavior implements BossBehaviorStrategy {
@@ -6,6 +8,16 @@ public class MidHPBossBehavior implements BossBehaviorStrategy {
 
     @Override
     public int calculateDamage() {
-        return 7 + random.nextInt(6); // Example damage calculation for mid HP behavior
+        return 7 + random.nextInt(6);
+    }
+
+    @Override
+    public String getDialogue() {
+        return "You're certainly better than I thought..";
+    }
+
+    @Override
+    public TerminalColor getColor() {
+        return TerminalColor.ORANGE;
     }
 }
