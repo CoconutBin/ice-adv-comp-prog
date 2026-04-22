@@ -1,6 +1,7 @@
 package entities;
 
-import entities.boss.behavior.*;
+import entities.boss.behavior.BossBehaviorStrategy;
+import entities.boss.behavior.DefaultBossBehavior;
 
 public class Boss extends GameEntity {
     private final String intro;
