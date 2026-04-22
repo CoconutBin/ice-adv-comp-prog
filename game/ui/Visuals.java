@@ -62,11 +62,10 @@ public void showLogo() {
             if (i < Math.max(0, hp / 5)) bar += "█";
             else missing += "█";
         }
-        if (isPlayer){
-            ioHandler.print(TerminalColor.GREEN + name + " HP: " + bar + TerminalColor.LIGHT_GREY + missing + TerminalColor.RESET);
-        }
-        else{
-            ioHandler.print(TerminalColor.RED + name + " HP: " + bar + TerminalColor.LIGHT_GREY + missing + TerminalColor.RESET);
+        if (isPlayer) {
+            ioHandler.print(TerminalColor.GREEN.apply(name + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing));
+        } else {
+            ioHandler.print(TerminalColor.RED.apply(name + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing));
         }
     }
 
