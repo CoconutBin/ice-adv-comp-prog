@@ -8,12 +8,12 @@ public class LowHPBossBehavior implements BossBehaviorStrategy {
 
     @Override
     public int calculateDamage() {
-        return 8 + random.nextInt(8);
+        return 10 + random.nextInt(10);
     }
 
     @Override
     public String getDialogue() {
-        return "You think you can defeat me? Go ahead, try me!";
+        return "You think you can defeat me? Go ahead, try me! (* You feel the air around you getting thicker... *)";
     }
 
     @Override

@@ -8,12 +8,12 @@ public class MidHPBossBehavior implements BossBehaviorStrategy {
 
     @Override
     public int calculateDamage() {
-        return 7 + random.nextInt(6);
+        return 8 + random.nextInt(8);
     }
 
     @Override
     public String getDialogue() {
-        return "You're certainly better than I thought..";
+        return "You're certainly better than I thought.. (* You feel vibrations from deep underground... *)";
     }
 
     @Override
