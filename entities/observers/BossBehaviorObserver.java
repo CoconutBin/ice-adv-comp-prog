@@ -19,8 +19,9 @@ public class BossBehaviorObserver implements EntityObserver {
     }
 
     @Override
-    public void onHpChange(GameEntity entity) {
+    public void onHpChange(GameEntity entity, double oldHp, double newHp) {
         double hpPercentage = boss.getHp() / boss.getMaxHp();
+        // double hpPercentage = newHp / boss.getMaxHp();
 
         int newPhase;
         BossBehaviorStrategy newBehavior;

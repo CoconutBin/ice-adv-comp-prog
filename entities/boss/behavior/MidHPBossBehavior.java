@@ -13,7 +13,7 @@ public class MidHPBossBehavior implements BossBehaviorStrategy {
 
     @Override
     public String getDialogue() {
-        return "You're certainly better than I thought..\n(* You feel vibrations from deep underground... *)";
+        return "You're certainly better than I thought..\n\n(* You feel vibrations from deep underground... *)";
     }
 
     @Override
