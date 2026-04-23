@@ -11,7 +11,7 @@ public class EntityLoggerObserver implements EntityObserver {
     }
 
     @Override
-    public void onHpChange(GameEntity entity, double oldHp, double newHp) {
-        visuals.displayStatus(entity, oldHp, newHp);
+    public void onHpChange(GameEntity entity, double hpChange) {
+        visuals.displayStatus(entity, hpChange);
     }
 }
