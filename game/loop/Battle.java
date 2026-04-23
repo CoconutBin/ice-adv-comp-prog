@@ -75,7 +75,7 @@ public class Battle {
                 aimTarget = BodyPart.values()[Integer.parseInt(input)-1];
             } catch (NumberFormatException e) {
                 io.printTyping(TerminalColor.RED.apply("You hesitated! Enter a valid target NUMBER (1, 2, or 3)."));
-            } catch (IllegalArgumentException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 io.printTyping(TerminalColor.RED.apply("Invalid target! Focus your aim on 1, 2, or 3."));
             }
         }
@@ -117,7 +117,7 @@ public class Battle {
                 dodgeDirection = DodgeDirection.values()[dodge];
             } catch (NumberFormatException e) {
                 io.printTyping(TerminalColor.RED.apply("Panic makes you freeze! Enter a NUMBER (1, 2, or 3)."));
-            } catch (IllegalArgumentException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 io.printTyping(TerminalColor.RED.apply("Invalid dodge! Focus on dodging to 1, 2, or 3."));
             }
         }

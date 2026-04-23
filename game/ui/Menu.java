@@ -30,7 +30,7 @@ public class Menu {
                 return PlayerGift.values()[choice];
             } catch (NumberFormatException e) {
                 io.print("Invalid input. Pick a number.");
-            } catch (IllegalArgumentException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 io.print("Pick 1, 2, or 3!");
             }
         }
@@ -55,7 +55,7 @@ public class Menu {
                 
             } catch (NumberFormatException e) {
                 io.printTyping(TerminalColor.RED.apply("Error: Please enter a valid NUMBER."));
-            } catch (IllegalArgumentException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 io.printTyping(TerminalColor.RED.apply("Invalid choice! Pick a number between 1 and " + Subject.values().length + "."));
             }
         }
