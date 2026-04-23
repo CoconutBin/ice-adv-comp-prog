@@ -36,7 +36,8 @@ public void showLogo() {
         "Knowledge is your blade. Logic is your shield. A Calculator with low battery is your only friend.");
     ioHandler.wait(800);
     ioHandler.printTyping("If you falter, your GPA will be lower than the bar for a TikTok challenge.");
-    ioHandler.wait(1500);
+    ioHandler.print(TerminalColor.LIGHT_GREY.apply("\n[ Press ENTER to continue ]"));
+    ioHandler.readLine();
     ioHandler.clearTerminal();
   }
 
