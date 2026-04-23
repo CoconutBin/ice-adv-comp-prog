@@ -66,14 +66,14 @@ public class Battle {
         }
         io.printTyping("Prepare your strike!");
         String strikeMessage = "Striking";
-        for (BodyPart part : BodyPart.values()) {
-            strikeMessage += " [" + part.getId() + "] " + part;
+        for (int i = 0; i < BodyPart.values().length; i++) {
+            strikeMessage += " [" + (i+1) + "] " + BodyPart.values()[i];
         }
         io.print(strikeMessage);
         while (aimTarget == null) {
             try {
                 String input = io.readLine();
-                aimTarget = BodyPart.fromId(Integer.parseInt(input));
+                aimTarget = BodyPart.values()[Integer.parseInt(input)-1];
             } catch (NumberFormatException e) {
                 io.printTyping(TerminalColor.RED.apply("You hesitated! Enter a valid target NUMBER (1, 2, or 3)."));
             } catch (IllegalArgumentException e) {
@@ -106,16 +106,16 @@ public class Battle {
         DodgeDirection dodgeDirection = null;
         io.printTyping("Prepare to dodge!");
         String dodgeMessage = "Dodge to";
-        for (DodgeDirection dir : DodgeDirection.values()) {
-            dodgeMessage += " [" + dir.getId() + "] " + dir;
+        for (int i = 0; i < DodgeDirection.values().length; i++) {
+            dodgeMessage += " [" + (i+1) + "] " + DodgeDirection.values()[i];
         }
         io.print(dodgeMessage);
 
         while (dodgeDirection == null) {
             try {
                 String input = io.readLine();
-                int dodge = Integer.parseInt(input);
-                dodgeDirection = DodgeDirection.fromId(dodge);
+                int dodge = Integer.parseInt(input) - 1;
+                dodgeDirection = DodgeDirection.values()[dodge];
             } catch (NumberFormatException e) {
                 io.printTyping(TerminalColor.RED.apply("Panic makes you freeze! Enter a NUMBER (1, 2, or 3)."));
             } catch (IllegalArgumentException e) {

@@ -20,8 +20,9 @@ public class Menu {
 
     public PlayerGift selectSpecialty() {
         io.print(TerminalColor.YELLOW.apply(io.center(" PICK YOUR GIFT ", 120, "=")));
-        for(PlayerGift gift : PlayerGift.values()) {
-            io.print(TerminalColor.PURPLE.apply("[" + gift.getId() + "]") + " " + gift + " " + "(" + gift.getDescription() + ")");
+        for(int i = 0; i < PlayerGift.values().length; i++) {
+            PlayerGift gift = PlayerGift.values()[i];
+            io.print(TerminalColor.PURPLE.apply("[" + (i+1) + "]") + " " + gift + " " + "(" + gift.getDescription() + ")");
         }
         io.print(TerminalColor.YELLOW.apply(io.center("", 120, "=")));
 
@@ -29,8 +30,8 @@ public class Menu {
             io.inlinePrint("--> ");
             try {
                 String input = io.readLine();
-                int choice = Integer.parseInt(input);
-                return PlayerGift.fromId(choice);
+                int choice = Integer.parseInt(input) - 1;
+                return PlayerGift.values()[choice];
             } catch (NumberFormatException e) {
                 io.print("Invalid input. Pick a number.");
             } catch (IllegalArgumentException e) {
@@ -43,7 +44,7 @@ public class Menu {
         io.print(TerminalColor.YELLOW.apply(io.center(" SELECT YOUR SUBJECT ", 120, "=")));
         
         for (int i = 0; i < Subject.values().length; i++) {
-            io.print(TerminalColor.PURPLE.apply("[" + (i + 1) + "] ") + Subject.fromId(i + 1).getDisplayName());
+            io.print(TerminalColor.PURPLE.apply("[" + (i + 1) + "] ") + Subject.values()[i].getDisplayName());
             io.wait(100);
         }
         io.print(TerminalColor.YELLOW.apply(io.center("", 120, "=")));
@@ -53,8 +54,8 @@ public class Menu {
             
             try {
                 String input = io.readLine();             
-                int choice = Integer.parseInt(input);
-                return Subject.fromId(choice); 
+                int choice = Integer.parseInt(input) - 1;
+                return Subject.values()[choice]; 
                 
             } catch (NumberFormatException e) {
                 io.printTyping(TerminalColor.RED.apply("Error: Please enter a valid NUMBER."));
