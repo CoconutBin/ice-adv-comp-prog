@@ -21,8 +21,8 @@ public class GameSetup {
     }
 
     public void setupObservers() {
-        player.addObserver(new EntityLoggerObserver(visuals, true));
-        boss.addObserver(new EntityLoggerObserver(visuals, false));
+        player.addObserver(new EntityLoggerObserver(visuals));
+        boss.addObserver(new EntityLoggerObserver(visuals));
         boss.addObserver(new BossBehaviorObserver(ioHandler, boss));
     }
 }

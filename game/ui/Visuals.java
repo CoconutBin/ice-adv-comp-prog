@@ -1,5 +1,7 @@
 package game.ui;
 
+import entities.GameEntity;
+
 import attacks.question.QuoteBank;
 import attacks.question.Subject;
 import entities.Boss;
@@ -59,19 +61,21 @@ public void showLogo() {
     ioHandler.inlinePrint(TerminalColor.CYAN.apply("--> "));
   }
 
-  public void displayStatus(boolean isPlayer, double hp, String name) {
+  public void displayStatus(GameEntity entity) {
     String bar = "";
     String missing = "";
+    double hp = entity.getHp();
+    double maxHp = entity.getMaxHp();
     for (int i = 0; i < 20; i++) {
-      if (i < Math.max(0, hp / 5))
+      if (i < Math.max(0, (hp / maxHp) * 20))
         bar += "█";
       else
         missing += "█";
     }
-    if (isPlayer) {
-      ioHandler.print(TerminalColor.GREEN.apply(name + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing));
+    if (entity instanceof Player) {
+      ioHandler.print(TerminalColor.GREEN.apply(entity.getName() + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing) + TerminalColor.GREEN.apply(" " + hp + "/" + maxHp));
     } else {
-      ioHandler.print(TerminalColor.RED.apply(name + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing));
+      ioHandler.print(TerminalColor.RED.apply(entity.getName() + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing) + TerminalColor.RED.apply(" " + hp + "/" + maxHp));
     }
   }
 
