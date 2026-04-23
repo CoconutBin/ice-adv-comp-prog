@@ -5,11 +5,7 @@ import entities.PlayerGift;
 import game.io.IOHandler;
 
 public class Menu {
-    private final IOHandler io;
-
-    public Menu(IOHandler io) {
-        this.io = io;
-    }
+    private final IOHandler io = IOHandler.getInstance();
 
     public boolean shouldSkip() {
         io.print(TerminalColor.LIGHT_GREY.apply("\n[ Press 'x' to skip intro]"));

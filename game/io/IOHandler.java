@@ -3,10 +3,15 @@ package game.io;
 import java.util.Scanner;
 
 public class IOHandler {
+    public static final IOHandler instance = new IOHandler();
     private final Scanner scanner;
 
-    public IOHandler() {
+    private IOHandler() {
         this.scanner = new Scanner(System.in);
+    }
+
+    public static IOHandler getInstance() {
+        return instance;
     }
 
     public void print(String message) {

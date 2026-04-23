@@ -12,12 +12,11 @@ import java.util.Random;
 import attacks.AttackResult;
 
 public class Battle {
-    private final IOHandler io;
+    private final IOHandler io = IOHandler.getInstance();
     private final Random rand;
     private final Visuals visuals;
 
-    public Battle(IOHandler io, Visuals visuals) {
-        this.io = io;
+    public Battle(Visuals visuals) {
         this.rand = new Random();
         this.visuals = visuals;
     }

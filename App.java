@@ -14,7 +14,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        final IOHandler ioHandler = new IOHandler();
+        final IOHandler ioHandler = IOHandler.getInstance();
         Visuals visuals = new Visuals(ioHandler);
 
         ioHandler.fullClear();
@@ -27,7 +27,7 @@ public class App {
         ioHandler.readLine();
         ioHandler.fullClear();
 
-        Menu menu = new Menu(ioHandler);
+        Menu menu = new Menu();
         Subject chosenSubject = menu.subjectSelection();
         ioHandler.print("");
         PlayerGift playerGift = menu.selectSpecialty();
@@ -54,7 +54,7 @@ public class App {
         GameSetup gameSetup = new GameSetup(player, boss, ioHandler, visuals);
         gameSetup.setupObservers();
 
-        Battle battle = new Battle(ioHandler, visuals);
+        Battle battle = new Battle(visuals);
         battle.startLoop(player, boss, chosenSubject);
         System.exit(0);
     }
