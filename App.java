@@ -18,7 +18,7 @@ public class App {
         Visuals visuals = new Visuals(ioHandler);
 
         ioHandler.fullClear();
-        ioHandler.print(ioHandler.center("Please set your terminal to 120 x 15", 120, " "));
+        ioHandler.print(ioHandler.center("Please set your terminal width to 120 (or until this text is centered)", 120, " "));
         ioHandler.print(TerminalColor.LIGHT_GREY.apply(ioHandler.center("[ Press ENTER to continue ]", 120, " ")));
         ioHandler.readLine();
         ioHandler.fullClear();
