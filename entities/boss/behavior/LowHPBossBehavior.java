@@ -13,7 +13,7 @@ public class LowHPBossBehavior implements BossBehaviorStrategy {
 
     @Override
     public String getDialogue() {
-        return "You think you can defeat me? Go ahead, try me! (* You feel the air around you getting thicker... *)";
+        return "You think you can defeat me? Go ahead, try me!\n(* You feel the air around you getting thicker... *)";
     }
 
     @Override
