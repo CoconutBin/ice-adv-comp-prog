@@ -38,7 +38,7 @@ public class App {
             visuals.showOpening();
             playerName = ioHandler.readLine();
         }
-        Player player = new Player(playerName.isEmpty() ? "Academic Probation" : playerName, 100, playerGift);
+        Player player = new Player(playerName.isEmpty() ? "Academic Probation" : playerName, 50, playerGift);
         Boss boss = new Boss(QuoteBank.getBossName(chosenSubject), QuoteBank.getBossIntro(chosenSubject), 100);
         if (!skip){
             visuals.playPrologue(player);

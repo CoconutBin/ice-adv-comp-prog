@@ -25,7 +25,7 @@ public class IOHandler {
         }
     }
 
-    public String center(String text, int width, String symbol) {
+    public String center(String text, int width, String fill) {
         if (text == null || width <= text.length()) {
             return text;
         }
@@ -34,7 +34,7 @@ public class IOHandler {
         int leftPadding = totalPadding / 2;
         int rightPadding = totalPadding - leftPadding;
 
-        return symbol.repeat(leftPadding) + text + symbol.repeat(rightPadding);
+        return fill.repeat(leftPadding) + text + fill.repeat(rightPadding);
     }
 
     public void printTyping(String message, int delay) {
