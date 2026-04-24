@@ -24,6 +24,7 @@ public void showLogo() {
         ioHandler.print(TerminalColor.BLUE.apply(ioHandler.center(  "| ██/██ ██| ██  | ██  | ██    /██/           /██  \\ ██| ██      | ██  | ██    | ██    | ██      | ██  \\ ██", 120, " ")));
         ioHandler.print(TerminalColor.PURPLE.apply(ioHandler.center("|  ██████/|  ██████/ /██████ /████████      |  ██████/| ████████| ██  | ██    | ██    | ████████| ██  | ██", 120, " ")));
         ioHandler.print(TerminalColor.PINK.apply(ioHandler.center(  " \\____ ███ \\______/ |______/|________/       \\______/ |________/|__/  |__/    |__/    |________/|__/  |__/", 120, " ")));
+        ioHandler.print(ioHandler.center("", 120, " "));
         ioHandler.print(ioHandler.center("- Press Enter to start -", 120, " "));
     }
 
