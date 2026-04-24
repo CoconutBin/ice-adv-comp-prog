@@ -62,20 +62,20 @@ public void showLogo() {
     ioHandler.inlinePrint(TerminalColor.CYAN.apply("--> "));
   }
 
-  public void displayStatus(GameEntity entity, double oldHp, double newHp) {
+  public void displayStatus(GameEntity entity, double hpChange) {
     String bar = "";
     String missing = "";
     double maxHp = entity.getMaxHp();
     for (int i = 0; i < 20; i++) {
-      if (i < Math.max(0, (newHp / maxHp) * 20))
+      if (i < Math.max(0, (entity.getHp() / maxHp) * 20))
         bar += "█";
       else
         missing += "█";
     }
     if (entity instanceof Player) {
-      ioHandler.print(TerminalColor.GREEN.apply(entity.getName() + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing) + TerminalColor.GREEN.apply(" " + newHp + "/" + maxHp) + TerminalColor.ORANGE.apply(" [" + (newHp-oldHp) + " Hp]"));
+      ioHandler.print(TerminalColor.GREEN.apply(entity.getName() + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing) + TerminalColor.GREEN.apply(" " + entity.getHp() + "/" + maxHp) + TerminalColor.ORANGE.apply(" [" + hpChange + " Hp]"));
     } else {
-      ioHandler.print(TerminalColor.RED.apply(entity.getName() + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing) + TerminalColor.RED.apply(" " + newHp + "/" + maxHp) + TerminalColor.ORANGE.apply(" [" + (newHp-oldHp) + " Hp]"));
+      ioHandler.print(TerminalColor.RED.apply(entity.getName() + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing) + TerminalColor.RED.apply(" " + entity.getHp() + "/" + maxHp) + TerminalColor.ORANGE.apply(" [" + hpChange + " Hp]"));
     }
   }
 
