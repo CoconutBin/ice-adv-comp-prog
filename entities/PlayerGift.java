@@ -44,5 +44,6 @@ public enum PlayerGift {
     /** Whether this gift unlocks the special S-Rank victory screen. */
     public boolean hasSpecialVictoryScreen() { return hasSpecialVictoryScreen; }
 
+    @Override
     public String toString() { return this.name().toUpperCase(); }
 }

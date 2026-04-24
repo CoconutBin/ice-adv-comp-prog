@@ -15,7 +15,7 @@ public class App {
     public static void main(String[] args) {
 
         final IOHandler ioHandler = IOHandler.getInstance();
-        Visuals visuals = new Visuals(ioHandler);
+        Visuals visuals = new Visuals();
 
         ioHandler.fullClear();
         ioHandler.print(ioHandler.center("Please set your terminal width to 120 (or until this text is centered)", 120, " "));

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class QuestionBank {
-    private static QuestionBank instance = new QuestionBank();
+    private static final QuestionBank instance = new QuestionBank();
     private final Map<Subject, Question[]> subjectData;
     private final Map<Subject, List<Question>> remainingQuestions;
 

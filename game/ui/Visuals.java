@@ -1,32 +1,27 @@
 package game.ui;
 
-import entities.GameEntity;
-
 import attacks.question.QuoteBank;
 import attacks.question.Subject;
 import entities.Boss;
+import entities.GameEntity;
 import entities.Player;
 import game.io.IOHandler;
 
 public class Visuals {
-  private final IOHandler ioHandler;
+  private final IOHandler ioHandler = IOHandler.getInstance();
 
-  public Visuals(IOHandler ioHandler) {
-    this.ioHandler = ioHandler;
+  public void showLogo() {
+          ioHandler.print(TerminalColor.RED.apply(ioHandler.center(   "  /██████  /██   /██ /██████ /████████        /██████  /██        /██████  /██     /██ /████████ /███████ ", 120, " "))) ;
+          ioHandler.print(TerminalColor.ORANGE.apply(ioHandler.center(" /██__  ██| ██  | ██|_  ██_/|_____ ██        /██__  ██| ██       /██__  ██|  ██   /██/| ██_____/| ██__  ██", 120, " ")));
+          ioHandler.print(TerminalColor.YELLOW.apply(ioHandler.center("| ██  \\ ██| ██  | ██  | ██       /██/       | ██  \\__/| ██      | ██  \\ ██ \\  ██ /██/ | ██      | ██  \\ ██", 120, " ")));
+          ioHandler.print(TerminalColor.GREEN.apply(ioHandler.center( "| ██  | ██| ██  | ██  | ██      /██/        |  ██████ | ██      | ████████  \\  ████/  | █████   | ███████/", 120, " ")));
+          ioHandler.print(TerminalColor.CYAN.apply(ioHandler.center(  "| ██  | ██| ██  | ██  | ██     /██/          \\____  ██| ██      | ██__  ██   \\  ██/   | ██      | ██  \\ ██", 120, " ")));
+          ioHandler.print(TerminalColor.BLUE.apply(ioHandler.center(  "| ██/██ ██| ██  | ██  | ██    /██/           /██  \\ ██| ██      | ██  | ██    | ██    | ██      | ██  \\ ██", 120, " ")));
+          ioHandler.print(TerminalColor.PURPLE.apply(ioHandler.center("|  ██████/|  ██████/ /██████ /████████      |  ██████/| ████████| ██  | ██    | ██    | ████████| ██  | ██", 120, " ")));
+          ioHandler.print(TerminalColor.PINK.apply(ioHandler.center(  " \\____ ███ \\______/ |______/|________/       \\______/ |________/|__/  |__/    |__/    |________/|__/  |__/", 120, " ")));
+          ioHandler.print(ioHandler.center("", 120, " "));
+          ioHandler.print(ioHandler.center("- Press Enter to start -", 120, " "));
   }
-
-public void showLogo() {
-        ioHandler.print(TerminalColor.RED.apply(ioHandler.center(   "  /██████  /██   /██ /██████ /████████        /██████  /██        /██████  /██     /██ /████████ /███████ ", 120, " "))) ;
-        ioHandler.print(TerminalColor.ORANGE.apply(ioHandler.center(" /██__  ██| ██  | ██|_  ██_/|_____ ██        /██__  ██| ██       /██__  ██|  ██   /██/| ██_____/| ██__  ██", 120, " ")));
-        ioHandler.print(TerminalColor.YELLOW.apply(ioHandler.center("| ██  \\ ██| ██  | ██  | ██       /██/       | ██  \\__/| ██      | ██  \\ ██ \\  ██ /██/ | ██      | ██  \\ ██", 120, " ")));
-        ioHandler.print(TerminalColor.GREEN.apply(ioHandler.center( "| ██  | ██| ██  | ██  | ██      /██/        |  ██████ | ██      | ████████  \\  ████/  | █████   | ███████/", 120, " ")));
-        ioHandler.print(TerminalColor.CYAN.apply(ioHandler.center(  "| ██  | ██| ██  | ██  | ██     /██/          \\____  ██| ██      | ██__  ██   \\  ██/   | ██      | ██  \\ ██", 120, " ")));
-        ioHandler.print(TerminalColor.BLUE.apply(ioHandler.center(  "| ██/██ ██| ██  | ██  | ██    /██/           /██  \\ ██| ██      | ██  | ██    | ██    | ██      | ██  \\ ██", 120, " ")));
-        ioHandler.print(TerminalColor.PURPLE.apply(ioHandler.center("|  ██████/|  ██████/ /██████ /████████      |  ██████/| ████████| ██  | ██    | ██    | ████████| ██  | ██", 120, " ")));
-        ioHandler.print(TerminalColor.PINK.apply(ioHandler.center(  " \\____ ███ \\______/ |______/|________/       \\______/ |________/|__/  |__/    |__/    |________/|__/  |__/", 120, " ")));
-        ioHandler.print(ioHandler.center("", 120, " "));
-        ioHandler.print(ioHandler.center("- Press Enter to start -", 120, " "));
-    }
 
   public void playPrologue(Player player) {
     ioHandler.printTyping("\n" + TerminalColor.YELLOW.apply("Ah, " + player.getName() + "..."));
