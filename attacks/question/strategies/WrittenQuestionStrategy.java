@@ -8,7 +8,7 @@ public class WrittenQuestionStrategy implements QuestionStrategy {
     @Override
     public String askQuestion(String question, String[] options, IOHandler ioHandler) {
         String input;
-        ioHandler.printTyping("\n" + question);
+        ioHandler.printTyping(question);
         ioHandler.print("Write your answer below");
         
         while (true) {
