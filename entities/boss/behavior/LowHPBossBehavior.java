@@ -8,7 +8,7 @@ public class LowHPBossBehavior implements BossBehaviorStrategy {
 
     @Override
     public int calculateDamage() {
-        return 10 + random.nextInt(10);
+        return 10 + random.nextInt(11);
     }
 
     @Override
