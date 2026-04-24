@@ -44,7 +44,7 @@ public class Battle {
             if (!(boss.getHp() > 0 && player.getHp() > 0)) {
                 break;
             }
-            io.print(TerminalColor.LIGHT_GREY.apply("\n[ Press ENTER to continue ]\nㅤ"));
+            io.print(TerminalColor.LIGHT_GREY.apply("\n[ Press ENTER to continue ]"));
             io.readLine();
             io.clearTerminal();
         }

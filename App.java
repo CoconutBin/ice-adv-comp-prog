@@ -47,7 +47,7 @@ public class App {
             ioHandler.clearTerminal();
         }
         visuals.playBossIntro(boss);
-        ioHandler.print(TerminalColor.LIGHT_GREY.apply("\n[ Press ENTER to continue ]\nㅤ"));
+        ioHandler.print(TerminalColor.LIGHT_GREY.apply("\n[ Press ENTER to continue ]"));
         ioHandler.readLine();
         ioHandler.clearTerminal();
         // Setup game state (register observers, initialize systems)
