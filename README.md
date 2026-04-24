@@ -188,6 +188,8 @@ Core decisions and implementation were ideated and done by the group.
 
 # Class Diagram
 
+[Link to the class diagram (.png)](./class-diagram.png)
+
 ```mermaid
 classDiagram
     %% ── ENTITY LAYER ───────────────────────────────────────────────────────────
