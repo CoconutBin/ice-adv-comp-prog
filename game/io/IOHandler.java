@@ -3,7 +3,7 @@ package game.io;
 import java.util.Scanner;
 
 public class IOHandler {
-    public static final IOHandler instance = new IOHandler();
+    private static final IOHandler instance = new IOHandler();
     private final Scanner scanner;
 
     private IOHandler() {
