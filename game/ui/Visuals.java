@@ -73,9 +73,9 @@ public void showLogo() {
         missing += "█";
     }
     if (entity instanceof Player) {
-      ioHandler.print(TerminalColor.GREEN.apply(entity.getName() + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing) + TerminalColor.GREEN.apply(" " + entity.getHp() + "/" + maxHp) + TerminalColor.ORANGE.apply(" [" + (hpChange) + " Hp]"));
+      ioHandler.print(TerminalColor.GREEN.apply(entity.getName() + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing) + TerminalColor.GREEN.apply(" " + entity.getHp() + "/" + maxHp) + TerminalColor.ORANGE.apply(" [" + hpChange + " Hp]"));
     } else {
-      ioHandler.print(TerminalColor.RED.apply(entity.getName() + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing) + TerminalColor.RED.apply(" " + entity.getHp() + "/" + maxHp) + TerminalColor.ORANGE.apply(" [" + (hpChange) + " Hp]"));
+      ioHandler.print(TerminalColor.RED.apply(entity.getName() + " HP: " + bar) + TerminalColor.LIGHT_GREY.apply(missing) + TerminalColor.RED.apply(" " + entity.getHp() + "/" + maxHp) + TerminalColor.ORANGE.apply(" [" + hpChange + " Hp]"));
     }
   }
 

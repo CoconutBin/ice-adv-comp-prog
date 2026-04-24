@@ -21,3 +21,7 @@ Thumbs.db
 *.class
 *.jar
 *.bat
+
+#stuff
+*.zip
+sources.txt
